@@ -48,7 +48,7 @@
     </developer>
   </developers>
   <modules>
-    <module>parent</module>
+    <module>azure</module>
   </modules>
   <build>
   	<pluginManagement>
