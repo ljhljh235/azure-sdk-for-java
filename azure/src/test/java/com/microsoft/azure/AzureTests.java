@@ -1,7 +1,6 @@
 package com.microsoft.azure;
 
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
-import com.microsoft.azure.credentials.AzureEnvironment;
 import com.microsoft.azure.implementation.Azure;
 import com.microsoft.azure.management.resources.Subscriptions;
 import com.microsoft.azure.management.resources.fluentcore.arm.Region;
@@ -19,7 +18,7 @@ public class AzureTests {
             System.getenv("domain"),
             System.getenv("secret"),
             AzureEnvironment.AZURE);
-    private static final String subscriptionId = System.getenv("resourceClient-id");
+    private static final String subscriptionId = System.getenv("subscription-id");
     private Subscriptions subscriptions;
     private Azure azure;
 
