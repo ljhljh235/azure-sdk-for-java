@@ -18,11 +18,11 @@ class PublicIpAddressImpl
         extends GroupableResourceImpl<PublicIpAddress, PublicIPAddressInner, PublicIpAddressImpl>
         implements
         	PublicIpAddress,
-        	PublicIpAddress.Definitions
+        	PublicIpAddress.Definitions,
+        	PublicIpAddress.Update
         {
 
     private String name;
-
     private final PublicIPAddressesInner client;
 
     PublicIpAddressImpl(String name,
@@ -123,5 +123,15 @@ class PublicIpAddressImpl
 		} else {
 			return this.inner().dnsSettings().domainNameLabel();
 		}
+	}
+
+	@Override
+	public PublicIpAddressImpl apply() throws Exception {
+		return this.create();
+	}
+
+	@Override
+	public PublicIpAddressImpl update() throws Exception {
+		return this;
 	}
 }
