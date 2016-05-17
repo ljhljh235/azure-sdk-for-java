@@ -80,7 +80,6 @@ public class AzureTests {
     			.append("\n\tLeaf domain label: ").append(pip.leafDomainLabel())
     			.append("\n\tResource group: ").append(pip.resourceGroupName())
     			.toString());
-    	
     	// Verify update
     	pip = pip.update()
     		.withStaticIp()
@@ -90,13 +89,13 @@ public class AzureTests {
     	System.out.println(new StringBuilder().append("Public IP Address: ").append(pip.id())
     			.append("\n\tIP Address: ").append(pip.ipAddress())
     			.append("\n\tLeaf domain label: ").append(pip.leafDomainLabel())
-    			.append("\n\tResource group: ").append(pip.resourceGroup())
+    			.append("\n\tResource group: ").append(pip.resourceGroupName())
     			.toString());
     	
     	// Verify delete
     	azure2.publicIpAddresses().delete(pip.id());
     	azure2.resourceGroups().delete(resourceGroupName);
-    	azure2.resourceGroups().delete(pip.resourceGroup());
+    	azure2.resourceGroups().delete(pip.resourceGroupName());
     }
     
     @Test

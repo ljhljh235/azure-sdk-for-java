@@ -33,11 +33,12 @@ public abstract class GroupableResourceImpl<
      * Getters
      *******************************************/
 
-    final public String resourceGroupName() {
-        if(this.groupName != null) {
-        	return this.groupName;
-        } else {
+    @Override
+    public String resourceGroupName() {
+        if(this.groupName == null) {
         	return ResourceUtils.groupFromResourceId(this.id());
+        } else {
+        	return this.groupName;
         }
     }
 
@@ -45,8 +46,8 @@ public abstract class GroupableResourceImpl<
     public FluentModelT create() throws Exception {
         for (String id : prerequisites().keySet()) {
             if (!created().containsKey(id)) {
-                created().put(id, prerequisites().get(id));
                 prerequisites().get(id).create();
+                created().put(id, prerequisites().get(id));
             }
         }
         return null;
@@ -57,11 +58,11 @@ public abstract class GroupableResourceImpl<
      ****************************************/
 
     public final FluentModelImplT withNewGroup(String groupName) {
-        return this.withNewGroup(resourceGroups.define(groupName).withLocation(location()));
+        return this.withNewGroup(resourceGroups.define(groupName).withLocation(this.location()));
     }
 
     public final FluentModelImplT withNewGroup() {
-        return this.withNewGroup(groupName);
+        return this.withNewGroup(this.name() + "group");
     }
 
     @SuppressWarnings("unchecked")

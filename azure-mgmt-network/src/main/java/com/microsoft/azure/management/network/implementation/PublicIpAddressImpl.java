@@ -50,9 +50,7 @@ class PublicIpAddressImpl
 
     @Override
     public PublicIpAddressImpl create() throws Exception {
-		for (Creatable<?> provisionable : prerequisites().values()) {
-			provisionable.create();
-		}
+    	super.create();
 
         ServiceResponse<PublicIPAddressInner> response =
                 this.client.createOrUpdate(this.resourceGroupName(), this.name(), this.inner());
