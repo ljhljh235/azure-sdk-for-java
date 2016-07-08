@@ -80,6 +80,12 @@ var mappings = {
         'package': 'com.microsoft.azure.batch.protocol',
         'fluent': false,
         'args': '-FT 1'
+    },
+    'keyvault': {
+        'dir': 'azure-mgmt-keyvault',
+        'source': 'arm-keyvault/2015-06-01/swagger/keyvault.json',
+        'package': 'com.microsoft.azure.management.keyvault',
+        'fluent': false
     }
 };
 
