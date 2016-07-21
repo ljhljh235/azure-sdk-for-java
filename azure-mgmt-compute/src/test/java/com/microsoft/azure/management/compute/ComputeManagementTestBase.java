@@ -2,13 +2,16 @@ package com.microsoft.azure.management.compute;
 
 import com.microsoft.azure.AzureEnvironment;
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
+import com.microsoft.azure.management.compute.implementation.ComputeManagementClientImpl;
 import com.microsoft.azure.management.compute.implementation.ComputeManager;
 import com.microsoft.azure.management.resources.implementation.ResourceManager;
 import com.microsoft.azure.RestClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public abstract class ComputeManagementTestBase {
     protected static ResourceManager resourceManager;
     protected static ComputeManager computeManager;
+    protected static ComputeManagementClientImpl clientImpl;
 
     public static void createClients() {
         ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(
@@ -19,7 +22,7 @@ public abstract class ComputeManagementTestBase {
 
         RestClient restClient = AzureEnvironment.AZURE.newRestClientBuilder()
                 .withCredentials(credentials)
-                //.withLogLevel(HttpLoggingInterceptor.Level.BASIC)
+                .withLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .build();
 
         resourceManager = ResourceManager
@@ -28,5 +31,8 @@ public abstract class ComputeManagementTestBase {
 
         computeManager = ComputeManager
                 .authenticate(restClient, System.getenv("subscription-id"));
+
+        clientImpl = new ComputeManagementClientImpl(restClient);
+        clientImpl.withSubscriptionId(System.getenv("subscription-id"));
     }
 }
