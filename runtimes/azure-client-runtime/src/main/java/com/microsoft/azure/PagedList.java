@@ -13,6 +13,7 @@ import javax.xml.bind.DataBindingException;
 import javax.xml.ws.WebServiceException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -28,10 +29,10 @@ import java.util.NoSuchElementException;
 public abstract class PagedList<E> implements List<E> {
     /** The actual items in the list. */
     private List<E> items;
-    /** Stores the link to get the next page of items. */
-    private String nextPageLink;
     /** Stores the latest page fetched. */
     private Page<E> currentPage;
+    /** Caches the next non-empty page. */
+    private Page<E> cachedPage;
 
     /**
      * Creates an instance of Pagedlist.
@@ -47,9 +48,9 @@ public abstract class PagedList<E> implements List<E> {
      */
     public PagedList(Page<E> page) {
         this();
-        items.addAll(page.getItems());
-        nextPageLink = page.getNextPageLink();
-        currentPage = page;
+        System.out.println(Arrays.toString(page.getItems().toArray()));
+        cachedPage = skipEmptyPages(page);
+        loadNextPage();
     }
 
     /**
@@ -68,7 +69,7 @@ public abstract class PagedList<E> implements List<E> {
      * @return true if there are more pages to load. False otherwise.
      */
     public boolean hasNextPage() {
-        return this.nextPageLink != null;
+        return cachedPage != null;
     }
 
     /**
@@ -77,10 +78,13 @@ public abstract class PagedList<E> implements List<E> {
      */
     public void loadNextPage() {
         try {
-            Page<E> nextPage = nextPage(this.nextPageLink);
-            this.nextPageLink = nextPage.getNextPageLink();
-            this.items.addAll(nextPage.getItems());
-            this.currentPage = nextPage;
+            if (cachedPage == null) {
+                throw new NoSuchElementException();
+            }
+            items.addAll(cachedPage.getItems());
+            currentPage = cachedPage;
+            System.out.println(Arrays.toString(cachedPage.getItems().toArray()));
+            cachedPage = skipEmptyPages(nextPage(cachedPage.getNextPageLink()));
         } catch (RestException e) {
             throw new WebServiceException(e.toString(), e);
         } catch (IOException e) {
@@ -112,7 +116,31 @@ public abstract class PagedList<E> implements List<E> {
      * @return the next page link.
      */
     public String nextPageLink() {
-        return nextPageLink;
+        return currentPage.getNextPageLink();
+    }
+
+    /**
+     * Empty pages are skipped so that hasNext() is accurate.
+     * The exceptions are wrapped into Java Runtime exceptions.
+     *
+     * @param page the page to check and possibly skip.
+     * @return the first non-empty page, or null if no more pages available.
+     */
+    private Page<E> skipEmptyPages(Page<E> page) {
+        try {
+            if (page.getItems() != null && !page.getItems().iterator().hasNext()) {
+                System.out.println(Arrays.toString(page.getItems().toArray()));
+                return page;
+            } else if (page.getNextPageLink() == null) {
+                return null;
+            } else {
+                return skipEmptyPages(nextPage(page.getNextPageLink()));
+            }
+        } catch (RestException e) {
+            throw new WebServiceException(e.toString(), e);
+        } catch (IOException e) {
+            throw new DataBindingException(e.getMessage(), e);
+        }
     }
 
     /**
@@ -138,7 +166,7 @@ public abstract class PagedList<E> implements List<E> {
 
         @Override
         public E next() {
-            if (!itemsListItr.hasNext()) {
+            while (!itemsListItr.hasNext()) {
                 if (!hasNextPage()) {
                     throw new NoSuchElementException();
                 } else {
