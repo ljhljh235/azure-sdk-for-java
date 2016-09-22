@@ -29,6 +29,7 @@ public interface Deployments extends
         SupportsGettingById<Deployment>,
         SupportsDeletingById,
         SupportsDeletingByGroup {
+
     /**
      * Checks if a deployment exists in a resource group.
      *

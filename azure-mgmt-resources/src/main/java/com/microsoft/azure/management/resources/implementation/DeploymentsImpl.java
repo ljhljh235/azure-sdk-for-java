@@ -13,6 +13,7 @@ import com.microsoft.azure.management.resources.ResourceGroup;
 import com.microsoft.azure.management.resources.fluentcore.arm.ResourceUtils;
 import com.microsoft.azure.management.resources.fluentcore.arm.models.implementation.GroupPagedList;
 import com.microsoft.azure.management.resources.fluentcore.utils.PagedListConverter;
+import com.microsoft.azure.management.resources.fluentcore.utils.ResourceFactory;
 import com.microsoft.rest.ServiceCall;
 import com.microsoft.rest.ServiceCallback;
 import com.microsoft.rest.ServiceResponse;
@@ -115,8 +116,9 @@ final class DeploymentsImpl
                 this.resourceManager);
     }
 
-    protected DeploymentImpl createFluentModel(DeploymentExtendedInner deploymentExtendedInner) {
-        return new DeploymentImpl(deploymentExtendedInner, client, deploymentOperationsClient, this.resourceManager);
+    protected Deployment createFluentModel(DeploymentExtendedInner deploymentExtendedInner) {
+        DeploymentImpl impl = new DeploymentImpl(deploymentExtendedInner, client, deploymentOperationsClient, this.resourceManager);
+        return ResourceFactory.newInstance(Deployment.class, impl);
     }
 
     @Override

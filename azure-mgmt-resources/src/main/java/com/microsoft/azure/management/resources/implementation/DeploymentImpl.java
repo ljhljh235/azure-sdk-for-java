@@ -9,6 +9,7 @@ package com.microsoft.azure.management.resources.implementation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.azure.management.resources.Dependency;
 import com.microsoft.azure.management.resources.Deployment;
+import com.microsoft.azure.management.resources.DeploymentBase;
 import com.microsoft.azure.management.resources.DeploymentExportResult;
 import com.microsoft.azure.management.resources.DeploymentMode;
 import com.microsoft.azure.management.resources.DeploymentOperations;
@@ -22,8 +23,10 @@ import com.microsoft.azure.management.resources.fluentcore.arm.Region;
 import com.microsoft.azure.management.resources.fluentcore.arm.ResourceUtils;
 import com.microsoft.azure.management.resources.fluentcore.model.Creatable;
 import com.microsoft.azure.management.resources.fluentcore.model.implementation.CreatableUpdatableImpl;
+import com.microsoft.azure.management.resources.fluentcore.utils.ResourceFactory;
 import org.joda.time.DateTime;
 import rx.Observable;
+import rx.functions.Func1;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,9 +38,9 @@ import java.util.List;
 final class DeploymentImpl extends
         CreatableUpdatableImpl<Deployment, DeploymentExtendedInner, DeploymentImpl>
         implements
-        Deployment,
-        Deployment.Definition,
-        Deployment.Update {
+        DeploymentBase,
+        DeploymentBase.Definition,
+        DeploymentBase.Update {
 
     private final DeploymentsInner client;
     private final DeploymentOperationsInner deploymentOperationsClient;
@@ -164,15 +167,18 @@ final class DeploymentImpl extends
         return new DeploymentOperationsImpl(deploymentOperationsClient, this);
     }
 
-    @Override
-    public void cancel() {
-        client.cancel(resourceGroupName, name());
+    public Observable<Void> cancelAsync() {
+        return client.cancelAsync(resourceGroupName, name());
     }
 
-    @Override
-    public DeploymentExportResult exportTemplate() {
-        DeploymentExportResultInner inner = client.exportTemplate(resourceGroupName(), name());
-        return new DeploymentExportResultImpl(inner);
+    public Observable<DeploymentExportResult> exportTemplateAsync() {
+        return client.exportTemplateAsync(resourceGroupName(), name())
+                .map(new Func1<DeploymentExportResultInner, DeploymentExportResult>() {
+                    @Override
+                    public DeploymentExportResult call(DeploymentExportResultInner deploymentExportResultInner) {
+                        return new DeploymentExportResultImpl(deploymentExportResultInner);
+                    }
+                });
     }
 
     // Withers
@@ -267,7 +273,7 @@ final class DeploymentImpl extends
     }
 
     @Override
-    public DeploymentImpl beginCreate() {
+    public Deployment beginCreate() {
         if (creatableResourceGroup != null) {
             creatableResourceGroup.create();
         }
@@ -279,7 +285,7 @@ final class DeploymentImpl extends
         inner.properties().withParameters(parameters());
         inner.properties().withParametersLink(parametersLink());
         client.beginCreateOrUpdate(resourceGroupName(), name(), inner);
-        return this;
+        return ResourceFactory.newInstance(Deployment.class, this);
     }
 
     @Override
@@ -318,7 +324,7 @@ final class DeploymentImpl extends
     @Override
     public Deployment refresh() {
         setInner(client.get(resourceGroupName(), name()));
-        return this;
+        return ResourceFactory.newInstance(Deployment.class, this);
     }
 
     @Override
