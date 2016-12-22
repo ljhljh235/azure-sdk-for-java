@@ -55,6 +55,7 @@ public class DeploymentsTests extends ResourceManagerTestBase {
         for (Deployment deployment : deployments) {
             if (deployment.name().equals(dp1)) {
                 found = true;
+                break;
             }
         }
         Assert.assertTrue(found);

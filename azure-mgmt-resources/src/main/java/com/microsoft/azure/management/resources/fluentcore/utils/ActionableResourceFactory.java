@@ -6,6 +6,7 @@
 
 package com.microsoft.azure.management.resources.fluentcore.utils;
 
+import com.google.common.collect.Lists;
 import com.microsoft.rest.ServiceCall;
 import com.microsoft.rest.ServiceCallback;
 import com.microsoft.rest.ServiceResponse;
@@ -16,31 +17,39 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.List;
 
-public class ResourceFactory<T> implements InvocationHandler {
+public class ActionableResourceFactory<A extends ActionableResource, T> implements InvocationHandler {
+    private Class<A> actionable;
     private T impl;
 
-    private ResourceFactory(T impl) {
+    private ActionableResourceFactory(Class<A> actionable, T impl) {
+        this.actionable = actionable;
         this.impl = impl;
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // List methods to forward
+        List<Method> declaredMethods = Lists.newArrayList(actionable.getDeclaredMethods());
         String methodName = method.getName();
-        if (!method.getName().contains("Async")) {
-            methodName += "Async";
+        // Append 'Async' to synchronous action
+        if (declaredMethods.contains(method) && !methodName.endsWith("Async")) {
+            methodName = methodName + "Async";
         }
+        // Remove callback for ServiceCall based action
         Class<?>[] parameterTypes = method.getParameterTypes();
         if (parameterTypes.length > 0 && parameterTypes[parameterTypes.length - 1].getName().contains("Callback")) {
             parameterTypes = Arrays.copyOfRange(parameterTypes, 0, parameterTypes.length - 1);
         }
+        // Find implementation method
         Method implMethod = impl.getClass().getMethod(methodName, parameterTypes);
         implMethod.setAccessible(true);
 
-        if (method.getName().contains("Async") && method.getReturnType().getName().contains("Observable")) {
-            return implMethod.invoke(proxy, args);
+        if (!declaredMethods.contains(method)) {
+            return implMethod.invoke(impl, args);
         } else if (method.getName().contains("Async") && method.getReturnType().getName().contains("ServiceCall")) {
-            Observable<?> observable = (Observable<?>) implMethod.invoke(proxy, args);
+            Observable<?> observable = (Observable<?>) implMethod.invoke(impl, args);
             return ServiceCall.create(
                     observable.map(new Func1<Object, ServiceResponse<Object>>() {
                         @Override
@@ -58,6 +67,6 @@ public class ResourceFactory<T> implements InvocationHandler {
 
     @SuppressWarnings("unchecked")
     public static <T, A extends ActionableResource> A newInstance(Class<A> actionable, T impl) {
-        return (A) Proxy.newProxyInstance(actionable.getClassLoader(), new Class[] { actionable }, new ResourceFactory<>(impl));
+        return (A) Proxy.newProxyInstance(actionable.getClassLoader(), new Class[] { actionable }, new ActionableResourceFactory<>(actionable, impl));
     }
 }

@@ -23,7 +23,7 @@ import com.microsoft.azure.management.resources.fluentcore.arm.Region;
 import com.microsoft.azure.management.resources.fluentcore.arm.ResourceUtils;
 import com.microsoft.azure.management.resources.fluentcore.model.Creatable;
 import com.microsoft.azure.management.resources.fluentcore.model.implementation.CreatableUpdatableImpl;
-import com.microsoft.azure.management.resources.fluentcore.utils.ResourceFactory;
+import com.microsoft.azure.management.resources.fluentcore.utils.ActionableResourceFactory;
 import org.joda.time.DateTime;
 import rx.Observable;
 import rx.functions.Func1;
@@ -285,7 +285,7 @@ final class DeploymentImpl extends
         inner.properties().withParameters(parameters());
         inner.properties().withParametersLink(parametersLink());
         client.beginCreateOrUpdate(resourceGroupName(), name(), inner);
-        return ResourceFactory.newInstance(Deployment.class, this);
+        return ActionableResourceFactory.newInstance(Deployment.class, this);
     }
 
     @Override
@@ -324,7 +324,7 @@ final class DeploymentImpl extends
     @Override
     public Deployment refresh() {
         setInner(client.get(resourceGroupName(), name()));
-        return ResourceFactory.newInstance(Deployment.class, this);
+        return ActionableResourceFactory.newInstance(Deployment.class, this);
     }
 
     @Override
