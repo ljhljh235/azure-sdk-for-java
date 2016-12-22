@@ -268,7 +268,7 @@ public final class ZonesInner {
     }
 
     private ServiceResponse<ZoneInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ZoneInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ZoneInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ZoneInner>() { }.getType())
                 .register(201, new TypeToken<ZoneInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -567,7 +567,7 @@ public final class ZonesInner {
     }
 
     private ServiceResponse<ZoneDeleteResultInner> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ZoneDeleteResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ZoneDeleteResultInner, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<ZoneDeleteResultInner>() { }.getType())
@@ -649,7 +649,7 @@ public final class ZonesInner {
     }
 
     private ServiceResponse<ZoneInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ZoneInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ZoneInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ZoneInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -864,7 +864,7 @@ public final class ZonesInner {
     }
 
     private ServiceResponse<PageImpl<ZoneInner>> listInResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ZoneInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ZoneInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ZoneInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1063,7 +1063,7 @@ public final class ZonesInner {
     }
 
     private ServiceResponse<PageImpl<ZoneInner>> listInSubscriptionDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ZoneInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ZoneInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ZoneInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1166,7 +1166,7 @@ public final class ZonesInner {
     }
 
     private ServiceResponse<PageImpl<ZoneInner>> listInResourceGroupNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ZoneInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ZoneInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ZoneInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1269,7 +1269,7 @@ public final class ZonesInner {
     }
 
     private ServiceResponse<PageImpl<ZoneInner>> listInSubscriptionNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ZoneInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ZoneInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ZoneInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

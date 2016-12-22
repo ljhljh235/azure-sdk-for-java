@@ -171,7 +171,7 @@ public final class ApplicationPackagesInner {
     }
 
     private ServiceResponse<Void> activateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -264,7 +264,7 @@ public final class ApplicationPackagesInner {
     }
 
     private ServiceResponse<ApplicationPackageInner> createDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ApplicationPackageInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ApplicationPackageInner, CloudException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<ApplicationPackageInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -357,7 +357,7 @@ public final class ApplicationPackagesInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -450,7 +450,7 @@ public final class ApplicationPackagesInner {
     }
 
     private ServiceResponse<ApplicationPackageInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ApplicationPackageInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ApplicationPackageInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ApplicationPackageInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

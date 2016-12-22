@@ -170,7 +170,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<ServicePrincipalInner> createDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ServicePrincipalInner, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ServicePrincipalInner, GraphErrorException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<ServicePrincipalInner>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -369,7 +369,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<PageImpl1<ServicePrincipalInner>> listDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<ServicePrincipalInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<ServicePrincipalInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<ServicePrincipalInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -441,7 +441,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -514,7 +514,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<ServicePrincipalInner> getDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ServicePrincipalInner, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ServicePrincipalInner, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ServicePrincipalInner>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -588,7 +588,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<PageImpl<KeyCredentialInner>> listKeyCredentialsDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<KeyCredentialInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<KeyCredentialInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<KeyCredentialInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -735,7 +735,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<Void> updateKeyCredentialsDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -809,7 +809,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<PageImpl<PasswordCredentialInner>> listPasswordCredentialsDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PasswordCredentialInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PasswordCredentialInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PasswordCredentialInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -956,7 +956,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<Void> updatePasswordCredentialsDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -1065,7 +1065,7 @@ public final class ServicePrincipalsInner {
     }
 
     private ServiceResponse<PageImpl1<ServicePrincipalInner>> listNextDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<ServicePrincipalInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<ServicePrincipalInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<ServicePrincipalInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);

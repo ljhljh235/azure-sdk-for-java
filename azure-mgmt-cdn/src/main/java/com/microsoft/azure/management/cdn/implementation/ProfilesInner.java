@@ -209,7 +209,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<PageImpl<ProfileInner>> listDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ProfileInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -317,7 +317,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<PageImpl<ProfileInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ProfileInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -397,7 +397,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<ProfileInner> getDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ProfileInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ProfileInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ProfileInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -556,7 +556,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<ProfileInner> beginCreateDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ProfileInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ProfileInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ProfileInner>() { }.getType())
                 .register(201, new TypeToken<ProfileInner>() { }.getType())
                 .register(202, new TypeToken<ProfileInner>() { }.getType())
@@ -721,7 +721,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<ProfileInner> beginUpdateDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ProfileInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ProfileInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ProfileInner>() { }.getType())
                 .register(202, new TypeToken<ProfileInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
@@ -863,7 +863,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, ErrorResponseException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(ErrorResponseException.class)
@@ -944,7 +944,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<SsoUriInner> generateSsoUriDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SsoUriInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<SsoUriInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<SsoUriInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -1047,7 +1047,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<PageImpl<ProfileInner>> listNextDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ProfileInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -1150,7 +1150,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<PageImpl<ProfileInner>> listByResourceGroupNextDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ProfileInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);

@@ -200,7 +200,7 @@ public final class OriginsInner {
     }
 
     private ServiceResponse<PageImpl<OriginInner>> listByEndpointDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<OriginInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<OriginInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<OriginInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -294,7 +294,7 @@ public final class OriginsInner {
     }
 
     private ServiceResponse<OriginInner> getDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<OriginInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<OriginInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<OriginInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -481,7 +481,7 @@ public final class OriginsInner {
     }
 
     private ServiceResponse<OriginInner> beginUpdateDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<OriginInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<OriginInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<OriginInner>() { }.getType())
                 .register(202, new TypeToken<OriginInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
@@ -585,7 +585,7 @@ public final class OriginsInner {
     }
 
     private ServiceResponse<PageImpl<OriginInner>> listByEndpointNextDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<OriginInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<OriginInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<OriginInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);

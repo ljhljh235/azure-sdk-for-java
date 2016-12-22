@@ -158,7 +158,7 @@ public final class TagsInner {
     }
 
     private ServiceResponse<Void> deleteValueDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -238,7 +238,7 @@ public final class TagsInner {
     }
 
     private ServiceResponse<TagValueInner> createOrUpdateValueDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<TagValueInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<TagValueInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<TagValueInner>() { }.getType())
                 .register(201, new TypeToken<TagValueInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -312,7 +312,7 @@ public final class TagsInner {
     }
 
     private ServiceResponse<TagDetailsInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<TagDetailsInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<TagDetailsInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<TagDetailsInner>() { }.getType())
                 .register(201, new TypeToken<TagDetailsInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -385,7 +385,7 @@ public final class TagsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -485,7 +485,7 @@ public final class TagsInner {
     }
 
     private ServiceResponse<PageImpl<TagDetailsInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<TagDetailsInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<TagDetailsInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<TagDetailsInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -588,7 +588,7 @@ public final class TagsInner {
     }
 
     private ServiceResponse<PageImpl<TagDetailsInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<TagDetailsInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<TagDetailsInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<TagDetailsInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

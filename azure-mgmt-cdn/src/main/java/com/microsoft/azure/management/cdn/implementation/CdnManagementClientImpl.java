@@ -356,7 +356,7 @@ public final class CdnManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CheckNameAvailabilityOutputInner> checkNameAvailabilityDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CheckNameAvailabilityOutputInner, ErrorResponseException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CheckNameAvailabilityOutputInner, ErrorResponseException>(this.serializerAdapter())
                 .register(200, new TypeToken<CheckNameAvailabilityOutputInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -453,7 +453,7 @@ public final class CdnManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<OperationInner>> listOperationsDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<OperationInner>, ErrorResponseException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<OperationInner>, ErrorResponseException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<OperationInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -556,7 +556,7 @@ public final class CdnManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<OperationInner>> listOperationsNextDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<OperationInner>, ErrorResponseException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<OperationInner>, ErrorResponseException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<OperationInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);

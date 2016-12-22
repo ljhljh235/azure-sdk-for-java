@@ -209,7 +209,7 @@ public final class CustomDomainsInner {
     }
 
     private ServiceResponse<PageImpl<CustomDomainInner>> listByEndpointDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<CustomDomainInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<CustomDomainInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<CustomDomainInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -303,7 +303,7 @@ public final class CustomDomainsInner {
     }
 
     private ServiceResponse<CustomDomainInner> getDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CustomDomainInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<CustomDomainInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<CustomDomainInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -492,7 +492,7 @@ public final class CustomDomainsInner {
     }
 
     private ServiceResponse<CustomDomainInner> beginCreateDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CustomDomainInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<CustomDomainInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<CustomDomainInner>() { }.getType())
                 .register(201, new TypeToken<CustomDomainInner>() { }.getType())
                 .register(202, new TypeToken<CustomDomainInner>() { }.getType())
@@ -665,7 +665,7 @@ public final class CustomDomainsInner {
     }
 
     private ServiceResponse<CustomDomainInner> beginDeleteDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CustomDomainInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<CustomDomainInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(202, new TypeToken<CustomDomainInner>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
@@ -770,7 +770,7 @@ public final class CustomDomainsInner {
     }
 
     private ServiceResponse<PageImpl<CustomDomainInner>> listByEndpointNextDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<CustomDomainInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<CustomDomainInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<CustomDomainInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);

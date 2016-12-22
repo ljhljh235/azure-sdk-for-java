@@ -245,7 +245,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<PageImpl<AppServiceCertificateOrderInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateOrderInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateOrderInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServiceCertificateOrderInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -320,7 +320,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<Void> validatePurchaseInformationDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -430,7 +430,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<PageImpl<AppServiceCertificateOrderInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateOrderInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateOrderInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServiceCertificateOrderInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -549,7 +549,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<PageImpl<AppServiceCertificateInner>> listCertificatesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServiceCertificateInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -638,7 +638,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<AppServiceCertificateInner> getCertificateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AppServiceCertificateInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AppServiceCertificateInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AppServiceCertificateInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -815,7 +815,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<AppServiceCertificateInner> beginCreateOrUpdateCertificateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AppServiceCertificateInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AppServiceCertificateInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AppServiceCertificateInner>() { }.getType())
                 .register(201, new TypeToken<AppServiceCertificateInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -904,7 +904,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<Void> deleteCertificateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -986,7 +986,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<AppServiceCertificateOrderInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AppServiceCertificateOrderInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AppServiceCertificateOrderInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AppServiceCertificateOrderInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1149,7 +1149,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<AppServiceCertificateOrderInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AppServiceCertificateOrderInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AppServiceCertificateOrderInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AppServiceCertificateOrderInner>() { }.getType())
                 .register(201, new TypeToken<AppServiceCertificateOrderInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -1231,7 +1231,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<Void> deleteCertificateOrderDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -1320,7 +1320,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<Void> reissueDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1408,7 +1408,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<Void> renewDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1488,7 +1488,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<Void> resendEmailDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1569,7 +1569,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<List<CertificateOrderActionInner>> retrieveCertificateActionsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<CertificateOrderActionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<CertificateOrderActionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<CertificateOrderActionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1651,7 +1651,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<List<CertificateEmailInner>> retrieveCertificateEmailHistoryDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<CertificateEmailInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<CertificateEmailInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<CertificateEmailInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1732,7 +1732,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<Void> verifyDomainOwnershipDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1839,7 +1839,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<PageImpl<AppServiceCertificateOrderInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateOrderInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateOrderInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServiceCertificateOrderInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1947,7 +1947,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<PageImpl<AppServiceCertificateOrderInner>> listByResourceGroupNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateOrderInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateOrderInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServiceCertificateOrderInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2055,7 +2055,7 @@ public final class AppServiceCertificateOrdersInner {
     }
 
     private ServiceResponse<PageImpl<AppServiceCertificateInner>> listCertificatesNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServiceCertificateInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServiceCertificateInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

@@ -292,7 +292,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<RedisResourceInner> beginCreateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<RedisResourceInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<RedisResourceInner, CloudException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<RedisResourceInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -452,7 +452,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<RedisResourceInner> beginUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<RedisResourceInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<RedisResourceInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<RedisResourceInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -593,7 +593,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -673,7 +673,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<RedisResourceInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<RedisResourceInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<RedisResourceInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<RedisResourceInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -781,7 +781,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<PageImpl<RedisResourceInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<RedisResourceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<RedisResourceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<RedisResourceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -881,7 +881,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<PageImpl<RedisResourceInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<RedisResourceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<RedisResourceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<RedisResourceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -961,7 +961,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<RedisAccessKeysInner> listKeysDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<RedisAccessKeysInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<RedisAccessKeysInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<RedisAccessKeysInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1050,7 +1050,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<RedisAccessKeysInner> regenerateKeyDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<RedisAccessKeysInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<RedisAccessKeysInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<RedisAccessKeysInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1137,7 +1137,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<Void> forceRebootDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -1294,7 +1294,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<Void> beginImportDataDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1450,7 +1450,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<Void> beginExportDataDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1552,7 +1552,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<PageImpl<RedisResourceInner>> listByResourceGroupNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<RedisResourceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<RedisResourceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<RedisResourceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1655,7 +1655,7 @@ public final class RedisInner {
     }
 
     private ServiceResponse<PageImpl<RedisResourceInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<RedisResourceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<RedisResourceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<RedisResourceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

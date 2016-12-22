@@ -323,7 +323,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<VirtualMachineScaleSetInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VirtualMachineScaleSetInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VirtualMachineScaleSetInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VirtualMachineScaleSetInner>() { }.getType())
                 .register(201, new TypeToken<VirtualMachineScaleSetInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -624,7 +624,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<Void> beginDeallocateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -764,7 +764,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
@@ -845,7 +845,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<VirtualMachineScaleSetInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VirtualMachineScaleSetInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VirtualMachineScaleSetInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VirtualMachineScaleSetInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1006,7 +1006,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<Void> beginDeleteInstancesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1085,7 +1085,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<VirtualMachineScaleSetInstanceViewInner> getInstanceViewDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VirtualMachineScaleSetInstanceViewInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VirtualMachineScaleSetInstanceViewInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VirtualMachineScaleSetInstanceViewInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1193,7 +1193,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<PageImpl1<VirtualMachineScaleSetInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<VirtualMachineScaleSetInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1293,7 +1293,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<PageImpl1<VirtualMachineScaleSetInner>> listAllDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<VirtualMachineScaleSetInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1409,7 +1409,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<PageImpl1<VirtualMachineScaleSetSkuInner>> listSkusDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetSkuInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetSkuInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<VirtualMachineScaleSetSkuInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1709,7 +1709,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<Void> beginPowerOffDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -2008,7 +2008,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<Void> beginRestartDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -2307,7 +2307,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<Void> beginStartDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -2467,7 +2467,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<Void> beginUpdateInstancesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -2607,7 +2607,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<Void> beginReimageDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -2709,7 +2709,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<PageImpl1<VirtualMachineScaleSetInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<VirtualMachineScaleSetInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2812,7 +2812,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<PageImpl1<VirtualMachineScaleSetInner>> listAllNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<VirtualMachineScaleSetInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2915,7 +2915,7 @@ public final class VirtualMachineScaleSetsInner {
     }
 
     private ServiceResponse<PageImpl1<VirtualMachineScaleSetSkuInner>> listSkusNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetSkuInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<VirtualMachineScaleSetSkuInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<VirtualMachineScaleSetSkuInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

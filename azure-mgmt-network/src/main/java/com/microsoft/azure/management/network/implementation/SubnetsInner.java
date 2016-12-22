@@ -240,7 +240,7 @@ public final class SubnetsInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
@@ -413,7 +413,7 @@ public final class SubnetsInner {
     }
 
     private ServiceResponse<SubnetInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SubnetInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<SubnetInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<SubnetInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -586,7 +586,7 @@ public final class SubnetsInner {
     }
 
     private ServiceResponse<SubnetInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SubnetInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<SubnetInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<SubnetInner>() { }.getType())
                 .register(201, new TypeToken<SubnetInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -703,7 +703,7 @@ public final class SubnetsInner {
     }
 
     private ServiceResponse<PageImpl<SubnetInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SubnetInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SubnetInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SubnetInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -806,7 +806,7 @@ public final class SubnetsInner {
     }
 
     private ServiceResponse<PageImpl<SubnetInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SubnetInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SubnetInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SubnetInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

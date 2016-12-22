@@ -265,7 +265,7 @@ public final class VirtualNetworkGatewayConnectionsInner {
     }
 
     private ServiceResponse<VirtualNetworkGatewayConnectionInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VirtualNetworkGatewayConnectionInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VirtualNetworkGatewayConnectionInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VirtualNetworkGatewayConnectionInner>() { }.getType())
                 .register(201, new TypeToken<VirtualNetworkGatewayConnectionInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -346,7 +346,7 @@ public final class VirtualNetworkGatewayConnectionsInner {
     }
 
     private ServiceResponse<VirtualNetworkGatewayConnectionInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VirtualNetworkGatewayConnectionInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VirtualNetworkGatewayConnectionInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VirtualNetworkGatewayConnectionInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -487,7 +487,7 @@ public final class VirtualNetworkGatewayConnectionsInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
@@ -568,7 +568,7 @@ public final class VirtualNetworkGatewayConnectionsInner {
     }
 
     private ServiceResponse<ConnectionSharedKeyResultInner> getSharedKeyDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ConnectionSharedKeyResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ConnectionSharedKeyResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ConnectionSharedKeyResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -676,7 +676,7 @@ public final class VirtualNetworkGatewayConnectionsInner {
     }
 
     private ServiceResponse<PageImpl<VirtualNetworkGatewayConnectionInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<VirtualNetworkGatewayConnectionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<VirtualNetworkGatewayConnectionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<VirtualNetworkGatewayConnectionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -972,7 +972,7 @@ public final class VirtualNetworkGatewayConnectionsInner {
     }
 
     private ServiceResponse<ConnectionResetSharedKeyInner> beginResetSharedKeyDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ConnectionResetSharedKeyInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ConnectionResetSharedKeyInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ConnectionResetSharedKeyInner>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .registerError(CloudException.class)
@@ -1269,7 +1269,7 @@ public final class VirtualNetworkGatewayConnectionsInner {
     }
 
     private ServiceResponse<ConnectionSharedKeyInner> beginSetSharedKeyDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ConnectionSharedKeyInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ConnectionSharedKeyInner, CloudException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<ConnectionSharedKeyInner>() { }.getType())
                 .register(200, new TypeToken<ConnectionSharedKeyInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -1373,7 +1373,7 @@ public final class VirtualNetworkGatewayConnectionsInner {
     }
 
     private ServiceResponse<PageImpl<VirtualNetworkGatewayConnectionInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<VirtualNetworkGatewayConnectionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<VirtualNetworkGatewayConnectionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<VirtualNetworkGatewayConnectionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

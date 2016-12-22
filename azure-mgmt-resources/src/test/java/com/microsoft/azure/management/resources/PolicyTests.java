@@ -6,7 +6,7 @@ import com.microsoft.azure.CloudException;
 import com.microsoft.azure.credentials.UserTokenCredentials;
 import com.microsoft.azure.management.resources.fluentcore.arm.Region;
 import com.microsoft.azure.management.resources.implementation.ResourceManager;
-import okhttp3.logging.HttpLoggingInterceptor;
+import com.microsoft.rest.LogLevel;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class PolicyTests {
     public static void setup() throws Exception {
         resourceManager = ResourceManager
                 .configure()
-                .withLogLevel(HttpLoggingInterceptor.Level.BODY)
+                .withLogLevel(LogLevel.BODY)
                 .authenticate(
                         new UserTokenCredentials(
                                 System.getenv("client-id"),

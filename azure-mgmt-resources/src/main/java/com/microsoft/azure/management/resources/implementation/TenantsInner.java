@@ -157,7 +157,7 @@ public final class TenantsInner {
     }
 
     private ServiceResponse<PageImpl1<TenantIdDescriptionInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<TenantIdDescriptionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<TenantIdDescriptionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<TenantIdDescriptionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -260,7 +260,7 @@ public final class TenantsInner {
     }
 
     private ServiceResponse<PageImpl1<TenantIdDescriptionInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<TenantIdDescriptionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<TenantIdDescriptionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<TenantIdDescriptionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

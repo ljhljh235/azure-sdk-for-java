@@ -152,7 +152,7 @@ public final class PatchSchedulesInner {
     }
 
     private ServiceResponse<RedisPatchScheduleInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<RedisPatchScheduleInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<RedisPatchScheduleInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<RedisPatchScheduleInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -231,7 +231,7 @@ public final class PatchSchedulesInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -310,7 +310,7 @@ public final class PatchSchedulesInner {
     }
 
     private ServiceResponse<RedisPatchScheduleInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<RedisPatchScheduleInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<RedisPatchScheduleInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<RedisPatchScheduleInner>() { }.getType())
                 .register(404, new TypeToken<Void>() { }.getType())
                 .registerError(CloudException.class)

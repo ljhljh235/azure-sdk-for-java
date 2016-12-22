@@ -179,7 +179,7 @@ public final class TopLevelDomainsInner {
     }
 
     private ServiceResponse<PageImpl<TopLevelDomainInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<TopLevelDomainInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<TopLevelDomainInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<TopLevelDomainInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -254,7 +254,7 @@ public final class TopLevelDomainsInner {
     }
 
     private ServiceResponse<TopLevelDomainInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<TopLevelDomainInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<TopLevelDomainInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<TopLevelDomainInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -479,7 +479,7 @@ public final class TopLevelDomainsInner {
     }
 
     private ServiceResponse<PageImpl<TldLegalAgreementInner>> listAgreementsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<TldLegalAgreementInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<TldLegalAgreementInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<TldLegalAgreementInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -587,7 +587,7 @@ public final class TopLevelDomainsInner {
     }
 
     private ServiceResponse<PageImpl<TopLevelDomainInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<TopLevelDomainInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<TopLevelDomainInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<TopLevelDomainInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -695,7 +695,7 @@ public final class TopLevelDomainsInner {
     }
 
     private ServiceResponse<PageImpl<TldLegalAgreementInner>> listAgreementsNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<TldLegalAgreementInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<TldLegalAgreementInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<TldLegalAgreementInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

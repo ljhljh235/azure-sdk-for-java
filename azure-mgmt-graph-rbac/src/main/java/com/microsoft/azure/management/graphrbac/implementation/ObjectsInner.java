@@ -118,7 +118,7 @@ public final class ObjectsInner {
     }
 
     private ServiceResponse<AADObjectInner> getCurrentUserDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AADObjectInner, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AADObjectInner, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AADObjectInner>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);

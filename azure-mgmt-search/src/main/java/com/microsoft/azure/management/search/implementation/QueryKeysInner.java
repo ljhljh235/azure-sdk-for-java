@@ -132,7 +132,7 @@ public final class QueryKeysInner {
     }
 
     private ServiceResponse<ListQueryKeysResultInner> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ListQueryKeysResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ListQueryKeysResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ListQueryKeysResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

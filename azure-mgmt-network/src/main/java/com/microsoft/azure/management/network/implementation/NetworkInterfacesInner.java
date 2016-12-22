@@ -271,7 +271,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<Void>() { }.getType())
@@ -430,7 +430,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<NetworkInterfaceInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<NetworkInterfaceInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<NetworkInterfaceInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<NetworkInterfaceInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -589,7 +589,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<NetworkInterfaceInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<NetworkInterfaceInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<NetworkInterfaceInner, CloudException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<NetworkInterfaceInner>() { }.getType())
                 .register(200, new TypeToken<NetworkInterfaceInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -714,7 +714,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<PageImpl<NetworkInterfaceInner>> listVirtualMachineScaleSetVMNetworkInterfacesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkInterfaceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -830,7 +830,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<PageImpl<NetworkInterfaceInner>> listVirtualMachineScaleSetNetworkInterfacesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkInterfaceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1016,7 +1016,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<NetworkInterfaceInner> getVirtualMachineScaleSetNetworkInterfaceDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<NetworkInterfaceInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<NetworkInterfaceInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<NetworkInterfaceInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1116,7 +1116,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<PageImpl<NetworkInterfaceInner>> listAllDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkInterfaceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1224,7 +1224,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<PageImpl<NetworkInterfaceInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkInterfaceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1367,7 +1367,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<EffectiveRouteListResultInner> beginGetEffectiveRouteTableDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<EffectiveRouteListResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<EffectiveRouteListResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<EffectiveRouteListResultInner>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .registerError(CloudException.class)
@@ -1511,7 +1511,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<EffectiveNetworkSecurityGroupListResultInner> beginListEffectiveNetworkSecurityGroupsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<EffectiveNetworkSecurityGroupListResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<EffectiveNetworkSecurityGroupListResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<EffectiveNetworkSecurityGroupListResultInner>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .registerError(CloudException.class)
@@ -1615,7 +1615,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<PageImpl<NetworkInterfaceInner>> listVirtualMachineScaleSetVMNetworkInterfacesNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkInterfaceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1718,7 +1718,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<PageImpl<NetworkInterfaceInner>> listVirtualMachineScaleSetNetworkInterfacesNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkInterfaceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1821,7 +1821,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<PageImpl<NetworkInterfaceInner>> listAllNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkInterfaceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1924,7 +1924,7 @@ public final class NetworkInterfacesInner {
     }
 
     private ServiceResponse<PageImpl<NetworkInterfaceInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkInterfaceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkInterfaceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

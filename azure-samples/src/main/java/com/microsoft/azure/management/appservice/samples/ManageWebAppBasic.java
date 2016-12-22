@@ -16,7 +16,7 @@ import com.microsoft.azure.management.appservice.WebContainer;
 import com.microsoft.azure.management.resources.fluentcore.arm.Region;
 import com.microsoft.azure.management.resources.fluentcore.utils.ResourceNamer;
 import com.microsoft.azure.management.samples.Utils;
-import okhttp3.logging.HttpLoggingInterceptor;
+import com.microsoft.rest.LogLevel;
 
 import java.io.File;
 
@@ -53,7 +53,7 @@ public final class ManageWebAppBasic {
 
             Azure azure = Azure
                     .configure()
-                    .withLogLevel(HttpLoggingInterceptor.Level.NONE)
+                    .withLogLevel(LogLevel.BODY)
                     .authenticate(credFile)
                     .withDefaultSubscription();
 
@@ -74,6 +74,7 @@ public final class ManageWebAppBasic {
                         .withRegion(Region.US_WEST)
                         .withPricingTier(AppServicePricingTier.STANDARD_S1)
                         .create();
+
 
                 System.out.println("Created web app " + app1.name());
                 Utils.print(app1);

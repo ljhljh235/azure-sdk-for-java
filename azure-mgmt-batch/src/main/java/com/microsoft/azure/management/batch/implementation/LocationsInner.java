@@ -125,7 +125,7 @@ public final class LocationsInner {
     }
 
     private ServiceResponse<BatchLocationQuotaInner> getQuotasDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<BatchLocationQuotaInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<BatchLocationQuotaInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<BatchLocationQuotaInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

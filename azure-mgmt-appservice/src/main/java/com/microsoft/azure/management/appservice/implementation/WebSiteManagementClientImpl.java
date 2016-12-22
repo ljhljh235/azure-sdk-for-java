@@ -489,7 +489,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<SourceControlInner>> listSourceControlsDelegate(Response<ResponseBody> response) throws CloudException, IOException {
-        return new AzureServiceResponseBuilder<PageImpl<SourceControlInner>, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SourceControlInner>, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SourceControlInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -569,7 +569,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<SourceControlInner> updateSourceControlDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SourceControlInner, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<SourceControlInner, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<SourceControlInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -739,7 +739,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<ResourceNameAvailabilityInner> checkNameAvailabilityDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ResourceNameAvailabilityInner, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<ResourceNameAvailabilityInner, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<ResourceNameAvailabilityInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -944,7 +944,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<GeoRegionInner>> listGeoRegionsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<GeoRegionInner>, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<GeoRegionInner>, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<GeoRegionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1047,7 +1047,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<PremierAddOnOfferInner>> listPremierAddOnOffersDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PremierAddOnOfferInner>, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PremierAddOnOfferInner>, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PremierAddOnOfferInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1115,7 +1115,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<UserInner> getPublishingCredentialsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<UserInner, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<UserInner, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<UserInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1191,7 +1191,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<UserInner> updatePublishingCredentialsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<UserInner, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<UserInner, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<UserInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1259,7 +1259,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<SkuInfosInner> listSkusDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SkuInfosInner, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<SkuInfosInner, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<SkuInfosInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1341,7 +1341,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<Void> moveDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1423,7 +1423,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<ValidateResponseInner> validateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ValidateResponseInner, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<ValidateResponseInner, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<ValidateResponseInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1505,7 +1505,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<Void> validateMoveDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -1612,7 +1612,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<SourceControlInner>> listSourceControlsNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SourceControlInner>, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SourceControlInner>, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SourceControlInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1720,7 +1720,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<GeoRegionInner>> listGeoRegionsNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<GeoRegionInner>, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<GeoRegionInner>, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<GeoRegionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1828,7 +1828,7 @@ public final class WebSiteManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<PremierAddOnOfferInner>> listPremierAddOnOffersNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PremierAddOnOfferInner>, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PremierAddOnOfferInner>, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PremierAddOnOfferInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

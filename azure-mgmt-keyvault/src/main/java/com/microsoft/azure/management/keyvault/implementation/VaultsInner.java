@@ -175,7 +175,7 @@ public final class VaultsInner {
     }
 
     private ServiceResponse<VaultInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VaultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VaultInner, CloudException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<VaultInner>() { }.getType())
                 .register(200, new TypeToken<VaultInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -255,7 +255,7 @@ public final class VaultsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -334,7 +334,7 @@ public final class VaultsInner {
     }
 
     private ServiceResponse<VaultInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VaultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VaultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VaultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -549,7 +549,7 @@ public final class VaultsInner {
     }
 
     private ServiceResponse<PageImpl<VaultInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<VaultInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<VaultInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<VaultInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -746,7 +746,7 @@ public final class VaultsInner {
     }
 
     private ServiceResponse<PageImpl<VaultInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<VaultInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<VaultInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<VaultInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -849,7 +849,7 @@ public final class VaultsInner {
     }
 
     private ServiceResponse<PageImpl<VaultInner>> listByResourceGroupNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<VaultInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<VaultInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<VaultInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -952,7 +952,7 @@ public final class VaultsInner {
     }
 
     private ServiceResponse<PageImpl<VaultInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<VaultInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<VaultInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<VaultInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

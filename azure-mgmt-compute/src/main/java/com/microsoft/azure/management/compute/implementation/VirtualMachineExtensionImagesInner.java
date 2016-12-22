@@ -155,7 +155,7 @@ public final class VirtualMachineExtensionImagesInner {
     }
 
     private ServiceResponse<VirtualMachineExtensionImageInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VirtualMachineExtensionImageInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VirtualMachineExtensionImageInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VirtualMachineExtensionImageInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -235,7 +235,7 @@ public final class VirtualMachineExtensionImagesInner {
     }
 
     private ServiceResponse<List<VirtualMachineExtensionImageInner>> listTypesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VirtualMachineExtensionImageInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VirtualMachineExtensionImageInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VirtualMachineExtensionImageInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -417,7 +417,7 @@ public final class VirtualMachineExtensionImagesInner {
     }
 
     private ServiceResponse<List<VirtualMachineExtensionImageInner>> listVersionsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VirtualMachineExtensionImageInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VirtualMachineExtensionImageInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VirtualMachineExtensionImageInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

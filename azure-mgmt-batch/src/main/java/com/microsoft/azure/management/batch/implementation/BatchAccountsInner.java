@@ -272,7 +272,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<BatchAccountInner> beginCreateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<BatchAccountInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<BatchAccountInner, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<BatchAccountInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -361,7 +361,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<BatchAccountInner> updateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<BatchAccountInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<BatchAccountInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<BatchAccountInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -502,7 +502,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<Void>() { }.getType())
@@ -583,7 +583,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<BatchAccountInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<BatchAccountInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<BatchAccountInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<BatchAccountInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -683,7 +683,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<PageImpl<BatchAccountInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<BatchAccountInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<BatchAccountInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<BatchAccountInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -791,7 +791,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<PageImpl<BatchAccountInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<BatchAccountInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<BatchAccountInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<BatchAccountInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -870,7 +870,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<Void> synchronizeAutoStorageKeysDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -958,7 +958,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<BatchAccountKeysInner> regenerateKeyDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<BatchAccountKeysInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<BatchAccountKeysInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<BatchAccountKeysInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1038,7 +1038,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<BatchAccountKeysInner> getKeysDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<BatchAccountKeysInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<BatchAccountKeysInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<BatchAccountKeysInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1141,7 +1141,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<PageImpl<BatchAccountInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<BatchAccountInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<BatchAccountInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<BatchAccountInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1244,7 +1244,7 @@ public final class BatchAccountsInner {
     }
 
     private ServiceResponse<PageImpl<BatchAccountInner>> listByResourceGroupNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<BatchAccountInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<BatchAccountInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<BatchAccountInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

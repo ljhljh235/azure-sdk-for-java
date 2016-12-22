@@ -234,7 +234,7 @@ public final class PublicIPAddressesInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<Void>() { }.getType())
@@ -393,7 +393,7 @@ public final class PublicIPAddressesInner {
     }
 
     private ServiceResponse<PublicIPAddressInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PublicIPAddressInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PublicIPAddressInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PublicIPAddressInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -552,7 +552,7 @@ public final class PublicIPAddressesInner {
     }
 
     private ServiceResponse<PublicIPAddressInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PublicIPAddressInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PublicIPAddressInner, CloudException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<PublicIPAddressInner>() { }.getType())
                 .register(200, new TypeToken<PublicIPAddressInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -653,7 +653,7 @@ public final class PublicIPAddressesInner {
     }
 
     private ServiceResponse<PageImpl<PublicIPAddressInner>> listAllDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PublicIPAddressInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PublicIPAddressInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PublicIPAddressInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -761,7 +761,7 @@ public final class PublicIPAddressesInner {
     }
 
     private ServiceResponse<PageImpl<PublicIPAddressInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PublicIPAddressInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PublicIPAddressInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PublicIPAddressInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -864,7 +864,7 @@ public final class PublicIPAddressesInner {
     }
 
     private ServiceResponse<PageImpl<PublicIPAddressInner>> listAllNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PublicIPAddressInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PublicIPAddressInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PublicIPAddressInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -967,7 +967,7 @@ public final class PublicIPAddressesInner {
     }
 
     private ServiceResponse<PageImpl<PublicIPAddressInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PublicIPAddressInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PublicIPAddressInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PublicIPAddressInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

@@ -217,7 +217,7 @@ public final class RecommendationsInner {
     }
 
     private ServiceResponse<List<RecommendationInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<RecommendationInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<RecommendationInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<RecommendationInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -284,7 +284,7 @@ public final class RecommendationsInner {
     }
 
     private ServiceResponse<Void> resetAllFiltersDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -445,7 +445,7 @@ public final class RecommendationsInner {
     }
 
     private ServiceResponse<List<RecommendationInner>> listHistoryForWebAppDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<RecommendationInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<RecommendationInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<RecommendationInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -627,7 +627,7 @@ public final class RecommendationsInner {
     }
 
     private ServiceResponse<List<RecommendationInner>> listRecommendedRulesForWebAppDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<RecommendationInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<RecommendationInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<RecommendationInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -708,7 +708,7 @@ public final class RecommendationsInner {
     }
 
     private ServiceResponse<Void> disableAllForWebAppDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -788,7 +788,7 @@ public final class RecommendationsInner {
     }
 
     private ServiceResponse<Void> resetAllFiltersForWebAppDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -963,7 +963,7 @@ public final class RecommendationsInner {
     }
 
     private ServiceResponse<RecommendationRuleInner> getRuleDetailsByWebAppDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<RecommendationRuleInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<RecommendationRuleInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<RecommendationRuleInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

@@ -152,7 +152,7 @@ public final class ServicesInner {
     }
 
     private ServiceResponse<SearchServiceResourceInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SearchServiceResourceInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<SearchServiceResourceInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<SearchServiceResourceInner>() { }.getType())
                 .register(201, new TypeToken<SearchServiceResourceInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -232,7 +232,7 @@ public final class ServicesInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(404, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
@@ -306,7 +306,7 @@ public final class ServicesInner {
     }
 
     private ServiceResponse<SearchServiceListResultInner> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SearchServiceListResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<SearchServiceListResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<SearchServiceListResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

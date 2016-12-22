@@ -158,7 +158,7 @@ public final class PolicyDefinitionsInner {
     }
 
     private ServiceResponse<PolicyDefinitionInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PolicyDefinitionInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PolicyDefinitionInner, CloudException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<PolicyDefinitionInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -230,7 +230,7 @@ public final class PolicyDefinitionsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -303,7 +303,7 @@ public final class PolicyDefinitionsInner {
     }
 
     private ServiceResponse<PolicyDefinitionInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PolicyDefinitionInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PolicyDefinitionInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PolicyDefinitionInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -502,7 +502,7 @@ public final class PolicyDefinitionsInner {
     }
 
     private ServiceResponse<PageImpl<PolicyDefinitionInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PolicyDefinitionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PolicyDefinitionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PolicyDefinitionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -605,7 +605,7 @@ public final class PolicyDefinitionsInner {
     }
 
     private ServiceResponse<PageImpl<PolicyDefinitionInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<PolicyDefinitionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<PolicyDefinitionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<PolicyDefinitionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

@@ -132,7 +132,7 @@ public final class AdminKeysInner {
     }
 
     private ServiceResponse<AdminKeyResultInner> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AdminKeyResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AdminKeyResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AdminKeyResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

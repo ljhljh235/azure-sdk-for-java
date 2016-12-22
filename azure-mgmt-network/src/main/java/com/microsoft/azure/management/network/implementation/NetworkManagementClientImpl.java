@@ -622,7 +622,7 @@ public final class NetworkManagementClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<DnsNameAvailabilityResultInner> checkDnsNameAvailabilityDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DnsNameAvailabilityResultInner, CloudException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<DnsNameAvailabilityResultInner, CloudException>(this.serializerAdapter())
                 .register(200, new TypeToken<DnsNameAvailabilityResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

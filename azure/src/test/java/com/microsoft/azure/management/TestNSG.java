@@ -15,14 +15,13 @@ import com.microsoft.azure.management.network.Subnet;
 import com.microsoft.azure.management.resources.fluentcore.arm.Region;
 import com.microsoft.azure.management.resources.fluentcore.model.Indexable;
 import com.microsoft.azure.management.resources.fluentcore.utils.Utils;
-import okhttp3.logging.HttpLoggingInterceptor;
-
-import java.util.List;
-
+import com.microsoft.rest.LogLevel;
 import org.junit.Assert;
 import org.junit.Test;
 import rx.Observable;
 import rx.Subscriber;
+
+import java.util.List;
 
 /**
  * Test for network security group CRUD.
@@ -177,7 +176,7 @@ public class TestNSG extends TestTemplate<NetworkSecurityGroup, NetworkSecurityG
                 null);
 
         Azure azure = Azure.configure()
-                .withLogLevel(HttpLoggingInterceptor.Level.BODY)
+                .withLogLevel(LogLevel.BODY)
                 .authenticate(credentials)
                 .withDefaultSubscription();
         runTest(azure.networkSecurityGroups(), azure.resourceGroups());

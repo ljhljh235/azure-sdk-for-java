@@ -152,7 +152,7 @@ public final class DeploymentOperationsInner {
     }
 
     private ServiceResponse<DeploymentOperationInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DeploymentOperationInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DeploymentOperationInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DeploymentOperationInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -383,7 +383,7 @@ public final class DeploymentOperationsInner {
     }
 
     private ServiceResponse<PageImpl<DeploymentOperationInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DeploymentOperationInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DeploymentOperationInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DeploymentOperationInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -486,7 +486,7 @@ public final class DeploymentOperationsInner {
     }
 
     private ServiceResponse<PageImpl<DeploymentOperationInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DeploymentOperationInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DeploymentOperationInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DeploymentOperationInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

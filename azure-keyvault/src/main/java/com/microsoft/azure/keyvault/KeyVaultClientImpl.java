@@ -644,7 +644,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyBundle> createKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -842,7 +842,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyBundle> importKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -923,7 +923,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyBundle> deleteKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -1118,7 +1118,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyBundle> updateKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -1206,7 +1206,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyBundle> getKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -1439,7 +1439,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<KeyItem>> getKeyVersionsDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<KeyItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<KeyItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<KeyItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -1656,7 +1656,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<KeyItem>> getKeysDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<KeyItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<KeyItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<KeyItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -1737,7 +1737,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<BackupKeyResult> backupKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<BackupKeyResult, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<BackupKeyResult, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<BackupKeyResult>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -1820,7 +1820,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyBundle> restoreKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -1925,7 +1925,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyOperationResult> encryptDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyOperationResult>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -2030,7 +2030,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyOperationResult> decryptDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyOperationResult>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -2135,7 +2135,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyOperationResult> signDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyOperationResult>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -2248,7 +2248,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyVerifyResult> verifyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyVerifyResult, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyVerifyResult, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyVerifyResult>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -2353,7 +2353,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyOperationResult> wrapKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyOperationResult>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -2458,7 +2458,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<KeyOperationResult> unwrapKeyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<KeyOperationResult, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<KeyOperationResult>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -2654,7 +2654,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<SecretBundle> setSecretDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SecretBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<SecretBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<SecretBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -2735,7 +2735,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<SecretBundle> deleteSecretDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SecretBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<SecretBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<SecretBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -2929,7 +2929,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<SecretBundle> updateSecretDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SecretBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<SecretBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<SecretBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -3017,7 +3017,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<SecretBundle> getSecretDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SecretBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<SecretBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<SecretBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -3234,7 +3234,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<SecretItem>> getSecretsDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SecretItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SecretItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SecretItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -3467,7 +3467,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<SecretItem>> getSecretVersionsDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SecretItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SecretItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SecretItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -3684,7 +3684,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<CertificateItem>> getCertificatesDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<CertificateItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<CertificateItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<CertificateItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -3765,7 +3765,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateBundle> deleteCertificateDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificateBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -3847,7 +3847,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<Contacts> setCertificateContactsDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Contacts, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<Contacts, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<Contacts>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -3921,7 +3921,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<Contacts> getCertificateContactsDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Contacts, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<Contacts, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<Contacts>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -3995,7 +3995,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<Contacts> deleteCertificateContactsDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Contacts, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<Contacts, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<Contacts>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -4212,7 +4212,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<CertificateIssuerItem>> getCertificateIssuersDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<CertificateIssuerItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<CertificateIssuerItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<CertificateIssuerItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -4409,7 +4409,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<IssuerBundle> setCertificateIssuerDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<IssuerBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<IssuerBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<IssuerBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -4597,7 +4597,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<IssuerBundle> updateCertificateIssuerDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<IssuerBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<IssuerBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<IssuerBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -4678,7 +4678,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<IssuerBundle> getCertificateIssuerDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<IssuerBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<IssuerBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<IssuerBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -4759,7 +4759,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<IssuerBundle> deleteCertificateIssuerDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<IssuerBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<IssuerBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<IssuerBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -4940,7 +4940,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateOperation> createCertificateDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateOperation, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateOperation, KeyVaultErrorException>(this.serializerAdapter())
                 .register(202, new TypeToken<CertificateOperation>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -5144,7 +5144,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateBundle> importCertificateDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificateBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -5377,7 +5377,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<CertificateItem>> getCertificateVersionsDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<CertificateItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<CertificateItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<CertificateItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -5458,7 +5458,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificatePolicy> getCertificatePolicyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificatePolicy, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificatePolicy, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificatePolicy>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -5547,7 +5547,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificatePolicy> updateCertificatePolicyDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificatePolicy, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificatePolicy, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificatePolicy>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -5742,7 +5742,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateBundle> updateCertificateDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificateBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -5830,7 +5830,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateBundle> getCertificateDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificateBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -5917,7 +5917,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateOperation> updateCertificateOperationDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateOperation, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateOperation, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificateOperation>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -5998,7 +5998,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateOperation> getCertificateOperationDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateOperation, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateOperation, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificateOperation>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -6079,7 +6079,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateOperation> deleteCertificateOperationDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateOperation, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateOperation, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<CertificateOperation>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -6270,7 +6270,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<CertificateBundle> mergeCertificateDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<CertificateBundle, KeyVaultErrorException>(this.serializerAdapter())
                 .register(201, new TypeToken<CertificateBundle>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -6376,7 +6376,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<KeyItem>> getKeyVersionsNextDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<KeyItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<KeyItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<KeyItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -6482,7 +6482,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<KeyItem>> getKeysNextDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<KeyItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<KeyItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<KeyItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -6588,7 +6588,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<SecretItem>> getSecretsNextDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SecretItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SecretItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SecretItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -6694,7 +6694,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<SecretItem>> getSecretVersionsNextDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SecretItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SecretItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SecretItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -6800,7 +6800,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<CertificateItem>> getCertificatesNextDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<CertificateItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<CertificateItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<CertificateItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -6906,7 +6906,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<CertificateIssuerItem>> getCertificateIssuersNextDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<CertificateIssuerItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<CertificateIssuerItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<CertificateIssuerItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);
@@ -7012,7 +7012,7 @@ final class KeyVaultClientImpl extends AzureServiceClient {
     }
 
     private ServiceResponse<PageImpl<CertificateItem>> getCertificateVersionsNextDelegate(Response<ResponseBody> response) throws KeyVaultErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<CertificateItem>, KeyVaultErrorException>(this.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<CertificateItem>, KeyVaultErrorException>(this.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<CertificateItem>>() { }.getType())
                 .registerError(KeyVaultErrorException.class)
                 .build(response);

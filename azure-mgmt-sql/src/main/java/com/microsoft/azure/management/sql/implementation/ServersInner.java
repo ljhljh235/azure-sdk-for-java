@@ -194,7 +194,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<ServerFirewallRuleInner> createOrUpdateFirewallRuleDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ServerFirewallRuleInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ServerFirewallRuleInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ServerFirewallRuleInner>() { }.getType())
                 .register(201, new TypeToken<ServerFirewallRuleInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -279,7 +279,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<Void> deleteFirewallRuleDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -364,7 +364,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<ServerFirewallRuleInner> getFirewallRuleDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ServerFirewallRuleInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ServerFirewallRuleInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ServerFirewallRuleInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -443,7 +443,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<PageImpl<ServerFirewallRuleInner>> listFirewallRulesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ServerFirewallRuleInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ServerFirewallRuleInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ServerFirewallRuleInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -508,7 +508,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<PageImpl<ServerInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ServerInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ServerInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ServerInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -594,7 +594,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<ServerInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ServerInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ServerInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ServerInner>() { }.getType())
                 .register(201, new TypeToken<ServerInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -672,7 +672,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -750,7 +750,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<ServerInner> getByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ServerInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ServerInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ServerInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -822,7 +822,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<PageImpl<ServerInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ServerInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ServerInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ServerInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -901,7 +901,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<PageImpl<ServerMetricInner>> listUsagesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ServerMetricInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ServerMetricInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ServerMetricInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -986,7 +986,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<ServiceObjectiveInner> getServiceObjectiveDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ServiceObjectiveInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ServiceObjectiveInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ServiceObjectiveInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1065,7 +1065,7 @@ public final class ServersInner {
     }
 
     private ServiceResponse<PageImpl<ServiceObjectiveInner>> listServiceObjectivesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ServiceObjectiveInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ServiceObjectiveInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ServiceObjectiveInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

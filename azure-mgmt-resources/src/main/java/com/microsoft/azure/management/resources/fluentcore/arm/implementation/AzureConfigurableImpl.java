@@ -10,9 +10,9 @@ import com.microsoft.azure.AzureEnvironment;
 import com.microsoft.azure.RestClient;
 import com.microsoft.azure.credentials.AzureTokenCredentials;
 import com.microsoft.azure.management.resources.fluentcore.arm.AzureConfigurable;
+import com.microsoft.rest.LogLevel;
 import okhttp3.Authenticator;
 import okhttp3.Interceptor;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 import java.net.Proxy;
 import java.util.concurrent.Executor;
@@ -34,7 +34,7 @@ public class AzureConfigurableImpl<T extends AzureConfigurable<T>>
 
     @SuppressWarnings("unchecked")
     @Override
-    public T withLogLevel(HttpLoggingInterceptor.Level level) {
+    public T withLogLevel(LogLevel level) {
         this.restClientBuilder = this.restClientBuilder.withLogLevel(level);
         return (T) this;
     }

@@ -160,7 +160,7 @@ public final class ExpressRouteServiceProvidersInner {
     }
 
     private ServiceResponse<PageImpl<ExpressRouteServiceProviderInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ExpressRouteServiceProviderInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ExpressRouteServiceProviderInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ExpressRouteServiceProviderInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -263,7 +263,7 @@ public final class ExpressRouteServiceProvidersInner {
     }
 
     private ServiceResponse<PageImpl<ExpressRouteServiceProviderInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ExpressRouteServiceProviderInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ExpressRouteServiceProviderInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ExpressRouteServiceProviderInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

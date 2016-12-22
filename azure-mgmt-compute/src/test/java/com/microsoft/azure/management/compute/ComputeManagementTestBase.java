@@ -1,13 +1,13 @@
 package com.microsoft.azure.management.compute;
 
 import com.microsoft.azure.AzureEnvironment;
+import com.microsoft.azure.RestClient;
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
 import com.microsoft.azure.management.compute.implementation.ComputeManager;
 import com.microsoft.azure.management.network.implementation.NetworkManager;
 import com.microsoft.azure.management.resources.implementation.ResourceManager;
-import com.microsoft.azure.RestClient;
 import com.microsoft.azure.management.storage.implementation.StorageManager;
-import okhttp3.logging.HttpLoggingInterceptor;
+import com.microsoft.rest.LogLevel;
 
 public abstract class ComputeManagementTestBase {
     protected static ResourceManager resourceManager;
@@ -25,7 +25,7 @@ public abstract class ComputeManagementTestBase {
         RestClient restClient = new RestClient.Builder()
                 .withBaseUrl(AzureEnvironment.AZURE, AzureEnvironment.Endpoint.RESOURCE_MANAGER)
                 .withCredentials(credentials)
-                .withLogLevel(HttpLoggingInterceptor.Level.NONE)
+                .withLogLevel(LogLevel.NONE)
                 .build();
 
         resourceManager = ResourceManager

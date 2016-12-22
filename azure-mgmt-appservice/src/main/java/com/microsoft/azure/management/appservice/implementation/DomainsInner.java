@@ -269,7 +269,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<DomainAvailablilityCheckResultInner> checkAvailabilityDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DomainAvailablilityCheckResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DomainAvailablilityCheckResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DomainAvailablilityCheckResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -372,7 +372,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<PageImpl<DomainInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DomainInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DomainInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DomainInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -440,7 +440,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<DomainControlCenterSsoRequestInner> getControlCenterSsoRequestDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DomainControlCenterSsoRequestInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DomainControlCenterSsoRequestInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DomainControlCenterSsoRequestInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -552,7 +552,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<PageImpl<NameIdentifierInner>> listRecommendationsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NameIdentifierInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NameIdentifierInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NameIdentifierInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -663,7 +663,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<PageImpl<DomainInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DomainInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DomainInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DomainInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -745,7 +745,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<DomainInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DomainInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DomainInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DomainInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -908,7 +908,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<DomainInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DomainInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DomainInner, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<DomainInner>() { }.getType())
                 .register(200, new TypeToken<DomainInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -1069,7 +1069,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -1188,7 +1188,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<PageImpl<DomainOwnershipIdentifierInner>> listOwnershipIdentifiersDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DomainOwnershipIdentifierInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DomainOwnershipIdentifierInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DomainOwnershipIdentifierInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1277,7 +1277,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<DomainOwnershipIdentifierInner> getOwnershipIdentifierDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DomainOwnershipIdentifierInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DomainOwnershipIdentifierInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DomainOwnershipIdentifierInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1374,7 +1374,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<DomainOwnershipIdentifierInner> createOrUpdateOwnershipIdentifierDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DomainOwnershipIdentifierInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DomainOwnershipIdentifierInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DomainOwnershipIdentifierInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1462,7 +1462,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<Void> deleteOwnershipIdentifierDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -1559,7 +1559,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<DomainOwnershipIdentifierInner> updateOwnershipIdentifierDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DomainOwnershipIdentifierInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DomainOwnershipIdentifierInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DomainOwnershipIdentifierInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1667,7 +1667,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<PageImpl<DomainInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DomainInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DomainInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DomainInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1775,7 +1775,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<PageImpl<NameIdentifierInner>> listRecommendationsNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NameIdentifierInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NameIdentifierInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NameIdentifierInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1883,7 +1883,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<PageImpl<DomainInner>> listByResourceGroupNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DomainInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DomainInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DomainInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1991,7 +1991,7 @@ public final class DomainsInner {
     }
 
     private ServiceResponse<PageImpl<DomainOwnershipIdentifierInner>> listOwnershipIdentifiersNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DomainOwnershipIdentifierInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DomainOwnershipIdentifierInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DomainOwnershipIdentifierInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

@@ -157,7 +157,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<TrafficManagerNameAvailabilityInner> checkTrafficManagerRelativeDnsNameAvailabilityDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<TrafficManagerNameAvailabilityInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<TrafficManagerNameAvailabilityInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<TrafficManagerNameAvailabilityInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -231,7 +231,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<PageImpl<ProfileInner>> listAllInResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ProfileInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -298,7 +298,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<PageImpl<ProfileInner>> listAllDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ProfileInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ProfileInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -378,7 +378,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<ProfileInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ProfileInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ProfileInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ProfileInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -466,7 +466,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<ProfileInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ProfileInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ProfileInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ProfileInner>() { }.getType())
                 .register(201, new TypeToken<ProfileInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -546,7 +546,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -634,7 +634,7 @@ public final class ProfilesInner {
     }
 
     private ServiceResponse<ProfileInner> updateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ProfileInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ProfileInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ProfileInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

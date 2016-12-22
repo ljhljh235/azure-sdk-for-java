@@ -409,7 +409,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<AppServicePlanInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServicePlanInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServicePlanInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServicePlanInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -520,7 +520,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<AppServicePlanInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServicePlanInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServicePlanInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServicePlanInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -602,7 +602,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<AppServicePlanInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AppServicePlanInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AppServicePlanInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AppServicePlanInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -765,7 +765,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<AppServicePlanInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AppServicePlanInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AppServicePlanInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AppServicePlanInner>() { }.getType())
                 .register(202, new TypeToken<AppServicePlanInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -847,7 +847,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -928,7 +928,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<List<CapabilityInner>> listCapabilitiesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<CapabilityInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<CapabilityInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<CapabilityInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1024,7 +1024,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<HybridConnectionInner> getHybridConnectionDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<HybridConnectionInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<HybridConnectionInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<HybridConnectionInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1128,7 +1128,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<HybridConnectionInner> updateHybridConnectionDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<HybridConnectionInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<HybridConnectionInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<HybridConnectionInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1223,7 +1223,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<Void> deleteHybridConnectionDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -1319,7 +1319,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<HybridConnectionKeyInner> listHybridConnectionKeysDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<HybridConnectionKeyInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<HybridConnectionKeyInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<HybridConnectionKeyInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1454,7 +1454,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<String>> listWebAppsByHybridConnectionDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<String>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<String>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<String>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1536,7 +1536,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<HybridConnectionLimitsInner> getHybridConnectionPlanLimitDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<HybridConnectionLimitsInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<HybridConnectionLimitsInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<HybridConnectionLimitsInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1655,7 +1655,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<HybridConnectionInner>> listHybridConnectionsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<HybridConnectionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<HybridConnectionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<HybridConnectionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1774,7 +1774,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<ResourceMetricDefinitionInner>> listMetricDefintionsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ResourceMetricDefinitionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ResourceMetricDefinitionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ResourceMetricDefinitionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2017,7 +2017,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<ResourceMetricInner>> listMetricsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ResourceMetricInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ResourceMetricInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ResourceMetricInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2177,7 +2177,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<Void> restartWebAppsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -2425,7 +2425,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<SiteInner>> listWebAppsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SiteInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SiteInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SiteInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2507,7 +2507,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<List<VnetInfoInner>> listVnetsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VnetInfoInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VnetInfoInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VnetInfoInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2596,7 +2596,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<VnetInfoInner> getVnetFromServerFarmDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VnetInfoInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VnetInfoInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VnetInfoInner>() { }.getType())
                 .register(404, new TypeToken<Void>() { }.getType())
                 .registerError(CloudException.class)
@@ -2693,7 +2693,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<VnetGatewayInner> getVnetGatewayDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VnetGatewayInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VnetGatewayInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VnetGatewayInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2797,7 +2797,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<VnetGatewayInner> updateVnetGatewayDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VnetGatewayInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VnetGatewayInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VnetGatewayInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2886,7 +2886,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<List<VnetRouteInner>> listRoutesForVnetDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VnetRouteInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VnetRouteInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VnetRouteInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -2982,7 +2982,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<List<VnetRouteInner>> getRouteForVnetDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VnetRouteInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VnetRouteInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VnetRouteInner>>() { }.getType())
                 .register(404, new TypeToken<Void>() { }.getType())
                 .registerError(CloudException.class)
@@ -3087,7 +3087,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<VnetRouteInner> createOrUpdateVnetRouteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VnetRouteInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VnetRouteInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VnetRouteInner>() { }.getType())
                 .register(400, new TypeToken<Void>() { }.getType())
                 .register(404, new TypeToken<Void>() { }.getType())
@@ -3184,7 +3184,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<Void> deleteVnetRouteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(404, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -3288,7 +3288,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<VnetRouteInner> updateVnetRouteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VnetRouteInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VnetRouteInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VnetRouteInner>() { }.getType())
                 .register(400, new TypeToken<Void>() { }.getType())
                 .register(404, new TypeToken<Void>() { }.getType())
@@ -3378,7 +3378,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<Void> rebootWorkerDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -3485,7 +3485,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<AppServicePlanInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServicePlanInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServicePlanInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServicePlanInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -3593,7 +3593,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<AppServicePlanInner>> listByResourceGroupNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AppServicePlanInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AppServicePlanInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AppServicePlanInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -3701,7 +3701,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<String>> listWebAppsByHybridConnectionNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<String>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<String>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<String>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -3809,7 +3809,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<HybridConnectionInner>> listHybridConnectionsNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<HybridConnectionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<HybridConnectionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<HybridConnectionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -3917,7 +3917,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<ResourceMetricDefinitionInner>> listMetricDefintionsNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ResourceMetricDefinitionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ResourceMetricDefinitionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ResourceMetricDefinitionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -4025,7 +4025,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<ResourceMetricInner>> listMetricsNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ResourceMetricInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ResourceMetricInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ResourceMetricInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -4133,7 +4133,7 @@ public final class AppServicePlansInner {
     }
 
     private ServiceResponse<PageImpl<SiteInner>> listWebAppsNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<SiteInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<SiteInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<SiteInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

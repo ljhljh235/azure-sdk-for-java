@@ -11,7 +11,7 @@ import com.microsoft.azure.RestClient;
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
 import com.microsoft.azure.management.keyvault.implementation.KeyVaultManager;
 import com.microsoft.azure.management.resources.implementation.ResourceManager;
-import okhttp3.logging.HttpLoggingInterceptor;
+import com.microsoft.rest.LogLevel;
 
 /**
  * The base for storage manager tests.
@@ -30,7 +30,7 @@ public abstract class KeyVaultManagementTestBase {
         RestClient restClient = new RestClient.Builder()
                 .withBaseUrl(AzureEnvironment.AZURE, AzureEnvironment.Endpoint.RESOURCE_MANAGER)
                 .withCredentials(credentials)
-                .withLogLevel(HttpLoggingInterceptor.Level.BODY)
+                .withLogLevel(LogLevel.BODY)
                 .build();
 
         resourceManager = ResourceManager

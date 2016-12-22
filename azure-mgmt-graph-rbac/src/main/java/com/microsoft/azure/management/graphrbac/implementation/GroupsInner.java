@@ -177,7 +177,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<CheckGroupMembershipResultInner> isMemberOfDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CheckGroupMembershipResultInner, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<CheckGroupMembershipResultInner, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<CheckGroupMembershipResultInner>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -256,7 +256,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<Void> removeMemberDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -337,7 +337,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<Void> addMemberDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -409,7 +409,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -483,7 +483,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<ADGroupInner> createDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ADGroupInner, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ADGroupInner, GraphErrorException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<ADGroupInner>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -682,7 +682,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<PageImpl1<ADGroupInner>> listDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<ADGroupInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<ADGroupInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<ADGroupInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -790,7 +790,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<PageImpl1<AADObjectInner>> getGroupMembersDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<AADObjectInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<AADObjectInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<AADObjectInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -863,7 +863,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<ADGroupInner> getDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ADGroupInner, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ADGroupInner, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ADGroupInner>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -943,7 +943,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<PageImpl<String>> getMemberGroupsDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<String>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<String>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<String>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -1052,7 +1052,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<PageImpl1<ADGroupInner>> listNextDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<ADGroupInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<ADGroupInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<ADGroupInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -1161,7 +1161,7 @@ public final class GroupsInner {
     }
 
     private ServiceResponse<PageImpl1<AADObjectInner>> getGroupMembersNextDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<AADObjectInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<AADObjectInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<AADObjectInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);

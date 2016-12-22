@@ -161,7 +161,7 @@ public final class UsersInner {
     }
 
     private ServiceResponse<UserInner> createDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<UserInner, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<UserInner, GraphErrorException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<UserInner>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -360,7 +360,7 @@ public final class UsersInner {
     }
 
     private ServiceResponse<PageImpl1<UserInner>> listDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<UserInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<UserInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<UserInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -433,7 +433,7 @@ public final class UsersInner {
     }
 
     private ServiceResponse<UserInner> getDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<UserInner, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<UserInner, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<UserInner>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -513,7 +513,7 @@ public final class UsersInner {
     }
 
     private ServiceResponse<Void> updateDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -585,7 +585,7 @@ public final class UsersInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, GraphErrorException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -665,7 +665,7 @@ public final class UsersInner {
     }
 
     private ServiceResponse<PageImpl<String>> getMemberGroupsDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<String>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<String>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<String>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);
@@ -774,7 +774,7 @@ public final class UsersInner {
     }
 
     private ServiceResponse<PageImpl1<UserInner>> listNextDelegate(Response<ResponseBody> response) throws GraphErrorException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<UserInner>, GraphErrorException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<UserInner>, GraphErrorException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<UserInner>>() { }.getType())
                 .registerError(GraphErrorException.class)
                 .build(response);

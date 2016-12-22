@@ -172,7 +172,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<CheckNameAvailabilityResultInner> checkNameAvailabilityDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<CheckNameAvailabilityResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<CheckNameAvailabilityResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<CheckNameAvailabilityResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -331,7 +331,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<StorageAccountInner> beginCreateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<StorageAccountInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<StorageAccountInner, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<StorageAccountInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -411,7 +411,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -491,7 +491,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<StorageAccountInner> getPropertiesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<StorageAccountInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<StorageAccountInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<StorageAccountInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -579,7 +579,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<StorageAccountInner> updateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<StorageAccountInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<StorageAccountInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<StorageAccountInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -646,7 +646,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<PageImpl<StorageAccountInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<StorageAccountInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<StorageAccountInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<StorageAccountInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -720,7 +720,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<PageImpl<StorageAccountInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<StorageAccountInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<StorageAccountInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<StorageAccountInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -800,7 +800,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<StorageAccountListKeysResultInner> listKeysDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<StorageAccountListKeysResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<StorageAccountListKeysResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<StorageAccountListKeysResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -889,7 +889,7 @@ public final class StorageAccountsInner {
     }
 
     private ServiceResponse<StorageAccountListKeysResultInner> regenerateKeyDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<StorageAccountListKeysResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<StorageAccountListKeysResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<StorageAccountListKeysResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

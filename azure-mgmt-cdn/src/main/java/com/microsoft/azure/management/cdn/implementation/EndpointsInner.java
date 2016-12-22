@@ -250,7 +250,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<PageImpl<EndpointInner>> listByProfileDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<EndpointInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<EndpointInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<EndpointInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -337,7 +337,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<EndpointInner> getDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<EndpointInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -510,7 +510,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<EndpointInner> beginCreateDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<EndpointInner>() { }.getType())
                 .register(201, new TypeToken<EndpointInner>() { }.getType())
                 .register(202, new TypeToken<EndpointInner>() { }.getType())
@@ -685,7 +685,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<EndpointInner> beginUpdateDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<EndpointInner>() { }.getType())
                 .register(202, new TypeToken<EndpointInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
@@ -841,7 +841,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, ErrorResponseException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .registerError(ErrorResponseException.class)
@@ -999,7 +999,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<EndpointInner> beginStartDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<EndpointInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -1156,7 +1156,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<EndpointInner> beginStopDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<EndpointInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<EndpointInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -1331,7 +1331,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<Void> beginPurgeContentDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, ErrorResponseException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -1506,7 +1506,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<Void> beginLoadContentDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, ErrorResponseException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -1602,7 +1602,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<ValidateCustomDomainOutputInner> validateCustomDomainDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ValidateCustomDomainOutputInner, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ValidateCustomDomainOutputInner, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ValidateCustomDomainOutputInner>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);
@@ -1705,7 +1705,7 @@ public final class EndpointsInner {
     }
 
     private ServiceResponse<PageImpl<EndpointInner>> listByProfileNextDelegate(Response<ResponseBody> response) throws ErrorResponseException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<EndpointInner>, ErrorResponseException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<EndpointInner>, ErrorResponseException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<EndpointInner>>() { }.getType())
                 .registerError(ErrorResponseException.class)
                 .build(response);

@@ -244,7 +244,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -324,7 +324,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<Boolean> checkExistenceDelegate(Response<Void> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Boolean, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Boolean, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .register(404, new TypeToken<Void>() { }.getType())
                 .registerError(CloudException.class)
@@ -484,7 +484,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<DeploymentExtendedInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DeploymentExtendedInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DeploymentExtendedInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DeploymentExtendedInner>() { }.getType())
                 .register(201, new TypeToken<DeploymentExtendedInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -565,7 +565,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<DeploymentExtendedInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DeploymentExtendedInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DeploymentExtendedInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DeploymentExtendedInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -644,7 +644,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<Void> cancelDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
     }
@@ -731,7 +731,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<DeploymentValidateResultInner> validateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DeploymentValidateResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DeploymentValidateResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DeploymentValidateResultInner>() { }.getType())
                 .register(400, new TypeToken<DeploymentValidateResultInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -812,7 +812,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<DeploymentExportResultInner> exportTemplateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DeploymentExportResultInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DeploymentExportResultInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DeploymentExportResultInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1033,7 +1033,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<PageImpl<DeploymentExtendedInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DeploymentExtendedInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DeploymentExtendedInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DeploymentExtendedInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -1136,7 +1136,7 @@ public final class DeploymentsInner {
     }
 
     private ServiceResponse<PageImpl<DeploymentExtendedInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DeploymentExtendedInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DeploymentExtendedInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DeploymentExtendedInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

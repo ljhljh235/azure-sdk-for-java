@@ -170,7 +170,7 @@ public final class VirtualMachineImagesInner {
     }
 
     private ServiceResponse<VirtualMachineImageInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<VirtualMachineImageInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<VirtualMachineImageInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<VirtualMachineImageInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -366,7 +366,7 @@ public final class VirtualMachineImagesInner {
     }
 
     private ServiceResponse<List<VirtualMachineImageResourceInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VirtualMachineImageResourceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VirtualMachineImageResourceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VirtualMachineImageResourceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -446,7 +446,7 @@ public final class VirtualMachineImagesInner {
     }
 
     private ServiceResponse<List<VirtualMachineImageResourceInner>> listOffersDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VirtualMachineImageResourceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VirtualMachineImageResourceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VirtualMachineImageResourceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -519,7 +519,7 @@ public final class VirtualMachineImagesInner {
     }
 
     private ServiceResponse<List<VirtualMachineImageResourceInner>> listPublishersDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VirtualMachineImageResourceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VirtualMachineImageResourceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VirtualMachineImageResourceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -606,7 +606,7 @@ public final class VirtualMachineImagesInner {
     }
 
     private ServiceResponse<List<VirtualMachineImageResourceInner>> listSkusDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<List<VirtualMachineImageResourceInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<List<VirtualMachineImageResourceInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<List<VirtualMachineImageResourceInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

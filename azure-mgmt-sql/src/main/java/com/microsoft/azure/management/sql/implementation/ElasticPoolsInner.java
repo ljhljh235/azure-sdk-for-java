@@ -258,7 +258,7 @@ public final class ElasticPoolsInner {
     }
 
     private ServiceResponse<ElasticPoolInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ElasticPoolInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ElasticPoolInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ElasticPoolInner>() { }.getType())
                 .register(201, new TypeToken<ElasticPoolInner>() { }.getType())
                 .register(202, new TypeToken<ElasticPoolInner>() { }.getType())
@@ -344,7 +344,7 @@ public final class ElasticPoolsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -429,7 +429,7 @@ public final class ElasticPoolsInner {
     }
 
     private ServiceResponse<ElasticPoolInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<ElasticPoolInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<ElasticPoolInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<ElasticPoolInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -508,7 +508,7 @@ public final class ElasticPoolsInner {
     }
 
     private ServiceResponse<PageImpl<ElasticPoolInner>> listByServerDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ElasticPoolInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ElasticPoolInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ElasticPoolInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -594,7 +594,7 @@ public final class ElasticPoolsInner {
     }
 
     private ServiceResponse<PageImpl<ElasticPoolActivityInner>> listActivityDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ElasticPoolActivityInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ElasticPoolActivityInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ElasticPoolActivityInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -680,7 +680,7 @@ public final class ElasticPoolsInner {
     }
 
     private ServiceResponse<PageImpl<ElasticPoolDatabaseActivityInner>> listDatabaseActivityDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<ElasticPoolDatabaseActivityInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<ElasticPoolDatabaseActivityInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<ElasticPoolDatabaseActivityInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -772,7 +772,7 @@ public final class ElasticPoolsInner {
     }
 
     private ServiceResponse<DatabaseInner> getDatabaseDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<DatabaseInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<DatabaseInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<DatabaseInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -858,7 +858,7 @@ public final class ElasticPoolsInner {
     }
 
     private ServiceResponse<PageImpl<DatabaseInner>> listDatabasesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DatabaseInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DatabaseInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DatabaseInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

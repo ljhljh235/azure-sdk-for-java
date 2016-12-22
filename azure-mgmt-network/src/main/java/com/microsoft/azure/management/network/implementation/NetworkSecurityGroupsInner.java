@@ -234,7 +234,7 @@ public final class NetworkSecurityGroupsInner {
     }
 
     private ServiceResponse<Void> beginDeleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(202, new TypeToken<Void>() { }.getType())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
@@ -393,7 +393,7 @@ public final class NetworkSecurityGroupsInner {
     }
 
     private ServiceResponse<NetworkSecurityGroupInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<NetworkSecurityGroupInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<NetworkSecurityGroupInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<NetworkSecurityGroupInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -552,7 +552,7 @@ public final class NetworkSecurityGroupsInner {
     }
 
     private ServiceResponse<NetworkSecurityGroupInner> beginCreateOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<NetworkSecurityGroupInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<NetworkSecurityGroupInner, CloudException>(this.client.serializerAdapter())
                 .register(201, new TypeToken<NetworkSecurityGroupInner>() { }.getType())
                 .register(200, new TypeToken<NetworkSecurityGroupInner>() { }.getType())
                 .registerError(CloudException.class)
@@ -653,7 +653,7 @@ public final class NetworkSecurityGroupsInner {
     }
 
     private ServiceResponse<PageImpl<NetworkSecurityGroupInner>> listAllDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkSecurityGroupInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkSecurityGroupInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkSecurityGroupInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -761,7 +761,7 @@ public final class NetworkSecurityGroupsInner {
     }
 
     private ServiceResponse<PageImpl<NetworkSecurityGroupInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkSecurityGroupInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkSecurityGroupInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkSecurityGroupInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -864,7 +864,7 @@ public final class NetworkSecurityGroupsInner {
     }
 
     private ServiceResponse<PageImpl<NetworkSecurityGroupInner>> listAllNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkSecurityGroupInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkSecurityGroupInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkSecurityGroupInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -967,7 +967,7 @@ public final class NetworkSecurityGroupsInner {
     }
 
     private ServiceResponse<PageImpl<NetworkSecurityGroupInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<NetworkSecurityGroupInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<NetworkSecurityGroupInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<NetworkSecurityGroupInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

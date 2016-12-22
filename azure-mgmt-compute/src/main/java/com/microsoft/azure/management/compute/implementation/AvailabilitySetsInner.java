@@ -161,7 +161,7 @@ public final class AvailabilitySetsInner {
     }
 
     private ServiceResponse<AvailabilitySetInner> createOrUpdateDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AvailabilitySetInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AvailabilitySetInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AvailabilitySetInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -240,7 +240,7 @@ public final class AvailabilitySetsInner {
     }
 
     private ServiceResponse<Void> deleteDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<Void, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<Void>() { }.getType())
                 .register(204, new TypeToken<Void>() { }.getType())
                 .build(response);
@@ -320,7 +320,7 @@ public final class AvailabilitySetsInner {
     }
 
     private ServiceResponse<AvailabilitySetInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<AvailabilitySetInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<AvailabilitySetInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<AvailabilitySetInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -394,7 +394,7 @@ public final class AvailabilitySetsInner {
     }
 
     private ServiceResponse<PageImpl<AvailabilitySetInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<AvailabilitySetInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<AvailabilitySetInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<AvailabilitySetInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -475,7 +475,7 @@ public final class AvailabilitySetsInner {
     }
 
     private ServiceResponse<PageImpl<VirtualMachineSizeInner>> listAvailableSizesDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<VirtualMachineSizeInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<VirtualMachineSizeInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<VirtualMachineSizeInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

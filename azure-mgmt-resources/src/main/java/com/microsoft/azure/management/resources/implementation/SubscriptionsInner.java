@@ -140,7 +140,7 @@ public final class SubscriptionsInner {
     }
 
     private ServiceResponse<PageImpl<LocationInner>> listLocationsDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<LocationInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<LocationInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<LocationInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -210,7 +210,7 @@ public final class SubscriptionsInner {
     }
 
     private ServiceResponse<SubscriptionInner> getDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<SubscriptionInner, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<SubscriptionInner, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<SubscriptionInner>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -307,7 +307,7 @@ public final class SubscriptionsInner {
     }
 
     private ServiceResponse<PageImpl1<SubscriptionInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<SubscriptionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<SubscriptionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<SubscriptionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -410,7 +410,7 @@ public final class SubscriptionsInner {
     }
 
     private ServiceResponse<PageImpl1<SubscriptionInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl1<SubscriptionInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl1<SubscriptionInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl1<SubscriptionInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);

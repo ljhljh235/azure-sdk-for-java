@@ -172,7 +172,7 @@ public final class DeletedWebAppsInner {
     }
 
     private ServiceResponse<PageImpl<DeletedSiteInner>> listDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DeletedSiteInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DeletedSiteInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DeletedSiteInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -283,7 +283,7 @@ public final class DeletedWebAppsInner {
     }
 
     private ServiceResponse<PageImpl<DeletedSiteInner>> listByResourceGroupDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DeletedSiteInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DeletedSiteInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DeletedSiteInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -391,7 +391,7 @@ public final class DeletedWebAppsInner {
     }
 
     private ServiceResponse<PageImpl<DeletedSiteInner>> listNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DeletedSiteInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DeletedSiteInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DeletedSiteInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
@@ -499,7 +499,7 @@ public final class DeletedWebAppsInner {
     }
 
     private ServiceResponse<PageImpl<DeletedSiteInner>> listByResourceGroupNextDelegate(Response<ResponseBody> response) throws CloudException, IOException, IllegalArgumentException {
-        return new AzureServiceResponseBuilder<PageImpl<DeletedSiteInner>, CloudException>(this.client.mapperAdapter())
+        return new AzureServiceResponseBuilder<PageImpl<DeletedSiteInner>, CloudException>(this.client.serializerAdapter())
                 .register(200, new TypeToken<PageImpl<DeletedSiteInner>>() { }.getType())
                 .registerError(CloudException.class)
                 .build(response);
