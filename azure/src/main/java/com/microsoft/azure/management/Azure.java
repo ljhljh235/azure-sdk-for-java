@@ -9,6 +9,7 @@ package com.microsoft.azure.management;
 import com.microsoft.azure.AzureEnvironment;
 import com.microsoft.azure.CloudException;
 import com.microsoft.azure.PagedList;
+import com.microsoft.azure.credentials.AzureCliCredentials;
 import com.microsoft.rest.RestClient;
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
 import com.microsoft.azure.credentials.AzureTokenCredentials;
@@ -256,12 +257,17 @@ public final class Azure {
 
         @Override
         public Azure withSubscription(String subscriptionId) {
+            if (restClient.credentials() instanceof AzureCliCredentials) {
+                ((AzureCliCredentials) restClient.credentials()).withDefaultSubscriptionId(subscriptionId);
+            }
             return new Azure(restClient, subscriptionId, tenantId);
         }
 
         @Override
         public Azure withDefaultSubscription() throws CloudException, IOException {
-            if (this.defaultSubscription != null) {
+            if (restClient.credentials() instanceof AzureCliCredentials) {
+                return new Azure(restClient, ((AzureCliCredentials) restClient.credentials()).defaultSubscriptionId(), tenantId);
+            } else if (this.defaultSubscription != null) {
                 return withSubscription(this.defaultSubscription);
             } else {
                 PagedList<Subscription> subs = this.subscriptions().list();

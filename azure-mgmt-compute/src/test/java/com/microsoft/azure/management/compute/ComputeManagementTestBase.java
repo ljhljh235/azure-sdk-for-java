@@ -1,11 +1,13 @@
 package com.microsoft.azure.management.compute;
 
 import com.microsoft.azure.AzureEnvironment;
+import com.microsoft.azure.AzureResponseBuilder;
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
 import com.microsoft.azure.management.compute.implementation.ComputeManager;
 import com.microsoft.azure.management.network.implementation.NetworkManager;
 import com.microsoft.azure.management.resources.implementation.ResourceManager;
 import com.microsoft.azure.management.storage.implementation.StorageManager;
+import com.microsoft.azure.serializer.AzureJacksonAdapter;
 import com.microsoft.rest.LogLevel;
 import com.microsoft.rest.RestClient;
 
@@ -25,6 +27,8 @@ public abstract class ComputeManagementTestBase {
         RestClient restClient = new RestClient.Builder()
                 .withBaseUrl(AzureEnvironment.AZURE, AzureEnvironment.Endpoint.RESOURCE_MANAGER)
                 .withCredentials(credentials)
+                .withSerializerAdapter(new AzureJacksonAdapter())
+                .withResponseBuilderFactory(new AzureResponseBuilder.Factory())
                 .withLogLevel(LogLevel.BODY_AND_HEADERS)
                 .build();
 

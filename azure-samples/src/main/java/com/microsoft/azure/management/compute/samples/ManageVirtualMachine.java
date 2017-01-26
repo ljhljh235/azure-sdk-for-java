@@ -7,6 +7,7 @@
 
 package com.microsoft.azure.management.compute.samples;
 
+import com.microsoft.azure.credentials.AzureCliCredentials;
 import com.microsoft.azure.management.Azure;
 import com.microsoft.azure.management.compute.CachingTypes;
 import com.microsoft.azure.management.compute.KnownLinuxVirtualMachineImage;
@@ -61,8 +62,8 @@ public final class ManageVirtualMachine {
             Azure azure = Azure
                     .configure()
                     .withLogLevel(LogLevel.BASIC)
-                    .authenticate(credFile)
-                    .withDefaultSubscription();
+                    .authenticate(AzureCliCredentials.create().withDefaultSubscriptionId("0b1f6471-1bf0-4dda-aec3-cb9272f09590"))
+                    .withSubscription("0b1f6471-1bf0-4dda-aec3-cb9272f09590");
 
             // Print selected subscription
             System.out.println("Selected subscription: " + azure.subscriptionId());

@@ -8,6 +8,7 @@
 package com.microsoft.azure.management.keyvault.samples;
 
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
+import com.microsoft.azure.credentials.AzureCliCredentials;
 import com.microsoft.azure.management.Azure;
 import com.microsoft.azure.management.keyvault.KeyPermissions;
 import com.microsoft.azure.management.keyvault.SecretPermissions;
@@ -51,7 +52,7 @@ public final class ManageKeyVault {
             Azure azure = Azure
                     .configure()
                     .withLogLevel(LogLevel.BASIC)
-                    .authenticate(credFile)
+                    .authenticate(AzureCliCredentials.create())
                     .withDefaultSubscription();
 
             // Print selected subscription
