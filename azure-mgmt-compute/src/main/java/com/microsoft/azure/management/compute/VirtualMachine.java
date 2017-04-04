@@ -40,25 +40,19 @@ public interface VirtualMachine extends
         HasNetworkInterfaces {
     // Actions
     /**
-     * Shuts down the Virtual Machine and releases the compute resources.
-     * <p>
-     * You are not billed for the compute resources that this Virtual Machine uses
+     * Shuts down the virtual machine and releases the compute resources.
      */
     void deallocate();
 
     /**
-     * Shuts down the Virtual Machine and releases the compute resources asynchronously.
-     * <p>
-     * You are not billed for the compute resources that this Virtual Machine uses
+     * Shuts down the virtual machine and releases the compute resources asynchronously.
      *
      * @return a representation of the deferred computation of this call
      */
     Completable deallocateAsync();
 
     /**
-     * Shuts down the Virtual Machine and releases the compute resources asynchronously.
-     * <p>
-     * You are not billed for the compute resources that this Virtual Machine uses
+     * Shuts down the virtual machine and releases the compute resources asynchronously.
      *
      * @param callback the callback to call on success or failure
      * @return a handle to cancel the request
@@ -66,19 +60,19 @@ public interface VirtualMachine extends
     ServiceFuture<Void> deallocateAsync(ServiceCallback<Void> callback);
 
     /**
-     * Generalize the Virtual Machine.
+     * Generalizes the virtual machine.
      */
     void generalize();
 
     /**
-     * Generalize the Virtual Machine asynchronously.
+     * Generalizes the virtual machine asynchronously.
      *
      * @return a representation of the deferred computation of this call
      */
     Completable generalizeAsync();
 
     /**
-     * Generalize the Virtual Machine asynchronously.
+     * Generalizes the virtual machine asynchronously.
      *
      * @param callback the callback to call on success or failure
      * @return a handle to cancel the request
@@ -86,16 +80,12 @@ public interface VirtualMachine extends
     ServiceFuture<Void> generalizeAsync(ServiceCallback<Void> callback);
 
     /**
-     * Power off (stop) the virtual machine.
-     * <p>
-     * You will be billed for the compute resources that this Virtual Machine uses.
+     * Powers off (stops) the virtual machine.
      */
     void powerOff();
 
     /**
-     * Power off (stop) the virtual machine asynchronously.
-     * <p>
-     * You will be billed for the compute resources that this Virtual Machine uses.
+     * Powers off (stops) the virtual machine asynchronously.
      *
      * @return a representation of the deferred computation of this call
      */
@@ -103,8 +93,6 @@ public interface VirtualMachine extends
 
     /**
      * Power off (stop) the virtual machine asynchronously.
-     * <p>
-     * You will be billed for the compute resources that this Virtual Machine uses.
      *
      * @param callback the callback to call on success or failure
      * @return a handle to cancel the request
@@ -193,17 +181,17 @@ public interface VirtualMachine extends
      * Captures the virtual machine by copying virtual hard disks of the VM and returns template as json
      * string that can be used to create similar VMs.
      *
-     * @param containerName destination container name to store the captured Vhd
-     * @param vhdPrefix the prefix for the vhd holding captured image
-     * @param overwriteVhd whether to overwrites destination vhd if it exists
-     * @return the template as json string
+     * @param containerName destination container name to store the captured VHD
+     * @param vhdPrefix the prefix for the VHD holding captured image
+     * @param overwriteVhd whether to overwrites destination VHD if it exists
+     * @return the template as JSON string
      */
     String capture(String containerName, String vhdPrefix, boolean overwriteVhd);
 
     /**
      * Refreshes the virtual machine instance view to sync with Azure.
      * <p>
-     * this will caches the instance view which can be later retrieved using {@link VirtualMachine#instanceView()}.
+     * The instance view will be cached for later retrieval using <code>instanceView</code>.
      *
      * @return the refreshed instance view
      */
@@ -241,7 +229,7 @@ public interface VirtualMachine extends
     OperatingSystemTypes osType();
 
     /**
-     * @return the uri to the vhd file backing this virtual machine's operating system disk
+     * @return the URI to the VHD file backing this virtual machine's operating system disk
      */
     String osUnmanagedDiskVhdUri();
 
@@ -256,22 +244,22 @@ public interface VirtualMachine extends
     int osDiskSize();
 
     /**
-     * @return the storage account type of the managed disk backing Os disk
+     * @return the storage account type of the managed disk backing OS disk
      */
     StorageAccountTypes osDiskStorageAccountType();
 
     /**
-     * @return resource id of the managed disk backing OS disk
+     * @return resource ID of the managed disk backing OS disk
      */
     String osDiskId();
 
     /**
-     * @return the unmanaged data disks associated with this virtual machine, indexed by lun
+     * @return the unmanaged data disks associated with this virtual machine, indexed by LUN number
      */
     Map<Integer, VirtualMachineUnmanagedDataDisk> unmanagedDataDisks();
 
     /**
-     * @return the managed data disks associated with this virtual machine, indexed by lun
+     * @return the managed data disks associated with this virtual machine, indexed by LUN
      */
     Map<Integer, VirtualMachineDataDisk> dataDisks();
 
@@ -290,12 +278,7 @@ public interface VirtualMachine extends
     String getPrimaryPublicIPAddressId();
 
     /**
-     * Returns id to the availability set this virtual machine associated with.
-     * <p>
-     * Having a set of virtual machines in an availability set ensures that during maintenance
-     * event at least one virtual machine will be available.
-     *
-     * @return the availabilitySet reference id
+     * @return the resource ID of the availability set associated with this virtual machine
      */
     String availabilitySetId();
 
@@ -315,7 +298,7 @@ public interface VirtualMachine extends
     Observable<VirtualMachineExtension> listExtensionsAsync();
 
     /**
-     * @return the extensions attached to the Virtual Machine
+     * @return the extensions attached to the virtual machine
      */
     Map<String, VirtualMachineExtension> listExtensions();
 
@@ -353,7 +336,7 @@ public interface VirtualMachine extends
     DiagnosticsProfile diagnosticsProfile();
 
     /**
-     * @return the virtual machine unique id.
+     * @return the virtual machine unique ID.
      */
     String vmId();
 
@@ -365,7 +348,7 @@ public interface VirtualMachine extends
     /**
      * Get the virtual machine instance view.
      * <p>
-     * this method returns the cached instance view, to refresh the cache call {@link VirtualMachine#refreshInstanceView()}.
+     * The instance view will be cached for later retrieval using <code>instanceView</code>.
      *
      * @return the virtual machine instance view
      */
@@ -617,15 +600,15 @@ public interface VirtualMachine extends
             /**
              * Specifies the version of a marketplace Windows image needs to be used.
              *
-             * @param imageReference describes publisher, offer, sku and version of the market-place image
+             * @param imageReference describes publisher, offer, SKU and version of the market-place image
              * @return the next stage of the virtual machine definition
              */
             WithWindowsAdminUsernameManagedOrUnmanaged withSpecificWindowsImageVersion(ImageReference imageReference);
 
             /**
-             * Specifies the id of a Windows custom image to be used.
+             * Specifies the ID of a Windows custom image to be used.
              *
-             * @param customImageId the resource id of the custom image
+             * @param customImageId the resource ID of the custom image
              * @return the next stage of the virtual machine definition
              */
             WithWindowsAdminUsernameManaged withWindowsCustomImage(String customImageId);
@@ -633,7 +616,7 @@ public interface VirtualMachine extends
             /**
              * Specifies the user (generalized) Windows image used for the virtual machine's OS.
              *
-             * @param imageUrl the url the the VHD
+             * @param imageUrl the URL the the VHD
              * @return the next stage of the virtual machine definition
              */
             WithWindowsAdminUsernameUnmanaged withStoredWindowsImage(String imageUrl);
@@ -659,15 +642,15 @@ public interface VirtualMachine extends
             /**
              * Specifies the version of a market-place Linux image needs to be used.
              *
-             * @param imageReference describes publisher, offer, sku and version of the market-place image
+             * @param imageReference describes publisher, offer, SKU and version of the market-place image
              * @return the next stage of the virtual machine definition
              */
             WithLinuxRootUsernameManagedOrUnmanaged withSpecificLinuxImageVersion(ImageReference imageReference);
 
             /**
-             * Specifies the id of a Linux custom image to be used.
+             * Specifies the ID of a Linux custom image to be used.
              *
-             * @param customImageId the resource id of the custom image
+             * @param customImageId the resource ID of the custom image
              * @return the next stage of the virtual machine definition
              */
             WithLinuxRootUsernameManaged withLinuxCustomImage(String customImageId);
@@ -675,7 +658,7 @@ public interface VirtualMachine extends
             /**
              * Specifies the user (generalized) Linux image used for the virtual machine's OS.
              *
-             * @param imageUrl the url the the VHD
+             * @param imageUrl the URL the the VHD
              * @return the next stage of the virtual machine definition
              */
             WithLinuxRootUsernameUnmanaged withStoredLinuxImage(String imageUrl);
@@ -683,7 +666,7 @@ public interface VirtualMachine extends
             /**
              * Specifies the specialized operating system unmanaged disk to be attached to the virtual machine.
              *
-             * @param osDiskUrl osDiskUrl the url to the OS disk in the Azure Storage account
+             * @param osDiskUrl osDiskUrl the URL to the OS disk in the Azure Storage account
              * @param osType the OS type
              * @return the next stage of the Windows virtual machine definition
              */
@@ -939,7 +922,7 @@ public interface VirtualMachine extends
 
         /**
          * The stage of the Linux virtual machine definition which contains all the minimum required inputs for
-         * the resource to be created (via {@link WithCreate#create()}), but also allows
+         * the resource to be created, but also allows
          * for any other optional settings to be specified.
          */
         interface WithLinuxCreateManagedOrUnmanaged extends WithFromImageCreateOptionsManagedOrUnmanaged {
@@ -956,7 +939,7 @@ public interface VirtualMachine extends
 
         /**
          * The stage of the Linux virtual machine definition which contains all the minimum required inputs for
-         * the resource to be created (via {@link WithCreate#create()}), but also allows
+         * the resource to be created, but also allows
          * for any other optional settings to be specified.
          */
         interface WithLinuxCreateManaged extends WithFromImageCreateOptionsManaged {
@@ -973,7 +956,7 @@ public interface VirtualMachine extends
 
         /**
          * The stage of the Linux virtual machine definition which contains all the minimum required inputs for
-         * the resource to be created (via {@link WithCreate#create()}), but also allows
+         * the resource to be created, but also allows
          * for any other optional settings to be specified.
          */
         interface WithLinuxCreateUnmanaged extends WithFromImageCreateOptionsUnmanaged {
@@ -998,7 +981,7 @@ public interface VirtualMachine extends
 
         /**
          * The stage of the Windows virtual machine definition which contains all the minimum required inputs for
-         * the resource to be created (via {@link WithCreate#create()}, but also allows
+         * the resource to be created, but also allows
          * for any other optional settings to be specified.
          */
         interface WithWindowsCreateManaged extends WithFromImageCreateOptionsManaged {
@@ -1039,7 +1022,7 @@ public interface VirtualMachine extends
 
         /**
          * The stage of the Windows virtual machine definition which contains all the minimum required inputs for
-         * the resource to be created (via {@link WithCreate#create()}, but also allows
+         * the resource to be created, but also allows
          * for any other optional settings to be specified.
          */
         interface WithWindowsCreateUnmanaged extends WithFromImageCreateOptionsUnmanaged {
@@ -1185,7 +1168,7 @@ public interface VirtualMachine extends
              * attach to the virtual machine as data disk.
              *
              * @param creatable the creatable disk
-             * @param lun the data disk lun
+             * @param lun the data disk LUN
              * @param cachingType the data disk caching type
              * @return the next stage of virtual machine definition
              */
@@ -1205,7 +1188,7 @@ public interface VirtualMachine extends
              * Specifies that a managed disk needs to be created implicitly with the given settings.
              *
              * @param sizeInGB the size of the managed disk
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param cachingType the caching type
              * @return the next stage of virtual machine definition
              */
@@ -1215,7 +1198,7 @@ public interface VirtualMachine extends
              * Specifies that a managed disk needs to be created implicitly with the given settings.
              *
              * @param sizeInGB the size of the managed disk
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param cachingType the caching type
              * @param storageAccountType the storage account type
              * @return the next stage of virtual machine definition
@@ -1237,7 +1220,7 @@ public interface VirtualMachine extends
              * Specifies an existing source managed disk and settings.
              *
              * @param disk the managed disk
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param cachingType a caching type
              * @return the next stage of virtual machine definition
              */
@@ -1250,7 +1233,7 @@ public interface VirtualMachine extends
              *
              * @param disk the managed disk
              * @param newSizeInGB the disk resize size in GB
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param cachingType a caching type
              * @return the next stage of virtual machine definition
              */
@@ -1262,7 +1245,7 @@ public interface VirtualMachine extends
             /**
              * Specifies the data disk to be created from the data disk image in the virtual machine image.
              *
-             * @param imageLun the lun of the source data disk image
+             * @param imageLun the LUN of the source data disk image
              * @return the next stage of virtual machine definition
              */
             WithManagedCreate withNewDataDiskFromImage(int imageLun);
@@ -1270,7 +1253,7 @@ public interface VirtualMachine extends
             /**
              * Specifies the data disk to be created from the data disk image in the virtual machine image.
              *
-             * @param imageLun the lun of the source data disk image
+             * @param imageLun the LUN of the source data disk image
              * @param newSizeInGB the new size that overrides the default size specified in the data disk image
              * @param cachingType the caching type
              * @return the next stage of virtual machine definition
@@ -1282,7 +1265,7 @@ public interface VirtualMachine extends
             /**
              * Specifies the data disk to be created from the data disk image in the virtual machine image.
              *
-             * @param imageLun the lun of the source data disk image
+             * @param imageLun the LUN of the source data disk image
              * @param newSizeInGB the new size that overrides the default size specified in the data disk image
              * @param cachingType the caching type
              * @param storageAccountType the storage account type
@@ -1322,7 +1305,7 @@ public interface VirtualMachine extends
             WithCreate withNewAvailabilitySet(Creatable<AvailabilitySet> creatable);
 
             /**
-             * Specifies an existing {@link AvailabilitySet} availability set to to associate the virtual machine with.
+             * Specifies an existing availability set to to associate the virtual machine with.
              * <p>
              * Adding virtual machines running your application to an availability set ensures that during
              * maintenance event at least one virtual machine will be available.
@@ -1361,7 +1344,7 @@ public interface VirtualMachine extends
             WithCreate withNewStorageAccount(Creatable<StorageAccount> creatable);
 
             /**
-             * Specifies an existing {@link StorageAccount} storage account to put the VM's OS and data disk VHD in.
+             * Specifies an existing storage account to put the VM's OS and data disk VHD in.
              * <p>
              * An OS disk based on marketplace or user image (generalized image) will be stored in this
              * storage account.
@@ -1445,7 +1428,7 @@ public interface VirtualMachine extends
                 WithManagedDataDisk,
                 WithCreate {
             /**
-             * Specifies the storage account type for managed Os disk.
+             * Specifies the storage account type for managed OS disk.
              *
              * @param accountType the storage account type
              * @return  the stage representing creatable VM definition
@@ -1481,7 +1464,7 @@ public interface VirtualMachine extends
              * Specifies the name of the OS Disk Vhd file and it's parent container.
              *
              * @param containerName the name of the container in the selected storage account.
-             * @param vhdName the name for the OS Disk vhd.
+             * @param vhdName the name for the OS Disk VHD.
              * @return the stage representing creatable VM definition
              */
             WithUnmanagedCreate withOsDiskVhdLocation(String containerName, String vhdName);
@@ -1489,7 +1472,7 @@ public interface VirtualMachine extends
 
         /**
          * The stage of the definition which contains all the minimum required inputs for
-         * the resource to be created (via {@link WithCreate#create()}), but also allows
+         * the resource to be created, but also allows
          * for any other optional settings to be specified.
          */
         interface WithCreate extends
@@ -1582,7 +1565,7 @@ public interface VirtualMachine extends
              * attach to the virtual machine as data disk.
              *
              * @param creatable the creatable disk
-             * @param lun the data disk lun
+             * @param lun the data disk LUN
              * @param cachingType the data disk caching type
              * @return the next stage of virtual machine update
              */
@@ -1600,7 +1583,7 @@ public interface VirtualMachine extends
              * pecifies that a managed disk needs to be created implicitly with the given settings.
              *
              * @param sizeInGB the size of the managed disk
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param cachingType the caching type
              * @return the next stage of virtual machine update
              */
@@ -1610,7 +1593,7 @@ public interface VirtualMachine extends
              * Specifies that a managed disk needs to be created implicitly with the given settings.
              *
              * @param sizeInGB the size of the managed disk
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param cachingType the caching type
              * @param storageAccountType the storage account type
              * @return the next stage of virtual machine update
@@ -1632,7 +1615,7 @@ public interface VirtualMachine extends
              * Specifies an existing source managed disk and settings.
              *
              * @param disk the managed disk
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param cachingType a caching type
              * @return the next stage of virtual machine update
              */
@@ -1645,7 +1628,7 @@ public interface VirtualMachine extends
              *
              * @param disk the managed disk
              * @param newSizeInGB the disk resize size in GB
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param cachingType a caching type
              * @return the next stage of virtual machine update
              */
@@ -1655,26 +1638,26 @@ public interface VirtualMachine extends
                                         CachingTypes cachingType);
 
             /**
-             * Detaches managed data disk with the given lun from the virtual machine.
+             * Detaches managed data disk with the given LUN from the virtual machine.
              *
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @return the next stage of virtual machine update
              */
             Update withoutDataDisk(int lun);
 
             /**
-             * Updates the size of a managed data disk with the given lun.
+             * Updates the size of a managed data disk with the given LUN.
              *
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param newSizeInGB the new size of the disk
              * @return the next stage of virtual machine update
              */
             Update withDataDiskUpdated(int lun, int newSizeInGB);
 
             /**
-             * Updates the size and caching type of a managed data disk with the given lun.
+             * Updates the size and caching type of a managed data disk with the given LUN.
              *
-             * @param lun the disk lun
+             * @param lun the disk LUN
              * @param newSizeInGB the new size of the disk
              * @param cachingType the caching type
              * @return the next stage of virtual machine update
@@ -1682,8 +1665,8 @@ public interface VirtualMachine extends
             Update withDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType);
 
             /**
-             * Updates the size, caching type and storage account type of a managed data disk with the given lun.
-             * @param lun the disk lun
+             * Updates the size, caching type and storage account type of a managed data disk with the given LUN.
+             * @param lun the disk LUN
              * @param newSizeInGB the new size of the disk
              * @param cachingType the caching type
              * @param storageAccountType the storage account type
@@ -1767,8 +1750,6 @@ public interface VirtualMachine extends
     /**
      * The template for an update operation, containing all the settings that
      * can be modified.
-     * <p>
-     * Call {@link Update#apply()} to apply the changes to the resource in Azure.
      */
     interface Update extends
             Appliable<VirtualMachine>,
