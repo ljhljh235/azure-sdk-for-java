@@ -153,6 +153,6 @@ class ResourceGroupImpl extends
 
     @Override
     protected Observable<ResourceGroupInner> getInnerAsync() {
-        return client.getAsync(this.key);
+        return client.getAsync(this.name());
     }
 }

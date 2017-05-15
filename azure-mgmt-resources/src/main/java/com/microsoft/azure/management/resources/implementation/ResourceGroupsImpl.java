@@ -16,6 +16,7 @@ import com.microsoft.rest.ServiceFuture;
 import com.microsoft.rest.ServiceCallback;
 import rx.Completable;
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * The implementation for {@link ResourceGroups} and its parent interfaces.
@@ -119,5 +120,15 @@ final class ResourceGroupsImpl
     @Override
     public Observable<ResourceGroup> listAsync() {
         return wrapPageAsync(this.client.listAsync());
+    }
+
+    @Override
+    public Observable<ResourceGroup> getByNameAsync(String name) {
+        return this.client.getAsync(name).map(new Func1<ResourceGroupInner, ResourceGroup>() {
+            @Override
+            public ResourceGroup call(ResourceGroupInner resourceGroupInner) {
+                return wrapModel(resourceGroupInner);
+            }
+        });
     }
 }

@@ -159,6 +159,8 @@
                     <AaddGeneratedAnnotation>true</AaddGeneratedAnnotation>
                     <Adebug>true</Adebug>
                   </compilerArguments>
+                  <source>1.8</source>
+                  <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>

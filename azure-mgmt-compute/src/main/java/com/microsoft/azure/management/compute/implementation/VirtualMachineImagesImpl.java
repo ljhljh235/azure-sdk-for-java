@@ -38,6 +38,9 @@ class VirtualMachineImagesImpl
                 offerName,
                 skuName,
                 version);
+        if (innerImage == null) {
+            return null;
+        }
         return new VirtualMachineImageImpl(region, publisherName, offerName, skuName, version, innerImage);
     }
 

@@ -8,6 +8,7 @@ package com.microsoft.azure.management.resources;
 
 import com.microsoft.azure.management.apigeneration.Fluent;
 import com.microsoft.azure.management.resources.fluentcore.arm.collection.SupportsGettingByName;
+import com.microsoft.azure.management.resources.fluentcore.arm.collection.SupportsGettingByNameAsync;
 import com.microsoft.azure.management.resources.fluentcore.collection.SupportsBatchCreation;
 import com.microsoft.azure.management.resources.fluentcore.collection.SupportsBeginDeletingByName;
 import com.microsoft.azure.management.resources.fluentcore.collection.SupportsCreating;
@@ -23,6 +24,7 @@ public interface ResourceGroups extends
         SupportsListing<ResourceGroup>,
         SupportsListingByTag<ResourceGroup>,
         SupportsGettingByName<ResourceGroup>,
+        SupportsGettingByNameAsync<ResourceGroup>,
         SupportsCreating<ResourceGroup.DefinitionStages.Blank>,
         SupportsDeletingByName,
         SupportsBeginDeletingByName,
