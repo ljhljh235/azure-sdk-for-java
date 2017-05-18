@@ -680,6 +680,7 @@ public final class Azure {
     /**
      * @return entry point to managing Service Bus.
      */
+    @Beta
     public ServiceBusNamespaces serviceBusNamespaces() {
         return serviceBusManager.namespaces();
     }
@@ -687,7 +688,7 @@ public final class Azure {
     /**
      * @return entry point to managing Container Services.
      */
-    @Beta
+    @Beta(SinceVersion.V1_1_0)
     public ContainerServices containerServices() {
         return computeManager.containerServices();
     }
@@ -695,7 +696,7 @@ public final class Azure {
     /**
      * @return entry point to managing Container Registries.
      */
-    @Beta
+    @Beta(SinceVersion.V1_1_0)
     public Registries containerRegistries() {
         return containerRegistryManager.containerRegistries();
     }
@@ -703,7 +704,7 @@ public final class Azure {
     /**
      * @return entry point to managing Container Regsitries.
      */
-    @Beta
+    @Beta(SinceVersion.V1_1_0)
     public DatabaseAccounts documentDBs() {
         return documentDBManager.databaseAccounts();
     }
