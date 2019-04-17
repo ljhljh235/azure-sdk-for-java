@@ -6,7 +6,7 @@ package com.azure.common.test.policy;
 import com.azure.common.http.HttpHeader;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.policy.HttpPipelinePolicy;
 import com.azure.common.test.models.NetworkCallRecord;
 import com.azure.common.test.models.RecordedData;
@@ -46,7 +46,7 @@ public class RecordNetworkCallPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         final NetworkCallRecord networkCallRecord = new NetworkCallRecord();
         Map<String, String> headers = new HashMap<>();
 
@@ -65,7 +65,7 @@ public class RecordNetworkCallPolicy implements HttpPipelinePolicy {
         networkCallRecord.uri(context.httpRequest().url().toString().replaceAll("\\?$", ""));
 
         return next.process().flatMap(httpResponse -> {
-            final HttpResponse bufferedResponse = httpResponse.buffer();
+            final AsyncHttpResponse bufferedResponse = httpResponse.buffer();
 
             return extractResponseData(bufferedResponse).map(responseData -> {
                 networkCallRecord.response(responseData);
@@ -86,7 +86,7 @@ public class RecordNetworkCallPolicy implements HttpPipelinePolicy {
         });
     }
 
-    private Mono<Map<String, String>> extractResponseData(final HttpResponse response) {
+    private Mono<Map<String, String>> extractResponseData(final AsyncHttpResponse response) {
         final Map<String, String> responseData = new HashMap<>();
         responseData.put("StatusCode", Integer.toString(response.statusCode()));
 
@@ -109,12 +109,12 @@ public class RecordNetworkCallPolicy implements HttpPipelinePolicy {
         if (contentType == null) {
             return Mono.just(responseData);
         } else if (contentType.contains("json") || response.headerValue("content-encoding") == null) {
-            return response.bodyAsString().map(content -> {
+            return response.bodyAsStringAsync().map(content -> {
                 responseData.put("Body", content);
                 return responseData;
             });
         } else {
-            return response.bodyAsByteArray().map(bytes -> {
+            return response.bodyAsByteArrayAsync().map(bytes -> {
                 String content;
                 try (GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(bytes));
                      ByteArrayOutputStream output = new ByteArrayOutputStream()) {

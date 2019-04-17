@@ -6,7 +6,7 @@ package com.azure.common.http.policy;
 import com.azure.common.credentials.AsyncServiceClientCredentials;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
@@ -32,7 +32,7 @@ public class AsyncCredentialsPolicy implements HttpPipelinePolicy {
      * {@inheritDoc}
      */
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         return credentials.authorizationHeaderValueAsync(context.httpRequest())
             .flatMap(token -> {
                 context.httpRequest().headers().set("Authorization", token);

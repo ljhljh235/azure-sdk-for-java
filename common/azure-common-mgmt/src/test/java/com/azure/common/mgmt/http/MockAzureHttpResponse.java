@@ -5,7 +5,7 @@ package com.azure.common.mgmt.http;
 
 import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.implementation.serializer.SerializerAdapter;
 import com.azure.common.implementation.serializer.SerializerEncoding;
 import com.azure.common.implementation.serializer.jackson.JacksonAdapter;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class MockAzureHttpResponse extends HttpResponse {
+public class MockAzureHttpResponse extends AsyncHttpResponse {
     private final static SerializerAdapter serializer = new JacksonAdapter();
 
     private final int statusCode;
@@ -74,22 +74,22 @@ public class MockAzureHttpResponse extends HttpResponse {
     }
 
     @Override
-    public Mono<byte[]> bodyAsByteArray() {
+    public Mono<byte[]> bodyAsByteArrayAsync() {
         return Mono.just(bodyBytes);
     }
 
     @Override
-    public Flux<ByteBuf> body() {
+    public Flux<ByteBuf> bodyAsByteBufAsync() {
         return Flux.just(Unpooled.wrappedBuffer(bodyBytes));
     }
 
     @Override
-    public Mono<String> bodyAsString() {
+    public Mono<String> bodyAsStringAsync() {
         return Mono.just(new String(bodyBytes, StandardCharsets.UTF_8));
     }
 
     @Override
-    public Mono<String> bodyAsString(Charset charset) {
+    public Mono<String> bodyAsStringAsync(Charset charset) {
         return Mono.just(new String(bodyBytes, charset));
     }
 

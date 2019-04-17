@@ -8,7 +8,7 @@ import com.azure.common.http.HttpHeader;
 import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.ProxyOptions;
 import com.azure.common.implementation.util.FluxUtil;
 import com.azure.common.mgmt.AsyncOperationResource;
@@ -54,7 +54,7 @@ public class MockAzureHttpClient implements HttpClient {
     }
 
     @Override
-    public Mono<HttpResponse> send(HttpRequest request) {
+    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
         MockAzureHttpResponse response = null;
 
         try {
@@ -272,7 +272,7 @@ public class MockAzureHttpClient implements HttpClient {
         catch (Exception ignored) {
         }
 
-        return Mono.<HttpResponse>just(response);
+        return Mono.<AsyncHttpResponse>just(response);
     }
 
     @Override

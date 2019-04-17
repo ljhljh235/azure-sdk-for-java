@@ -5,7 +5,7 @@ package com.azure.common.mgmt;
 
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.implementation.RestProxy;
 import com.azure.common.implementation.SwaggerMethodParser;
 import reactor.core.Exceptions;
@@ -80,7 +80,7 @@ public final class LocationPollStrategy extends PollStrategy {
     }
 
     @Override
-    public Mono<HttpResponse> updateFromAsync(HttpResponse httpPollResponse) {
+    public Mono<AsyncHttpResponse> updateFromAsync(AsyncHttpResponse httpPollResponse) {
         return ensureExpectedStatus(httpPollResponse, new int[] {202})
                 .map(response -> {
                     final int httpStatusCode = response.statusCode();
@@ -118,7 +118,7 @@ public final class LocationPollStrategy extends PollStrategy {
      * @param delayInMilliseconds The delay (in milliseconds) that the resulting pollStrategy will
      *                            use when polling.
      */
-    static PollStrategy tryToCreate(RestProxy restProxy, SwaggerMethodParser methodParser, HttpRequest originalHttpRequest, HttpResponse httpResponse, long delayInMilliseconds) {
+    static PollStrategy tryToCreate(RestProxy restProxy, SwaggerMethodParser methodParser, HttpRequest originalHttpRequest, AsyncHttpResponse httpResponse, long delayInMilliseconds) {
         final String locationUrl = getHeader(httpResponse);
 
         URL pollUrl = null;
@@ -146,7 +146,7 @@ public final class LocationPollStrategy extends PollStrategy {
                         new LocationPollStrategyData(restProxy, methodParser, pollUrl, delayInMilliseconds));
     }
 
-    static String getHeader(HttpResponse httpResponse) {
+    static String getHeader(AsyncHttpResponse httpResponse) {
         return httpResponse.headerValue(HEADER_NAME);
     }
 

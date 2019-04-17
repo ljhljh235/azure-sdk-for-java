@@ -61,15 +61,15 @@ public class HttpPipelineTests {
         final URL expectedUrl = new URL("http://my.site.com");
         final HttpPipeline httpPipeline = new HttpPipeline(new MockHttpClient() {
             @Override
-            public Mono<HttpResponse> send(HttpRequest request) {
+            public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                 assertEquals(0, request.headers().size());
                 assertEquals(expectedHttpMethod, request.httpMethod());
                 assertEquals(expectedUrl, request.url());
-                return Mono.<HttpResponse>just(new MockHttpResponse(request, 200));
+                return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, 200));
             }
         });
 
-        final HttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
+        final AsyncHttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
         assertNotNull(response);
         assertEquals(200, response.statusCode());
     }
@@ -81,19 +81,19 @@ public class HttpPipelineTests {
         final String expectedUserAgent = "my-user-agent";
         final HttpClient httpClient = new MockHttpClient() {
             @Override
-            public Mono<HttpResponse> send(HttpRequest request) {
+            public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                 assertEquals(1, request.headers().size());
                 assertEquals(expectedUserAgent, request.headers().value("User-Agent"));
                 assertEquals(expectedHttpMethod, request.httpMethod());
                 assertEquals(expectedUrl, request.url());
-                return Mono.<HttpResponse>just(new MockHttpResponse(request, 200));
+                return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, 200));
             }
         };
 
         final HttpPipeline httpPipeline = new HttpPipeline(httpClient,
                 new UserAgentPolicy(expectedUserAgent));
 
-        final HttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
+        final AsyncHttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
         assertNotNull(response);
         assertEquals(200, response.statusCode());
     }
@@ -104,7 +104,7 @@ public class HttpPipelineTests {
         final URL expectedUrl = new URL("http://my.site.com/1");
         final HttpPipeline httpPipeline = new HttpPipeline(new MockHttpClient() {
                 @Override
-                public Mono<HttpResponse> send(HttpRequest request) {
+                public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                     assertEquals(1, request.headers().size());
                     final String requestId = request.headers().value("x-ms-client-request-id");
                     assertNotNull(requestId);
@@ -112,12 +112,12 @@ public class HttpPipelineTests {
 
                     assertEquals(expectedHttpMethod, request.httpMethod());
                     assertEquals(expectedUrl, request.url());
-                    return Mono.<HttpResponse>just(new MockHttpResponse(request, 200));
+                    return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, 200));
                 }
             },
             new RequestIdPolicy());
 
-        final HttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
+        final AsyncHttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
         assertNotNull(response);
         assertEquals(200, response.statusCode());
     }
@@ -125,7 +125,7 @@ public class HttpPipelineTests {
     private static abstract class MockHttpClient implements HttpClient {
 
         @Override
-        public abstract Mono<HttpResponse> send(HttpRequest request);
+        public abstract Mono<AsyncHttpResponse> sendAsync(HttpRequest request);
 
         @Override
         public HttpClient proxy(Supplier<ProxyOptions> proxyOptions) {

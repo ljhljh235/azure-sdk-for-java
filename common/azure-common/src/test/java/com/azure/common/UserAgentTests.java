@@ -6,7 +6,7 @@ package com.azure.common;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.MockHttpClient;
 import com.azure.common.http.MockHttpResponse;
 import com.azure.common.http.policy.UserAgentPolicy;
@@ -21,16 +21,16 @@ public class UserAgentTests {
     public void defaultUserAgentTests() throws Exception {
         final HttpPipeline pipeline = new HttpPipeline(new MockHttpClient() {
                 @Override
-                public Mono<HttpResponse> send(HttpRequest request) {
+                public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                     Assert.assertEquals(
                             request.headers().value("User-Agent"),
                             "AutoRest-Java");
-                    return Mono.<HttpResponse>just(new MockHttpResponse(request, 200));
+                    return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, 200));
                 }
             },
             new UserAgentPolicy("AutoRest-Java"));
 
-        HttpResponse response = pipeline.send(new HttpRequest(
+        AsyncHttpResponse response = pipeline.send(new HttpRequest(
                 HttpMethod.GET, new URL("http://localhost"))).block();
 
         Assert.assertEquals(200, response.statusCode());
@@ -40,15 +40,15 @@ public class UserAgentTests {
     public void customUserAgentTests() throws Exception {
         final HttpPipeline pipeline = new HttpPipeline(new MockHttpClient() {
             @Override
-                public Mono<HttpResponse> send(HttpRequest request) {
+                public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                     String header = request.headers().value("User-Agent");
                     Assert.assertEquals("Awesome", header);
-                    return Mono.<HttpResponse>just(new MockHttpResponse(request, 200));
+                    return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, 200));
                 }
             },
             new UserAgentPolicy("Awesome"));
 
-        HttpResponse response = pipeline.send(new HttpRequest(HttpMethod.GET,
+        AsyncHttpResponse response = pipeline.send(new HttpRequest(HttpMethod.GET,
                 new URL("http://localhost"))).block();
         Assert.assertEquals(200, response.statusCode());
     }

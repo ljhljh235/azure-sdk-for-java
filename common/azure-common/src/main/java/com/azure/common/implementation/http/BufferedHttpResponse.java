@@ -4,7 +4,7 @@
 package com.azure.common.implementation.http;
 
 import com.azure.common.http.HttpHeaders;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import reactor.core.publisher.Flux;
@@ -16,8 +16,8 @@ import java.nio.charset.StandardCharsets;
 /**
  * HTTP response which will buffer the response's body when/if it is read.
  */
-public final class BufferedHttpResponse extends HttpResponse {
-    private final HttpResponse innerHttpResponse;
+public final class BufferedHttpResponse extends AsyncHttpResponse {
+    private final AsyncHttpResponse innerHttpResponse;
     private final Mono<byte[]> cachedBody;
 
     /**
@@ -25,9 +25,9 @@ public final class BufferedHttpResponse extends HttpResponse {
      *
      * @param innerHttpResponse The HTTP response to buffer
      */
-    public BufferedHttpResponse(HttpResponse innerHttpResponse) {
+    public BufferedHttpResponse(AsyncHttpResponse innerHttpResponse) {
         this.innerHttpResponse = innerHttpResponse;
-        this.cachedBody = innerHttpResponse.bodyAsByteArray().cache();
+        this.cachedBody = innerHttpResponse.bodyAsByteArrayAsync().cache();
         this.withRequest(innerHttpResponse.request());
     }
 
@@ -47,24 +47,24 @@ public final class BufferedHttpResponse extends HttpResponse {
     }
 
     @Override
-    public Mono<byte[]> bodyAsByteArray() {
+    public Mono<byte[]> bodyAsByteArrayAsync() {
         return cachedBody;
     }
 
     @Override
-    public Flux<ByteBuf> body() {
-        return bodyAsByteArray().flatMapMany(bytes -> Flux.just(Unpooled.wrappedBuffer(bytes)));
+    public Flux<ByteBuf> bodyAsByteBufAsync() {
+        return bodyAsByteArrayAsync().flatMapMany(bytes -> Flux.just(Unpooled.wrappedBuffer(bytes)));
     }
 
     @Override
-    public Mono<String> bodyAsString() {
-        return bodyAsByteArray()
+    public Mono<String> bodyAsStringAsync() {
+        return bodyAsByteArrayAsync()
                 .map(bytes -> bytes == null ? null : new String(bytes, StandardCharsets.UTF_8));
     }
 
     @Override
-    public Mono<String> bodyAsString(Charset charset) {
-        return bodyAsByteArray()
+    public Mono<String> bodyAsStringAsync(Charset charset) {
+        return bodyAsByteArrayAsync()
                 .map(bytes -> bytes == null ? null : new String(bytes, charset));
     }
 

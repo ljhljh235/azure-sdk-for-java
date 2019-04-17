@@ -5,7 +5,7 @@ package com.azure.common.http.policy;
 
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import reactor.core.publisher.Mono;
 
 /**
@@ -56,7 +56,7 @@ public class UserAgentPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         String header = context.httpRequest().headers().value("User-Agent");
         if (header == null || DEFAULT_USER_AGENT_HEADER.equals(header)) {
             header = userAgent;

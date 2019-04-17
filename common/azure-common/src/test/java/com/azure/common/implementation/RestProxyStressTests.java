@@ -17,7 +17,7 @@ import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.policy.AddDatePolicy;
 import com.azure.common.http.policy.AddHeadersPolicy;
 import com.azure.common.http.policy.HostPolicy;
@@ -149,18 +149,18 @@ public class RestProxyStressTests {
 
     private static final class ThrottlingRetryPolicy implements HttpPipelinePolicy {
         @Override
-        public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+        public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
             return process(1 + ThreadLocalRandom.current().nextInt(5), context, next);
         }
 
-        Mono<HttpResponse> process(final int waitTimeSeconds, final HttpPipelineCallContext context, final HttpPipelineNextPolicy nextPolicy) {
+        Mono<AsyncHttpResponse> process(final int waitTimeSeconds, final HttpPipelineCallContext context, final HttpPipelineNextPolicy nextPolicy) {
             return nextPolicy.clone().process().flatMap(httpResponse -> {
                 if (httpResponse.statusCode() != 503 && httpResponse.statusCode() != 500) {
                     return Mono.just(httpResponse);
                 } else {
                     LoggerFactory.getLogger(getClass()).warn("Received " + httpResponse.statusCode() + " for request. Waiting " + waitTimeSeconds + " seconds before retry.");
                     final int nextWaitTime = 5 + ThreadLocalRandom.current().nextInt(10);
-                    httpResponse.body().subscribe().dispose(); // TODO: Anu re-evaluate this
+                    httpResponse.bodyAsByteBufAsync().subscribe().dispose(); // TODO: Anu re-evaluate this
                     return Mono.delay(Duration.of(waitTimeSeconds, ChronoUnit.SECONDS))
                             .then(process(nextWaitTime, context, nextPolicy));
                 }

@@ -5,7 +5,7 @@ package com.azure.common.test.http;
 
 import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.implementation.serializer.SerializerAdapter;
 import com.azure.common.implementation.serializer.SerializerEncoding;
 import com.azure.common.implementation.serializer.jackson.JacksonAdapter;
@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * An HTTP response that is created to simulate a HTTP request.
  */
-public class MockHttpResponse extends HttpResponse {
+public class MockHttpResponse extends AsyncHttpResponse {
     private static final SerializerAdapter SERIALIZER = new JacksonAdapter();
 
     private final int statusCode;
@@ -123,7 +123,7 @@ public class MockHttpResponse extends HttpResponse {
      * {@inheritDoc}
      */
     @Override
-    public Mono<byte[]> bodyAsByteArray() {
+    public Mono<byte[]> bodyAsByteArrayAsync() {
         if (bodyBytes == null) {
             return Mono.empty();
         } else {
@@ -135,7 +135,7 @@ public class MockHttpResponse extends HttpResponse {
      * {@inheritDoc}
      */
     @Override
-    public Flux<ByteBuf> body() {
+    public Flux<ByteBuf> bodyAsByteBufAsync() {
         if (bodyBytes == null) {
             return Flux.empty();
         } else {
@@ -147,15 +147,15 @@ public class MockHttpResponse extends HttpResponse {
      * {@inheritDoc}
      */
     @Override
-    public Mono<String> bodyAsString() {
-        return bodyAsString(StandardCharsets.UTF_8);
+    public Mono<String> bodyAsStringAsync() {
+        return bodyAsStringAsync(StandardCharsets.UTF_8);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Mono<String> bodyAsString(Charset charset) {
+    public Mono<String> bodyAsStringAsync(Charset charset) {
         Objects.requireNonNull(charset);
 
         return bodyBytes == null

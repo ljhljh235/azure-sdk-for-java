@@ -4,7 +4,7 @@
 package com.azure.common.mgmt;
 
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.implementation.RestProxy;
 import com.azure.common.implementation.SwaggerMethodParser;
 import reactor.core.publisher.Flux;
@@ -18,7 +18,7 @@ import java.lang.reflect.Type;
  * further polling.
  */
 public class CompletedPollStrategy extends PollStrategy {
-    private final HttpResponse firstHttpResponse;
+    private final AsyncHttpResponse firstHttpResponse;
     private CompletedPollStrategyData data;
 
     /**
@@ -36,7 +36,7 @@ public class CompletedPollStrategy extends PollStrategy {
      * The CompletedPollStrategy data.
      */
     public static class CompletedPollStrategyData extends PollStrategyData {
-        HttpResponse firstHttpResponse;
+        AsyncHttpResponse firstHttpResponse;
 
         /**
          * Create a new CompletedPollStrategyData.
@@ -45,7 +45,7 @@ public class CompletedPollStrategy extends PollStrategy {
          *                     initiated the long running operation.
          * @param firstHttpResponse The HTTP response to the original HTTP request.
          */
-        public CompletedPollStrategyData(RestProxy restProxy, SwaggerMethodParser methodParser, HttpResponse firstHttpResponse) {
+        public CompletedPollStrategyData(RestProxy restProxy, SwaggerMethodParser methodParser, AsyncHttpResponse firstHttpResponse) {
             super(restProxy, methodParser, 0);
             this.firstHttpResponse = firstHttpResponse;
         }
@@ -64,7 +64,7 @@ public class CompletedPollStrategy extends PollStrategy {
     }
 
     @Override
-    Mono<HttpResponse> updateFromAsync(HttpResponse httpPollResponse) {
+    Mono<AsyncHttpResponse> updateFromAsync(AsyncHttpResponse httpPollResponse) {
         return Mono.error(new UnsupportedOperationException());
     }
 
@@ -78,8 +78,8 @@ public class CompletedPollStrategy extends PollStrategy {
                 .flatMapMany(cos -> Flux.just(cos));
     }
 
-    Mono<HttpResponse> pollUntilDone() {
-        return Mono.<HttpResponse>just(firstHttpResponse);
+    Mono<AsyncHttpResponse> pollUntilDone() {
+        return Mono.<AsyncHttpResponse>just(firstHttpResponse);
     }
 
     @Override

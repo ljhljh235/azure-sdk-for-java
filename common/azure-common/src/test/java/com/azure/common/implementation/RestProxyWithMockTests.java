@@ -16,7 +16,7 @@ import com.azure.common.http.HttpClient;
 import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.MockHttpClient;
 import com.azure.common.http.MockHttpResponse;
 import com.azure.common.http.ProxyOptions;
@@ -178,11 +178,11 @@ public class RestProxyWithMockTests extends RestProxyTests {
                 ServiceErrorWithCharsetService.class,
                 new HttpPipeline(new SimpleMockHttpClient() {
                     @Override
-                    public Mono<HttpResponse> send(HttpRequest request) {
+                    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                         HttpHeaders headers = new HttpHeaders();
                         headers.set("Content-Type", "application/json");
 
-                        HttpResponse response = new MockHttpResponse(request, 200, headers,
+                        AsyncHttpResponse response = new MockHttpResponse(request, 200, headers,
                                 "{ \"error\": \"Something went wrong, but at least this JSON is valid.\"}".getBytes(StandardCharsets.UTF_8));
                         return Mono.just(response);
                     }
@@ -202,11 +202,11 @@ public class RestProxyWithMockTests extends RestProxyTests {
                 ServiceErrorWithCharsetService.class,
                 new HttpPipeline(new SimpleMockHttpClient() {
                     @Override
-                    public Mono<HttpResponse> send(HttpRequest request) {
+                    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                         HttpHeaders headers = new HttpHeaders();
                         headers.set("Content-Type", "application/json");
 
-                        HttpResponse response = new MockHttpResponse(request, 200, headers, "BAD JSON".getBytes(StandardCharsets.UTF_8));
+                        AsyncHttpResponse response = new MockHttpResponse(request, 200, headers, "BAD JSON".getBytes(StandardCharsets.UTF_8));
                         return Mono.just(response);
                     }
                 }));
@@ -226,11 +226,11 @@ public class RestProxyWithMockTests extends RestProxyTests {
                 ServiceErrorWithCharsetService.class,
                 new HttpPipeline(new SimpleMockHttpClient() {
                     @Override
-                    public Mono<HttpResponse> send(HttpRequest request) {
+                    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                         HttpHeaders headers = new HttpHeaders();
                         headers.set("Content-Type", "application/json; charset=UTF-8");
 
-                        HttpResponse response = new MockHttpResponse(request, 200, headers,
+                        AsyncHttpResponse response = new MockHttpResponse(request, 200, headers,
                                 "{ \"error\": \"Something went wrong, but at least this JSON is valid.\"}".getBytes(StandardCharsets.UTF_8));
                         return Mono.just(response);
                     }
@@ -250,11 +250,11 @@ public class RestProxyWithMockTests extends RestProxyTests {
                 ServiceErrorWithCharsetService.class,
                 new HttpPipeline(new SimpleMockHttpClient() {
                     @Override
-                    public Mono<HttpResponse> send(HttpRequest request) {
+                    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                         HttpHeaders headers = new HttpHeaders();
                         headers.set("Content-Type", "application/json; charset=UTF-8");
 
-                        HttpResponse response = new MockHttpResponse(request, 200, headers, "BAD JSON".getBytes(StandardCharsets.UTF_8));
+                        AsyncHttpResponse response = new MockHttpResponse(request, 200, headers, "BAD JSON".getBytes(StandardCharsets.UTF_8));
                         return Mono.just(response);
                     }
                 }));
@@ -313,14 +313,14 @@ public class RestProxyWithMockTests extends RestProxyTests {
 
     private static final HttpClient headerCollectionHttpClient = new MockHttpClient() {
         @Override
-        public Mono<HttpResponse> send(HttpRequest request) {
+        public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
             final HttpHeaders headers = new HttpHeaders();
             headers.set("name", "Phillip");
             headers.set("header-collection-prefix-one", "1");
             headers.set("header-collection-prefix-two", "2");
             headers.set("header-collection-prefix-three", "3");
             final MockHttpResponse response = new MockHttpResponse(request, 200, headers);
-            return Mono.<HttpResponse>just(response);
+            return Mono.<AsyncHttpResponse>just(response);
         }
     };
 
@@ -408,7 +408,7 @@ public class RestProxyWithMockTests extends RestProxyTests {
     private static abstract class SimpleMockHttpClient implements HttpClient {
 
         @Override
-        public abstract Mono<HttpResponse> send(HttpRequest request);
+        public abstract Mono<AsyncHttpResponse> sendAsync(HttpRequest request);
 
         @Override
         public HttpClient proxy(Supplier<ProxyOptions> proxyOptions) {

@@ -6,7 +6,7 @@ package com.azure.common.http.policy;
 import com.azure.common.credentials.ServiceClientCredentials;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class CredentialsPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         try {
             String token = credentials.authorizationHeaderValue(context.httpRequest().url().toString());
             context.httpRequest().headers().set("Authorization", token);

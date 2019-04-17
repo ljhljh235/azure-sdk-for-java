@@ -5,7 +5,7 @@ package com.azure.common.test.http;
 import com.azure.common.http.HttpClient;
 import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.ProxyOptions;
 import com.azure.common.test.InterceptorManager;
 import com.azure.common.test.models.NetworkCallRecord;
@@ -49,7 +49,7 @@ public final class PlaybackClient implements HttpClient {
      * {@inheritDoc}
      */
     @Override
-    public Mono<HttpResponse> send(final HttpRequest request) {
+    public Mono<AsyncHttpResponse> sendAsync(final HttpRequest request) {
         return Mono.defer(() -> playbackHttpResponse(request));
     }
 
@@ -77,7 +77,7 @@ public final class PlaybackClient implements HttpClient {
         return this;
     }
 
-    private Mono<HttpResponse> playbackHttpResponse(final HttpRequest request) {
+    private Mono<AsyncHttpResponse> playbackHttpResponse(final HttpRequest request) {
         final String incomingUrl = applyReplacementRule(request.url().toString());
         final String incomingMethod = request.httpMethod().toString();
 
@@ -126,7 +126,7 @@ public final class PlaybackClient implements HttpClient {
             headers.set("Content-Length", String.valueOf(bytes.length));
         }
 
-        HttpResponse response = new MockHttpResponse(request, recordStatusCode, headers, bytes);
+        AsyncHttpResponse response = new MockHttpResponse(request, recordStatusCode, headers, bytes);
         return Mono.just(response);
     }
 

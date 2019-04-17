@@ -7,7 +7,7 @@ import com.azure.common.http.HttpClient;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.ProxyOptions;
 import org.junit.Test;
 import reactor.core.publisher.Mono;
@@ -34,7 +34,7 @@ public class HostPolicyTests {
     private static HttpPipeline createPipeline(String host, String expectedUrl) {
         return new HttpPipeline(new MockHttpClient() {
             @Override
-            public Mono<HttpResponse> send(HttpRequest request) {
+            public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                 return Mono.empty(); // NOP
             }
         },
@@ -52,7 +52,7 @@ public class HostPolicyTests {
     private static abstract class MockHttpClient implements HttpClient {
 
         @Override
-        public abstract Mono<HttpResponse> send(HttpRequest request);
+        public abstract Mono<AsyncHttpResponse> sendAsync(HttpRequest request);
 
         @Override
         public HttpClient proxy(Supplier<ProxyOptions> proxyOptions) {

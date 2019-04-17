@@ -5,6 +5,7 @@ package com.azure.common.http;
 
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.Charset;
 import java.util.function.Supplier;
 
 /**
@@ -17,7 +18,43 @@ public interface HttpClient {
      * @param request The HTTP request to send
      * @return A {@link Mono} that emits response asynchronously
      */
-    Mono<HttpResponse> send(HttpRequest request);
+    Mono<AsyncHttpResponse> sendAsync(HttpRequest request);
+
+    default HttpResponse send(HttpRequest request) {
+        return sendAsync(request).flatMap(ahr -> ahr.bodyAsByteArrayAsync()
+            .map(bytes -> new HttpResponse() {
+                @Override
+                public int statusCode() {
+                    return ahr.statusCode();
+                }
+
+                @Override
+                public String headerValue(String name) {
+                    return ahr.headerValue(name);
+                }
+
+                @Override
+                public HttpHeaders headers() {
+                    return ahr.headers();
+                }
+
+                @Override
+                public byte[] bodyAsByteArray() {
+                    return bytes;
+                }
+
+                @Override
+                public String bodyAsString() {
+                    return new String(bytes);
+                }
+
+                @Override
+                public String bodyAsString(Charset charset) {
+                    return new String(bytes, charset);
+                }
+            })
+        ).block();
+    }
 
     /**
      * Create default HttpClient instance.

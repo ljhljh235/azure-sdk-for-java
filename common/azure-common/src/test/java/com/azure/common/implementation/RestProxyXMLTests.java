@@ -16,7 +16,7 @@ import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.MockHttpResponse;
 import com.azure.common.http.ProxyOptions;
 import com.azure.common.implementation.serializer.SerializerEncoding;
@@ -44,23 +44,23 @@ import static org.junit.Assert.assertNull;
 
 public class RestProxyXMLTests {
     static class MockXMLHTTPClient implements HttpClient {
-        private HttpResponse response(HttpRequest request, String resource) throws IOException, URISyntaxException {
+        private AsyncHttpResponse response(HttpRequest request, String resource) throws IOException, URISyntaxException {
             URL url = getClass().getClassLoader().getResource(resource);
             byte[] bytes = Files.readAllBytes(Paths.get(url.toURI()));
             HttpHeaders headers = new HttpHeaders();
             headers.set("Content-Type", "application/xml");
-            HttpResponse res = new MockHttpResponse(request, 200, headers, bytes);
+            AsyncHttpResponse res = new MockHttpResponse(request, 200, headers, bytes);
             return res;
         }
         @Override
-        public Mono<HttpResponse> send(HttpRequest request) {
+        public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
             try {
                 if (request.url().toString().endsWith("GetContainerACLs")) {
                     return Mono.just(response(request, "GetContainerACLs.xml"));
                 } else if (request.url().toString().endsWith("GetXMLWithAttributes")) {
                     return Mono.just(response(request, "GetXMLWithAttributes.xml"));
                 } else {
-                    return Mono.<HttpResponse>just(new MockHttpResponse(request, 404));
+                    return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, 404));
                 }
             } catch (IOException | URISyntaxException e) {
                 return Mono.error(e);
@@ -110,7 +110,7 @@ public class RestProxyXMLTests {
         byte[] receivedBytes = null;
 
         @Override
-        public Mono<HttpResponse> send(HttpRequest request) {
+        public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
             if (request.url().toString().endsWith("SetContainerACLs")) {
                 return FluxUtil.collectBytesInByteBufStream(request.body(), false)
                         .map(bytes -> {
@@ -118,7 +118,7 @@ public class RestProxyXMLTests {
                             return new MockHttpResponse(request, 200);
                         });
             } else {
-                return Mono.<HttpResponse>just(new MockHttpResponse(request, 404));
+                return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, 404));
             }
         }
 

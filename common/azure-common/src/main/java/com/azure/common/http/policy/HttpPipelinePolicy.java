@@ -5,7 +5,7 @@ package com.azure.common.http.policy;
 
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import reactor.core.publisher.Mono;
 
 /**
@@ -20,5 +20,5 @@ public interface HttpPipelinePolicy {
      * @param next the next policy to invoke
      * @return publisher that initiate the request upon subscription and emits response on completion.
      */
-    Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next);
+    Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next);
 }

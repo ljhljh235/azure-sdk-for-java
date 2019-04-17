@@ -13,7 +13,7 @@ import com.azure.common.annotations.ResumeOperation;
 import com.azure.common.exception.ServiceRequestException;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.implementation.OperationDescription;
 import com.azure.common.implementation.exception.InvalidReturnTypeException;
 import com.azure.common.implementation.serializer.SerializerAdapter;
@@ -842,8 +842,8 @@ public class AzureProxyTests {
     public void deleteAsyncWithForbiddenResponse() {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient() {
             @Override
-            public Mono<HttpResponse> send(HttpRequest request) {
-                return Mono.<HttpResponse>just(new MockAzureHttpResponse(request, 403, MockAzureHttpClient.responseHeaders()));
+            public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
+                return Mono.<AsyncHttpResponse>just(new MockAzureHttpResponse(request, 403, MockAzureHttpClient.responseHeaders()));
             }
         };
 

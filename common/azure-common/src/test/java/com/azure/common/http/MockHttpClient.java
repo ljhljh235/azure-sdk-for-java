@@ -36,8 +36,8 @@ public class MockHttpClient implements HttpClient {
             .set("Content-Type", "application/json");
 
     @Override
-    public Mono<HttpResponse> send(HttpRequest request) {
-        HttpResponse response = null;
+    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
+        AsyncHttpResponse response = null;
 
         try {
             final URL requestUrl = request.url();

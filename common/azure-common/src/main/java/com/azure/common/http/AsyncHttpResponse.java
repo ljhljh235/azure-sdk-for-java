@@ -15,7 +15,7 @@ import java.nio.charset.Charset;
 /**
  * The type representing response of {@link HttpRequest}.
  */
-public abstract class HttpResponse implements Closeable {
+public abstract class AsyncHttpResponse implements Closeable {
     private HttpRequest request;
 
     /**
@@ -41,18 +41,48 @@ public abstract class HttpResponse implements Closeable {
     public abstract HttpHeaders headers();
 
     /**
+     * Get the publisher emitting response content chunks.
+     *
+     * <p>
+     * Returns a stream of the response's body content. Emissions may occur on the
+     * Netty EventLoop threads which are shared across channels and should not be
+     * blocked. Blocking should be avoided as much as possible/practical in reactive
+     * programming but if you do use methods like {@code blockingSubscribe} or {@code blockingGet}
+     * on the stream then be sure to use {@code subscribeOn} and {@code observeOn}
+     * before the blocking call. For example:
+     *
+     * <pre>
+     * {@code
+     *   response.body()
+     *     .map(bb -> bb.limit())
+     *     .reduce((x,y) -> x + y)
+     *     .subscribeOn(Schedulers.io())
+     *     .observeOn(Schedulers.io())
+     *     .blockingGet();
+     * }
+     * </pre>
+     * <p>
+     * The above code is a simplistic example and would probably run fine without
+     * the `subscribeOn` and `observeOn` but should be considered a template for
+     * more complex situations.
+     *
+     * @return The response's content as a stream of {@link ByteBuf}.
+     */
+    public abstract Flux<ByteBuf> bodyAsByteBufAsync();
+
+    /**
      * Get the response content as a byte[].
      *
      * @return this response content as a byte[]
      */
-    public abstract byte[] bodyAsByteArray();
+    public abstract Mono<byte[]> bodyAsByteArrayAsync();
 
     /**
      * Get the response content as a string.
      *
      * @return This response content as a string
      */
-    public abstract String bodyAsString();
+    public abstract Mono<String> bodyAsStringAsync();
 
     /**
      * Get the response content as a string.
@@ -60,7 +90,7 @@ public abstract class HttpResponse implements Closeable {
      * @param charset the charset to use as encoding
      * @return This response content as a string
      */
-    public abstract String bodyAsString(Charset charset);
+    public abstract Mono<String> bodyAsStringAsync(Charset charset);
 
     /**
      * Get the request which resulted in this response.
@@ -77,20 +107,20 @@ public abstract class HttpResponse implements Closeable {
      * @param request the request
      * @return this HTTP response
      */
-    public final HttpResponse withRequest(HttpRequest request) {
+    public final AsyncHttpResponse withRequest(HttpRequest request) {
         this.request = request;
         return this;
     }
-//
-//    /**
-//     * Get a new Response object wrapping this response with it's content
-//     * buffered into memory.
-//     *
-//     * @return the new Response object
-//     */
-//    public HttpResponse buffer() {
-//        return new BufferedHttpResponse(this);
-//    }
+
+    /**
+     * Get a new Response object wrapping this response with it's content
+     * buffered into memory.
+     *
+     * @return the new Response object
+     */
+    public AsyncHttpResponse buffer() {
+        return new BufferedHttpResponse(this);
+    }
 
     /**
      * Closes the response content stream, if any.

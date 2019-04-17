@@ -5,7 +5,7 @@ package com.azure.common.http.policy;
 
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import reactor.core.publisher.Mono;
 
 import java.time.OffsetDateTime;
@@ -23,7 +23,7 @@ public class AddDatePolicy implements HttpPipelinePolicy {
             .withLocale(Locale.US);
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         return Mono.defer(() -> {
             context.httpRequest().headers().set("Date", format.format(OffsetDateTime.now()));
             return next.process();

@@ -3,14 +3,14 @@
 
 package com.azure.common.implementation.serializer;
 
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import reactor.core.publisher.Mono;
 
 import java.io.Closeable;
 import java.lang.reflect.Type;
 
 /**
- * Decode {@link HttpResponse} to {@link HttpDecodedResponse}.
+ * Decode {@link AsyncHttpResponse} to {@link HttpDecodedResponse}.
  */
 public final class HttpResponseDecoder {
     // The adapter for deserialization
@@ -26,13 +26,13 @@ public final class HttpResponseDecoder {
     }
 
     /**
-     * Asynchronously decodes a {@link HttpResponse}.
+     * Asynchronously decodes a {@link AsyncHttpResponse}.
      *
      * @param response the publisher that emits response to be decoded
      * @param decodeData the necessary data required to decode the response emitted by {@code response}
      * @return a publisher that emits decoded HttpResponse upon subscription
      */
-    public Mono<HttpDecodedResponse> decode(Mono<HttpResponse> response, HttpResponseDecodeData decodeData) {
+    public Mono<HttpDecodedResponse> decode(Mono<AsyncHttpResponse> response, HttpResponseDecodeData decodeData) {
         return response.map(r -> new HttpDecodedResponse(r, this.serializer, decodeData));
     }
 
@@ -43,7 +43,7 @@ public final class HttpResponseDecoder {
      * Subscribing to header kickoff header decoding and emission of decoded object.
      */
     public static final class HttpDecodedResponse implements Closeable {
-        private final HttpResponse response;
+        private final AsyncHttpResponse response;
         private final SerializerAdapter serializer;
         private final HttpResponseDecodeData decodeData;
         private Mono<Object> bodyCached;
@@ -57,7 +57,7 @@ public final class HttpResponseDecoder {
          * @param serializer the decoder
          * @param decodeData the necessary data required to decode a Http response
          */
-        HttpDecodedResponse(final HttpResponse response, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
+        HttpDecodedResponse(final AsyncHttpResponse response, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
             if (HttpResponseBodyDecoder.isDecodable(response, decodeData)) {
                 this.response = response.buffer();
             } else {
@@ -70,7 +70,7 @@ public final class HttpResponseDecoder {
         /**
          * @return get the raw response that this decoded response based on
          */
-        public HttpResponse sourceResponse() {
+        public AsyncHttpResponse sourceResponse() {
             return this.response;
         }
 

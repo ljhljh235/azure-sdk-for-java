@@ -118,6 +118,7 @@
     <azure-common-auth.version>1.0.0-SNAPSHOT</azure-common-auth.version>
     <azure-common-mgmt.version>1.0.0-SNAPSHOT</azure-common-mgmt.version>
     <reactor-netty.version>0.8.3.RELEASE</reactor-netty.version>
+    <reactor-core.version>3.2.3.RELEASE</reactor-core.version>
     <netty.version>4.1.33.Final</netty.version>
 
     <!-- Test Dependency Versions -->
@@ -255,6 +256,11 @@
         <groupId>io.projectreactor.netty</groupId>
         <artifactId>reactor-netty</artifactId>
         <version>${reactor-netty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-core</artifactId>
+        <version>3.2.3.RELEASE</version>
       </dependency>
 
       <dependency>

@@ -54,17 +54,17 @@ class ReactorNettyClient implements HttpClient {
     }
 
     @Override
-    public Mono<HttpResponse> send(final HttpRequest request) {
+    public Mono<AsyncHttpResponse> sendAsync(final HttpRequest request) {
         Objects.requireNonNull(request.httpMethod());
         Objects.requireNonNull(request.url());
         Objects.requireNonNull(request.url().getProtocol());
         //
-        Mono<HttpResponse> response = httpClient
-                .request(HttpMethod.valueOf(request.httpMethod().toString()))
-                .uri(request.url().toString())
-                .send(bodySendDelegate(request))
-                .responseConnection(responseDelegate(request))
-                .single();
+        Mono<AsyncHttpResponse> response = httpClient
+            .request(HttpMethod.valueOf(request.httpMethod().toString()))
+            .uri(request.url().toString())
+            .send(bodySendDelegate(request))
+            .responseConnection(responseDelegate(request))
+            .single();
         return response;
     }
 
@@ -95,7 +95,7 @@ class ReactorNettyClient implements HttpClient {
      * @param restRequest the Rest request whose response this delegate handles
      * @return a delegate upon invocation setup Rest response object
      */
-    private static BiFunction<HttpClientResponse, Connection, Publisher<HttpResponse>> responseDelegate(final HttpRequest restRequest) {
+    private static BiFunction<HttpClientResponse, Connection, Publisher<AsyncHttpResponse>> responseDelegate(final HttpRequest restRequest) {
         return (reactorNettyResponse, reactorNettyConnection) ->
             Mono.just(new ReactorNettyHttpResponse(reactorNettyResponse, reactorNettyConnection).withRequest(restRequest));
     }
@@ -118,7 +118,7 @@ class ReactorNettyClient implements HttpClient {
         return new ReactorNettyClient(this.httpClient, client -> client.port(port));
     }
 
-    private static class ReactorNettyHttpResponse extends HttpResponse {
+    private static class ReactorNettyHttpResponse extends AsyncHttpResponse {
         private final HttpClientResponse reactorNettyResponse;
         private final Connection reactorNettyConnection;
 
@@ -145,7 +145,7 @@ class ReactorNettyClient implements HttpClient {
         }
 
         @Override
-        public Flux<ByteBuf> body() {
+        public Flux<ByteBuf> bodyAsByteBufAsync() {
             return bodyIntern().doFinally(s -> {
                 if (!reactorNettyConnection.isDisposed()) {
                     reactorNettyConnection.channel().eventLoop().execute(reactorNettyConnection::dispose);
@@ -154,7 +154,7 @@ class ReactorNettyClient implements HttpClient {
         }
 
         @Override
-        public Mono<byte[]> bodyAsByteArray() {
+        public Mono<byte[]> bodyAsByteArrayAsync() {
             return bodyIntern().aggregate().asByteArray().doFinally(s -> {
                 if (!reactorNettyConnection.isDisposed()) {
                     reactorNettyConnection.channel().eventLoop().execute(reactorNettyConnection::dispose);
@@ -163,7 +163,7 @@ class ReactorNettyClient implements HttpClient {
         }
 
         @Override
-        public Mono<String> bodyAsString() {
+        public Mono<String> bodyAsStringAsync() {
             return bodyIntern().aggregate().asString().doFinally(s -> {
                 if (!reactorNettyConnection.isDisposed()) {
                     reactorNettyConnection.channel().eventLoop().execute(reactorNettyConnection::dispose);
@@ -172,7 +172,7 @@ class ReactorNettyClient implements HttpClient {
         }
 
         @Override
-        public Mono<String> bodyAsString(Charset charset) {
+        public Mono<String> bodyAsStringAsync(Charset charset) {
             return bodyIntern().aggregate().asString(charset).doFinally(s -> {
                 if (!reactorNettyConnection.isDisposed()) {
                     reactorNettyConnection.channel().eventLoop().execute(reactorNettyConnection::dispose);

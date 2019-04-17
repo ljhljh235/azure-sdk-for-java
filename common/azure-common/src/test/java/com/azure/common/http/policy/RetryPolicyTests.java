@@ -6,7 +6,7 @@ package com.azure.common.http.policy;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.MockHttpClient;
 import com.azure.common.http.MockHttpResponse;
 import org.junit.Assert;
@@ -26,13 +26,13 @@ public class RetryPolicyTests {
            private int count = 0;
 
            @Override
-           public Mono<HttpResponse> send(HttpRequest request) {
-               return Mono.<HttpResponse>just(new MockHttpResponse(request, codes[count++]));
+           public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
+               return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, codes[count++]));
            }
        },
        new RetryPolicy(3, Duration.of(0, ChronoUnit.MILLIS)));
 
-        HttpResponse response = pipeline.send(new HttpRequest(HttpMethod.GET,
+        AsyncHttpResponse response = pipeline.send(new HttpRequest(HttpMethod.GET,
                         new URL("http://localhost/"))).block();
 
         Assert.assertEquals(501, response.statusCode());
@@ -45,15 +45,15 @@ public class RetryPolicyTests {
             int count = -1;
 
             @Override
-            public Mono<HttpResponse> send(HttpRequest request) {
+            public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                 Assert.assertTrue(count++ < maxRetries);
-                return Mono.<HttpResponse>just(new MockHttpResponse(request, 500));
+                return Mono.<AsyncHttpResponse>just(new MockHttpResponse(request, 500));
             }
         },
         new RetryPolicy(maxRetries, Duration.of(0, ChronoUnit.MILLIS)));
 
 
-        HttpResponse response = pipeline.send(new HttpRequest(HttpMethod.GET,
+        AsyncHttpResponse response = pipeline.send(new HttpRequest(HttpMethod.GET,
                         new URL("http://localhost/"))).block();
 
         Assert.assertEquals(500, response.statusCode());

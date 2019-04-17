@@ -7,7 +7,7 @@ import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.MockHttpClient;
 import io.netty.buffer.ByteBuf;
 import org.junit.Assert;
@@ -21,7 +21,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 public class RequestIdPolicyTests {
-    private final HttpResponse mockResponse = new HttpResponse() {
+    private final AsyncHttpResponse mockResponse = new AsyncHttpResponse() {
         @Override
         public int statusCode() {
             return 500;
@@ -38,22 +38,22 @@ public class RequestIdPolicyTests {
         }
 
         @Override
-        public Mono<byte[]> bodyAsByteArray() {
+        public Mono<byte[]> bodyAsByteArrayAsync() {
             return Mono.empty();
         }
 
         @Override
-        public Flux<ByteBuf> body() {
+        public Flux<ByteBuf> bodyAsByteBufAsync() {
             return Flux.empty();
         }
 
         @Override
-        public Mono<String> bodyAsString() {
+        public Mono<String> bodyAsStringAsync() {
             return Mono.empty();
         }
 
         @Override
-        public Mono<String> bodyAsString(Charset charset) {
+        public Mono<String> bodyAsStringAsync(Charset charset) {
             return Mono.empty();
         }
     };
@@ -65,7 +65,7 @@ public class RequestIdPolicyTests {
         HttpPipeline pipeline = new HttpPipeline(new MockHttpClient() {
             String firstRequestId = null;
             @Override
-            public Mono<HttpResponse> send(HttpRequest request) {
+            public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                 if (firstRequestId != null) {
                     String newRequestId = request.headers().value(REQUEST_ID_HEADER);
                     Assert.assertNotNull(newRequestId);
@@ -91,7 +91,7 @@ public class RequestIdPolicyTests {
             String firstRequestId = null;
 
             @Override
-            public Mono<HttpResponse> send(HttpRequest request) {
+            public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
                 if (firstRequestId != null) {
                     String newRequestId = request.headers().value(REQUEST_ID_HEADER);
                     Assert.assertNotNull(newRequestId);

@@ -9,7 +9,7 @@ import com.azure.common.credentials.ServiceClientCredentials;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.http.policy.CookiePolicy;
 import com.azure.common.http.policy.CredentialsPolicy;
 import com.azure.common.http.policy.HttpPipelinePolicy;
@@ -277,8 +277,8 @@ public final class AzureProxy extends RestProxy {
                 });
             }
         } else {
-            final Mono<HttpResponse> lastAsyncHttpResponse = createPollStrategy(httpRequest, asyncHttpResponse, methodParser)
-                    .flatMap((Function<PollStrategy, Mono<HttpResponse>>) pollStrategy -> pollStrategy.pollUntilDone());
+            final Mono<AsyncHttpResponse> lastAsyncHttpResponse = createPollStrategy(httpRequest, asyncHttpResponse, methodParser)
+                    .flatMap((Function<PollStrategy, Mono<AsyncHttpResponse>>) pollStrategy -> pollStrategy.pollUntilDone());
             return handleRestReturnType(new HttpResponseDecoder(this.serializer()).decode(lastAsyncHttpResponse, methodParser), methodParser, returnType);
         }
     }
@@ -303,7 +303,7 @@ public final class AzureProxy extends RestProxy {
         return asyncOriginalHttpDecodedResponse
                 .flatMap((Function<HttpDecodedResponse, Mono<PollStrategy>>) originalHttpDecodedResponse -> {
                     final int httpStatusCode = originalHttpDecodedResponse.sourceResponse().statusCode();
-                    final HttpResponse originalHttpResponse = originalHttpDecodedResponse.sourceResponse();
+                    final AsyncHttpResponse originalHttpResponse = originalHttpDecodedResponse.sourceResponse();
                     final int[] longRunningOperationStatusCodes = new int[] {200, 201, 202};
                     return ensureExpectedStatus(originalHttpDecodedResponse, methodParser, longRunningOperationStatusCodes)
                             .flatMap(response -> {
@@ -360,7 +360,7 @@ public final class AzureProxy extends RestProxy {
                 });
     }
 
-    private Mono<PollStrategy> createProvisioningStateOrCompletedPollStrategy(final HttpRequest httpRequest, HttpResponse httpResponse, final SwaggerMethodParser methodParser, final long delayInMilliseconds) {
+    private Mono<PollStrategy> createProvisioningStateOrCompletedPollStrategy(final HttpRequest httpRequest, AsyncHttpResponse httpResponse, final SwaggerMethodParser methodParser, final long delayInMilliseconds) {
         Mono<PollStrategy> pollStrategyMono;
 
         final HttpMethod httpRequestMethod = httpRequest.httpMethod();
@@ -371,8 +371,8 @@ public final class AzureProxy extends RestProxy {
             pollStrategyMono = Mono.<PollStrategy>just(new CompletedPollStrategy(
                     new CompletedPollStrategy.CompletedPollStrategyData(AzureProxy.this, methodParser, httpResponse)));
         } else {
-            final HttpResponse bufferedOriginalHttpResponse = httpResponse.buffer();
-            pollStrategyMono = bufferedOriginalHttpResponse.bodyAsString()
+            final AsyncHttpResponse bufferedOriginalHttpResponse = httpResponse.buffer();
+            pollStrategyMono = bufferedOriginalHttpResponse.bodyAsStringAsync()
                     .map(originalHttpResponseBody -> {
                         if (originalHttpResponseBody == null || originalHttpResponseBody.isEmpty()) {
                             throw new CloudException("The HTTP response does not contain a body.", bufferedOriginalHttpResponse);

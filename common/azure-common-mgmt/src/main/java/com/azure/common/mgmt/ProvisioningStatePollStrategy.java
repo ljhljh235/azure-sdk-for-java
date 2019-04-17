@@ -5,7 +5,7 @@ package com.azure.common.mgmt;
 
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.HttpResponse;
+import com.azure.common.http.AsyncHttpResponse;
 import com.azure.common.implementation.RestProxy;
 import com.azure.common.implementation.SwaggerMethodParser;
 import reactor.core.publisher.Mono;
@@ -66,11 +66,11 @@ public final class ProvisioningStatePollStrategy extends PollStrategy {
     }
 
     @Override
-    Mono<HttpResponse> updateFromAsync(HttpResponse pollResponse) {
+    Mono<AsyncHttpResponse> updateFromAsync(AsyncHttpResponse pollResponse) {
         return ensureExpectedStatus(pollResponse)
             .flatMap(response -> {
-                final HttpResponse bufferedHttpPollResponse = response.buffer();
-                return bufferedHttpPollResponse.bodyAsString()
+                final AsyncHttpResponse bufferedHttpPollResponse = response.buffer();
+                return bufferedHttpPollResponse.bodyAsStringAsync()
                     .map(responseBody -> {
                         ResourceWithProvisioningState resource = null;
                         try {

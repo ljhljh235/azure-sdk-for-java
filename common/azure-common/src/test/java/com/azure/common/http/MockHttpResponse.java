@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class MockHttpResponse extends HttpResponse {
+public class MockHttpResponse extends AsyncHttpResponse {
     private final static SerializerAdapter serializer = new JacksonAdapter();
 
     private final int statusCode;
@@ -74,7 +74,7 @@ public class MockHttpResponse extends HttpResponse {
     }
 
     @Override
-    public Mono<byte[]> bodyAsByteArray() {
+    public Mono<byte[]> bodyAsByteArrayAsync() {
         if (bodyBytes == null) {
             return Mono.empty();
         } else {
@@ -83,7 +83,7 @@ public class MockHttpResponse extends HttpResponse {
     }
 
     @Override
-    public Flux<ByteBuf> body() {
+    public Flux<ByteBuf> bodyAsByteBufAsync() {
         if (bodyBytes == null) {
             return Flux.empty();
         } else {
@@ -92,7 +92,7 @@ public class MockHttpResponse extends HttpResponse {
     }
 
     @Override
-    public Mono<String> bodyAsString() {
+    public Mono<String> bodyAsStringAsync() {
         if (bodyBytes == null) {
             return Mono.empty();
         } else {
@@ -101,7 +101,7 @@ public class MockHttpResponse extends HttpResponse {
     }
 
     @Override
-    public Mono<String> bodyAsString(Charset charset) {
+    public Mono<String> bodyAsStringAsync(Charset charset) {
         if (bodyBytes == null) {
             return Mono.empty();
         } else {
