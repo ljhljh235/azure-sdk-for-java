@@ -4,10 +4,10 @@
 package com.azure.common.mgmt;
 
 import com.azure.common.exception.ServiceRequestException;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 
 public class MyAzureException extends ServiceRequestException {
-    public MyAzureException(String message, AsyncHttpResponse response, HttpBinJSON body) {
+    public MyAzureException(String message, HttpResponse response, HttpBinJSON body) {
         super(message, response, body);
     }
 

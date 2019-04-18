@@ -18,42 +18,10 @@ public interface HttpClient {
      * @param request The HTTP request to send
      * @return A {@link Mono} that emits response asynchronously
      */
-    Mono<AsyncHttpResponse> sendAsync(HttpRequest request);
+    Mono<HttpResponse> sendAsync(HttpRequest request);
 
     default HttpResponse send(HttpRequest request) {
-        return sendAsync(request).flatMap(ahr -> ahr.bodyAsByteArrayAsync()
-            .map(bytes -> new HttpResponse() {
-                @Override
-                public int statusCode() {
-                    return ahr.statusCode();
-                }
-
-                @Override
-                public String headerValue(String name) {
-                    return ahr.headerValue(name);
-                }
-
-                @Override
-                public HttpHeaders headers() {
-                    return ahr.headers();
-                }
-
-                @Override
-                public byte[] bodyAsByteArray() {
-                    return bytes;
-                }
-
-                @Override
-                public String bodyAsString() {
-                    return new String(bytes);
-                }
-
-                @Override
-                public String bodyAsString(Charset charset) {
-                    return new String(bytes, charset);
-                }
-            })
-        ).block();
+        return sendAsync(request).block();
     }
 
     /**
@@ -62,7 +30,24 @@ public interface HttpClient {
      * @return the HttpClient
      */
     static HttpClient createDefault() {
-        return new ReactorNettyClient();
+        Class<?> httpClientClass = null;
+        try {
+            httpClientClass = Class.forName("com.azure.common.netty.ReactorNettyClient");
+        } catch (ClassNotFoundException e) { /* Netty not found, try other options */ }
+        // Repeat for other Http clients
+        if (httpClientClass == null) {
+            try {
+                httpClientClass = Class.forName("com.azure.common.http.HttpUrlConnectionClient");
+            } catch (ClassNotFoundException e) {
+                // Last built-in option
+                throw new NoClassDefFoundError("Cannot find any class implementing HttpClient");
+            }
+        }
+        try {
+            return (HttpClient) httpClientClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

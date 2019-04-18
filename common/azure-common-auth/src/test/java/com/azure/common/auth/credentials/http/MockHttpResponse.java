@@ -4,7 +4,7 @@
 package com.azure.common.auth.credentials.http;
 
 import com.azure.common.http.HttpHeaders;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.implementation.serializer.SerializerAdapter;
 import com.azure.common.implementation.serializer.SerializerEncoding;
 import com.azure.common.implementation.serializer.jackson.JacksonAdapter;
@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-public class MockHttpResponse extends AsyncHttpResponse {
+public class MockHttpResponse extends HttpResponse {
     private final static SerializerAdapter serializer = new JacksonAdapter();
 
     private final int statusCode;

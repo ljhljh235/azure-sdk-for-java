@@ -62,7 +62,7 @@ public class ProxyOptions {
             this.value = reactorProxyType;
         }
 
-        Proxy value() {
+        public Proxy value() {
             return value;
         }
     }

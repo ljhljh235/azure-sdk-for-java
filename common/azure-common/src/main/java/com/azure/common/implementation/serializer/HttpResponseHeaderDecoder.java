@@ -7,7 +7,7 @@ import com.azure.common.annotations.HeaderCollection;
 import com.azure.common.exception.ServiceRequestException;
 import com.azure.common.http.HttpHeader;
 import com.azure.common.http.HttpHeaders;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.http.rest.ResponseBase;
 import com.azure.common.implementation.util.TypeUtil;
 import reactor.core.publisher.Mono;
@@ -35,7 +35,7 @@ final class HttpResponseHeaderDecoder {
      * @return publisher that emits decoded response header upon subscription if header is decodable,
      * no emission if the header is not-decodable
      */
-    static Mono<Object> decode(AsyncHttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
+    static Mono<Object> decode(HttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
         Type headerType = decodeData.headersType();
         if (headerType == null) {
             return Mono.empty();

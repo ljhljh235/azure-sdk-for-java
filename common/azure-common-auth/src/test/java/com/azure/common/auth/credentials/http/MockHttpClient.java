@@ -5,7 +5,7 @@ package com.azure.common.auth.credentials.http;
 
 import com.azure.common.http.HttpClient;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.http.ProxyOptions;
 import reactor.core.publisher.Mono;
 
@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * This HttpClient attempts to mimic the behavior of http://httpbin.org without ever making a network call.
  */
 public class MockHttpClient implements HttpClient {
-    private static final AsyncHttpResponse mockResponse = new MockHttpResponse(200);
+    private static final HttpResponse mockResponse = new MockHttpResponse(200);
     private final List<HttpRequest> requests;
 
     public MockHttpClient() {
@@ -29,7 +29,7 @@ public class MockHttpClient implements HttpClient {
     }
 
     @Override
-    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
+    public Mono<HttpResponse> sendAsync(HttpRequest request) {
         requests.add(request);
 
         return Mono.just(mockResponse);

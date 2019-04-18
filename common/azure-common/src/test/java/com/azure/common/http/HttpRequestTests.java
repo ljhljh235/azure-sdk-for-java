@@ -33,7 +33,7 @@ public class HttpRequestTests {
                 HttpMethod.PUT,
                 new URL("http://request.url"),
                 headers,
-                Flux.just(Unpooled.buffer(0, 0)));
+                HttpBody.fromByteBuf(Flux.just(Unpooled.buffer(0, 0))));
 
         final HttpRequest bufferedRequest = request.buffer();
 

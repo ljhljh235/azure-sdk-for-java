@@ -6,7 +6,7 @@ package com.azure.common.implementation.serializer;
 import com.azure.common.annotations.ReturnValueWireType;
 import com.azure.common.exception.ServiceRequestException;
 import com.azure.common.http.HttpMethod;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.http.rest.Page;
 import com.azure.common.http.rest.Response;
 import com.azure.common.http.rest.ResponseBase;
@@ -45,12 +45,12 @@ final class HttpResponseBodyDecoder {
      * @return publisher that emits decoded response body upon subscription if body is decodable,
      * no emission if the body is not-decodable
      */
-    static Mono<Object> decode(AsyncHttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
+    static Mono<Object> decode(HttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
         ensureRequestSet(httpResponse);
         //
         return Mono.defer(() -> {
             if (isErrorStatus(httpResponse, decodeData)) {
-                return httpResponse.bodyAsStringAsync()
+                return httpResponse.body().toStringAsync()
                         .flatMap(bodyString -> {
                             try {
                                 final Object decodedErrorEntity = deserializeBody(bodyString,
@@ -71,7 +71,7 @@ final class HttpResponseBodyDecoder {
             } else if (!isReturnTypeDecodable(decodeData)) {
                 return Mono.empty();
             } else {
-                return httpResponse.bodyAsStringAsync()
+                return httpResponse.body().toStringAsync()
                         .flatMap(bodyString -> {
                             try {
                                 final Object decodedSuccessEntity = deserializeBody(bodyString,
@@ -93,7 +93,7 @@ final class HttpResponseBodyDecoder {
     /**
      * @return true if the body is decodable, false otherwise
      */
-    static boolean isDecodable(AsyncHttpResponse httpResponse, HttpResponseDecodeData decodeData) {
+    static boolean isDecodable(HttpResponse httpResponse, HttpResponseDecodeData decodeData) {
         ensureRequestSet(httpResponse);
         //
         if (isErrorStatus(httpResponse, decodeData)) {
@@ -111,7 +111,7 @@ final class HttpResponseBodyDecoder {
     /**
      * @return the decoded type used to decode the response body, null if the body is not decodable.
      */
-    static Type decodedType(AsyncHttpResponse httpResponse, HttpResponseDecodeData decodeData) {
+    static Type decodedType(HttpResponse httpResponse, HttpResponseDecodeData decodeData) {
         ensureRequestSet(httpResponse);
         //
         if (isErrorStatus(httpResponse, decodeData)) {
@@ -135,7 +135,7 @@ final class HttpResponseBodyDecoder {
      * @param decodeData the response metadata
      * @return true if the response status code is considered as error, false otherwise.
      */
-    static boolean isErrorStatus(AsyncHttpResponse httpResponse, HttpResponseDecodeData decodeData) {
+    static boolean isErrorStatus(HttpResponse httpResponse, HttpResponseDecodeData decodeData) {
         final int[] expectedStatuses = decodeData.expectedStatusCodes();
         if (expectedStatuses != null) {
             return !contains(expectedStatuses, httpResponse.statusCode());
@@ -425,7 +425,7 @@ final class HttpResponseBodyDecoder {
      * @param httpResponse the response to validate
      * @return the validated response
      */
-    private static AsyncHttpResponse ensureRequestSet(AsyncHttpResponse httpResponse) {
+    private static HttpResponse ensureRequestSet(HttpResponse httpResponse) {
         Objects.requireNonNull(httpResponse.request());
         Objects.requireNonNull(httpResponse.request().httpMethod());
         return httpResponse;

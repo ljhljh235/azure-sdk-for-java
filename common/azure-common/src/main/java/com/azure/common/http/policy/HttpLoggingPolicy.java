@@ -8,7 +8,7 @@ import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.implementation.util.FluxUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -54,7 +54,7 @@ public class HttpLoggingPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         //
         Optional<Object> data = context.getData("caller-method");
         String callerMethod;
@@ -68,7 +68,7 @@ public class HttpLoggingPolicy implements HttpPipelinePolicy {
         final long startNs = System.nanoTime();
         //
         Mono<Void> logRequest = logRequest(logger, context.httpRequest());
-        Function<AsyncHttpResponse, Mono<AsyncHttpResponse>> logResponseDelegate = logResponseDelegate(logger, context.httpRequest().url(), startNs);
+        Function<HttpResponse, Mono<HttpResponse>> logResponseDelegate = logResponseDelegate(logger, context.httpRequest().url(), startNs);
         //
         return logRequest.then(next.process()).flatMap(logResponseDelegate)
                 .doOnError(throwable -> log(logger, "<-- HTTP FAILED: " + throwable));
@@ -97,7 +97,7 @@ public class HttpLoggingPolicy implements HttpPipelinePolicy {
 
                 if (contentLength < MAX_BODY_LOG_SIZE && isHumanReadableContentType) {
                     try {
-                        Mono<byte[]> collectedBytes = FluxUtil.collectBytesInByteBufStream(request.body(), true);
+                        Mono<byte[]> collectedBytes = FluxUtil.collectBytesInByteBufStream(request.body().toByteBufAsync(), true);
                         reqBodyLoggingMono = collectedBytes.flatMap(bytes -> {
                             String bodyString = new String(bytes, StandardCharsets.UTF_8);
                             bodyString = prettyPrintIfNeeded(logger, request.headers().value("Content-Type"), bodyString);
@@ -117,8 +117,8 @@ public class HttpLoggingPolicy implements HttpPipelinePolicy {
         return reqBodyLoggingMono;
     }
 
-    private Function<AsyncHttpResponse, Mono<AsyncHttpResponse>> logResponseDelegate(final Logger logger, final URL url, final long startNs) {
-        return (AsyncHttpResponse response) -> {
+    private Function<HttpResponse, Mono<HttpResponse>> logResponseDelegate(final Logger logger, final URL url, final long startNs) {
+        return (HttpResponse response) -> {
             long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
             //
             String contentLengthString = response.headerValue("Content-Length");
@@ -145,8 +145,8 @@ public class HttpLoggingPolicy implements HttpPipelinePolicy {
                 final String contentTypeHeader = response.headerValue("Content-Type");
                 if ((contentTypeHeader == null || !"application/octet-stream".equalsIgnoreCase(contentTypeHeader))
                         && contentLength != 0 && contentLength < MAX_BODY_LOG_SIZE) {
-                    final AsyncHttpResponse bufferedResponse = response.buffer();
-                    return bufferedResponse.bodyAsStringAsync().map(bodyStr -> {
+                    final HttpResponse bufferedResponse = response.buffer();
+                    return bufferedResponse.body().toStringAsync().map(bodyStr -> {
                         bodyStr = prettyPrintIfNeeded(logger, contentTypeHeader, bodyStr);
                         log(logger, "Response body:\n" + bodyStr);
                         log(logger, "<-- END HTTP");

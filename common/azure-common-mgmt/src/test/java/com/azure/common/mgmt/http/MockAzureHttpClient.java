@@ -8,7 +8,7 @@ import com.azure.common.http.HttpHeader;
 import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.http.ProxyOptions;
 import com.azure.common.implementation.util.FluxUtil;
 import com.azure.common.mgmt.AsyncOperationResource;
@@ -54,7 +54,7 @@ public class MockAzureHttpClient implements HttpClient {
     }
 
     @Override
-    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
+    public Mono<HttpResponse> sendAsync(HttpRequest request) {
         MockAzureHttpResponse response = null;
 
         try {
@@ -272,7 +272,7 @@ public class MockAzureHttpClient implements HttpClient {
         catch (Exception ignored) {
         }
 
-        return Mono.<AsyncHttpResponse>just(response);
+        return Mono.<HttpResponse>just(response);
     }
 
     @Override
@@ -309,8 +309,7 @@ public class MockAzureHttpClient implements HttpClient {
     }
 
     private static String bodyToString(HttpRequest request) throws IOException {
-        Mono<String> asyncString = FluxUtil.collectBytesInByteBufStream(request.body(), false)
-                .map(bytes -> new String(bytes, StandardCharsets.UTF_8));
+        Mono<String> asyncString = request.body().toStringAsync();
         return asyncString.block();
     }
 

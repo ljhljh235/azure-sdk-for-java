@@ -5,7 +5,7 @@ package com.azure.common.http.policy;
 
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.implementation.http.UrlBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +30,10 @@ public class HostPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         LOGGER.info("Setting host to {0}", host);
 
-        Mono<AsyncHttpResponse> result;
+        Mono<HttpResponse> result;
         final UrlBuilder urlBuilder = UrlBuilder.parse(context.httpRequest().url());
         try {
             context.httpRequest().withUrl(urlBuilder.withHost(host).toURL());

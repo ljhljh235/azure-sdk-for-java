@@ -6,7 +6,7 @@ package com.azure.common.http.policy;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import reactor.core.publisher.Mono;
 
 import java.net.HttpURLConnection;
@@ -43,11 +43,11 @@ public class RetryPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         return attemptAsync(context, next, context.httpRequest(), 0);
     }
 
-    private Mono<AsyncHttpResponse> attemptAsync(final HttpPipelineCallContext context, final HttpPipelineNextPolicy next, final HttpRequest originalHttpRequest, final int tryCount) {
+    private Mono<HttpResponse> attemptAsync(final HttpPipelineCallContext context, final HttpPipelineNextPolicy next, final HttpRequest originalHttpRequest, final int tryCount) {
         context.withHttpRequest(originalHttpRequest.buffer());
         return next.clone().process()
                 .flatMap(httpResponse -> {
@@ -66,7 +66,7 @@ public class RetryPolicy implements HttpPipelinePolicy {
                 });
     }
 
-    private boolean shouldRetry(AsyncHttpResponse response, int tryCount) {
+    private boolean shouldRetry(HttpResponse response, int tryCount) {
         int code = response.statusCode();
         return tryCount < maxRetries
                 && (code == HttpURLConnection.HTTP_CLIENT_TIMEOUT

@@ -6,7 +6,7 @@ package com.azure.common.http.policy;
 import com.azure.common.http.HttpHeader;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import reactor.core.Exceptions;
 import reactor.core.publisher.Mono;
 
@@ -28,7 +28,7 @@ public class CookiePolicy implements HttpPipelinePolicy {
     private final CookieHandler cookies = new CookieManager();
 
     @Override
-    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         try {
             final URI uri = context.httpRequest().url().toURI();
 

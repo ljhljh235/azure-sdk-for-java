@@ -6,7 +6,7 @@ package com.azure.common.mgmt;
 import com.azure.common.exception.ServiceRequestException;
 import com.azure.common.http.ContextData;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.implementation.RestProxy;
 import com.azure.common.implementation.SwaggerMethodParser;
 import com.azure.common.implementation.serializer.HttpResponseDecoder;
@@ -59,11 +59,11 @@ abstract class PollStrategy {
         return (T) restProxy.serializer().deserialize(value, returnType, SerializerEncoding.JSON);
     }
 
-    protected Mono<AsyncHttpResponse> ensureExpectedStatus(AsyncHttpResponse httpResponse) {
+    protected Mono<HttpResponse> ensureExpectedStatus(HttpResponse httpResponse) {
         return ensureExpectedStatus(httpResponse, null);
     }
 
-    protected Mono<AsyncHttpResponse> ensureExpectedStatus(AsyncHttpResponse httpResponse, int[] additionalAllowedStatusCodes) {
+    protected Mono<HttpResponse> ensureExpectedStatus(HttpResponse httpResponse, int[] additionalAllowedStatusCodes) {
         Mono<HttpResponseDecoder.HttpDecodedResponse> asyncDecodedResponse = new HttpResponseDecoder(restProxy.serializer()).decode(Mono.just(httpResponse), this.methodParser);
         return asyncDecodedResponse.flatMap(decodedResponse -> {
             return restProxy.ensureExpectedStatus(decodedResponse, methodParser, additionalAllowedStatusCodes);
@@ -89,14 +89,14 @@ abstract class PollStrategy {
      * Update the delay in milliseconds from the provided HTTP poll response.
      * @param httpPollResponse The HTTP poll response to update the delay in milliseconds from.
      */
-    final void updateDelayInMillisecondsFrom(AsyncHttpResponse httpPollResponse) {
+    final void updateDelayInMillisecondsFrom(HttpResponse httpPollResponse) {
         final Long parsedDelayInMilliseconds = delayInMillisecondsFrom(httpPollResponse);
         if (parsedDelayInMilliseconds != null) {
             delayInMilliseconds = parsedDelayInMilliseconds;
         }
     }
 
-    static Long delayInMillisecondsFrom(AsyncHttpResponse httpResponse) {
+    static Long delayInMillisecondsFrom(HttpResponse httpResponse) {
         Long result = null;
 
         final String retryAfterSecondsString = httpResponse.headerValue("Retry-After");
@@ -147,7 +147,7 @@ abstract class PollStrategy {
      * @param httpPollResponse The response of the most recent poll request.
      * @return A Completable that can be used to chain off of this operation.
      */
-    abstract Mono<AsyncHttpResponse> updateFromAsync(AsyncHttpResponse httpPollResponse);
+    abstract Mono<HttpResponse> updateFromAsync(HttpResponse httpPollResponse);
 
     /**
      * Get whether or not this PollStrategy's long running operation is done.
@@ -155,14 +155,14 @@ abstract class PollStrategy {
      */
     abstract boolean isDone();
 
-    Mono<AsyncHttpResponse> sendPollRequestWithDelay() {
+    Mono<HttpResponse> sendPollRequestWithDelay() {
         return Mono.defer(() -> delayAsync().then(Mono.defer(() -> {
             final HttpRequest pollRequest = createPollRequest();
             return restProxy.send(pollRequest, new ContextData("caller-method", fullyQualifiedMethodName()));
         })).flatMap(response -> updateFromAsync(response)));
     }
 
-    Mono<OperationStatus<Object>> createOperationStatusMono(HttpRequest httpRequest, AsyncHttpResponse httpResponse, SwaggerMethodParser methodParser, Type operationStatusResultType) {
+    Mono<OperationStatus<Object>> createOperationStatusMono(HttpRequest httpRequest, HttpResponse httpResponse, SwaggerMethodParser methodParser, Type operationStatusResultType) {
         OperationStatus<Object> operationStatus;
         if (!isDone()) {
             operationStatus = new OperationStatus<>(this, httpRequest);
@@ -184,7 +184,7 @@ abstract class PollStrategy {
                 .takeUntil(operationStatus -> isDone());
     }
 
-    Mono<AsyncHttpResponse> pollUntilDone() {
+    Mono<HttpResponse> pollUntilDone() {
         return sendPollRequestWithDelay()
                 .repeat()
                 .takeUntil(ignored -> isDone())

@@ -1,8 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+package com.azure.common.netty;// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-package com.azure.common.http;
-
+import com.azure.common.http.HttpBody;
+import com.azure.common.http.HttpResponse;
+import com.azure.common.http.HttpClient;
+import com.azure.common.http.HttpMethod;
+import com.azure.common.http.HttpRequest;
+import com.azure.common.netty.ReactorNettyClient.ReactorNettyHttpResponse;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
@@ -76,11 +80,11 @@ public class ReactorNettyClientTests {
 
     @Test
     public void testMultipleSubscriptionsEmitsError() {
-        AsyncHttpResponse response = getResponse("/short");
+        HttpResponse response = getResponse("/short");
         // Subscription:1
-        response.bodyAsByteArrayAsync().block();
+        response.body().toByteArrayAsync().block();
         // Subscription:2
-        StepVerifier.create(response.bodyAsByteArrayAsync())
+        StepVerifier.create(response.body().toByteArrayAsync())
                 .expectNextCount(0) // TODO: Check with smaldini, what is the verifier operator equivalent to .awaitDone(20, TimeUnit.SECONDS)
                 .verifyError(IllegalStateException.class);
 
@@ -88,35 +92,35 @@ public class ReactorNettyClientTests {
 
     @Test
     public void testDispose() throws InterruptedException {
-        AsyncHttpResponse response = getResponse("/long");
-        response.bodyAsByteBufAsync().subscribe().dispose();
+        HttpResponse response = getResponse("/long");
+        response.body().toByteBufAsync().subscribe().dispose();
         // Wait for scheduled connection disposal action to execute on netty event-loop
         Thread.sleep(5000);
-        Assert.assertTrue(response.internConnection().isDisposed());
+        Assert.assertTrue(((ReactorNettyHttpResponse) response).internConnection().isDisposed());
     }
 
 
 
     @Test
     public void testCancel() {
-        AsyncHttpResponse response = getResponse("/long");
+        HttpResponse response = getResponse("/long");
         //
         StepVerifierOptions stepVerifierOptions = StepVerifierOptions.create();
         stepVerifierOptions.initialRequest(0);
         //
-        StepVerifier.create(response.bodyAsByteBufAsync(), stepVerifierOptions)
+        StepVerifier.create(response.body().toByteBufAsync(), stepVerifierOptions)
                 .expectNextCount(0)
                 .thenRequest(1)
                 .expectNextCount(1)
                 .thenCancel()
                 .verify();
-        Assert.assertTrue(response.internConnection().isDisposed());
+        Assert.assertTrue(((ReactorNettyHttpResponse) response).internConnection().isDisposed());
     }
 
     @Test
     public void testFlowableWhenServerReturnsBodyAndNoErrorsWhenHttp500Returned() {
-        AsyncHttpResponse response = getResponse("/error");
-        StepVerifier.create(response.bodyAsStringAsync())
+        HttpResponse response = getResponse("/error");
+        StepVerifier.create(response.body().toStringAsync())
                 .expectNext("error") // TODO: .awaitDone(20, TimeUnit.SECONDS) [See previous todo]
                 .verifyComplete();
         assertEquals(500, response.statusCode());
@@ -125,12 +129,12 @@ public class ReactorNettyClientTests {
     @Test
     @Ignore("Not working accurately at present")
     public void testFlowableBackpressure() {
-        AsyncHttpResponse response = getResponse("/long");
+        HttpResponse response = getResponse("/long");
         //
         StepVerifierOptions stepVerifierOptions = StepVerifierOptions.create();
         stepVerifierOptions.initialRequest(0);
         //
-        StepVerifier.create(response.bodyAsByteBufAsync(), stepVerifierOptions)
+        StepVerifier.create(response.body().toByteBufAsync(), stepVerifierOptions)
                 .expectNextCount(0)
                 .thenRequest(1)
                 .expectNextCount(1)
@@ -146,7 +150,7 @@ public class ReactorNettyClientTests {
         HttpClient client = HttpClient.createDefault();
         HttpRequest request = new HttpRequest(HttpMethod.POST, url(server, "/shortPost"))
                 .withHeader("Content-Length", "123")
-                .withBody(Flux.error(new RuntimeException("boo")));
+                .withBody(HttpBody.fromByteBuf(Flux.error(new RuntimeException("boo"))));
 
         StepVerifier.create(client.sendAsync(request))
                 .expectErrorMessage("boo")
@@ -160,10 +164,10 @@ public class ReactorNettyClientTests {
         int repetitions = 1000;
         HttpRequest request = new HttpRequest(HttpMethod.POST, url(server, "/shortPost"))
                 .withHeader("Content-Length", String.valueOf(contentChunk.length() * repetitions))
-                .withBody(Flux.just(contentChunk)
+                .withBody(HttpBody.fromByteBuf(Flux.just(contentChunk)
                         .repeat(repetitions)
                         .map(s -> Unpooled.wrappedBuffer(s.getBytes(StandardCharsets.UTF_8)))
-                        .concatWith(Flux.error(new RuntimeException("boo"))));
+                        .concatWith(Flux.error(new RuntimeException("boo")))));
         StepVerifier.create(client.sendAsync(request))
                 // .awaitDone(10, TimeUnit.SECONDS)
                 .expectErrorMessage("boo")
@@ -206,11 +210,11 @@ public class ReactorNettyClientTests {
             HttpClient client = HttpClient.createDefault();
             HttpRequest request = new HttpRequest(HttpMethod.GET,
                     new URL("http://localhost:" + ss.getLocalPort() + "/get"));
-            AsyncHttpResponse response = client.sendAsync(request).block();
+            HttpResponse response = client.sendAsync(request).block();
             assertEquals(200, response.statusCode());
             System.out.println("reading body");
             //
-            StepVerifier.create(response.bodyAsByteArrayAsync())
+            StepVerifier.create(response.body().toByteArrayAsync())
                     // .awaitDone(20, TimeUnit.SECONDS)
                     .verifyError(IOException.class);
         } finally {
@@ -231,7 +235,7 @@ public class ReactorNettyClientTests {
                 .runOn(reactor.core.scheduler.Schedulers.newElastic("io", 30))
                 .flatMap(n -> Mono.fromCallable(() -> getResponse(client, "/long")).flatMapMany(response -> {
                     MessageDigest md = md5Digest();
-                    return response.bodyAsByteBufAsync()
+                    return response.body().toByteBufAsync()
                             .doOnNext(bb -> {
                                 bb.retain();
                                 if (bb.hasArray()) {
@@ -299,12 +303,12 @@ public class ReactorNettyClientTests {
         }
     }
 
-    private static AsyncHttpResponse getResponse(String path) {
+    private static HttpResponse getResponse(String path) {
         HttpClient client = HttpClient.createDefault();
         return getResponse(client, path);
     }
 
-    private static AsyncHttpResponse getResponse(HttpClient client, String path) {
+    private static HttpResponse getResponse(HttpClient client, String path) {
         HttpRequest request = new HttpRequest(HttpMethod.GET, url(server, path));
         return client.sendAsync(request).block();
     }
@@ -327,15 +331,15 @@ public class ReactorNettyClientTests {
 
     private void checkBodyReceived(String expectedBody, String path) {
         HttpClient client = HttpClient.createDefault();
-        AsyncHttpResponse response = doRequest(client, path);
-        String s = new String(response.bodyAsByteArrayAsync().block(),
+        HttpResponse response = doRequest(client, path);
+        String s = new String(response.body().toByteArrayAsync().block(),
                 StandardCharsets.UTF_8);
         assertEquals(expectedBody, s);
     }
 
-    private AsyncHttpResponse doRequest(HttpClient client, String path) {
+    private HttpResponse doRequest(HttpClient client, String path) {
         HttpRequest request = new HttpRequest(HttpMethod.GET, url(server, path));
-        AsyncHttpResponse response = client.sendAsync(request).block();
+        HttpResponse response = client.sendAsync(request).block();
         return response;
     }
 }

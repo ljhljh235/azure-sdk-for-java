@@ -5,7 +5,7 @@ package com.azure.common.test.http;
 
 import com.azure.common.http.HttpHeaders;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.implementation.serializer.SerializerAdapter;
 import com.azure.common.implementation.serializer.SerializerEncoding;
 import com.azure.common.implementation.serializer.jackson.JacksonAdapter;
@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * An HTTP response that is created to simulate a HTTP request.
  */
-public class MockHttpResponse extends AsyncHttpResponse {
+public class MockHttpResponse extends HttpResponse {
     private static final SerializerAdapter SERIALIZER = new JacksonAdapter();
 
     private final int statusCode;

@@ -5,7 +5,7 @@ package com.azure.common.http.policy;
 
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.implementation.util.Base64Util;
 import reactor.core.publisher.Mono;
 
@@ -30,7 +30,7 @@ public class ProxyAuthenticationPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         String auth = username + ":" + password;
         String encodedAuth = Base64Util.encodeToString(auth.getBytes(StandardCharsets.UTF_8));
         context.httpRequest().withHeader("Proxy-Authentication", "Basic " + encodedAuth);

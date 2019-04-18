@@ -36,8 +36,8 @@ public class MockHttpClient implements HttpClient {
             .set("Content-Type", "application/json");
 
     @Override
-    public Mono<AsyncHttpResponse> sendAsync(HttpRequest request) {
-        AsyncHttpResponse response = null;
+    public Mono<HttpResponse> sendAsync(HttpRequest request) {
+        HttpResponse response = null;
 
         try {
             final URL requestUrl = request.url();
@@ -169,7 +169,7 @@ public class MockHttpClient implements HttpClient {
                 }
             }
             else if ("echo.org".equalsIgnoreCase(requestHost)) {
-                return request.body()
+                return request.body().toByteBufAsync()
                     .map(ByteBuf::nioBuffer)
                     .collectList()
                     .map(list ->  {
@@ -216,8 +216,7 @@ public class MockHttpClient implements HttpClient {
     private static String bodyToString(HttpRequest request) {
         String body = "";
         if (request.body() != null) {
-            Mono<String> asyncString = FluxUtil.collectBytesInByteBufStream(request.body(), true)
-                    .map(bytes -> new String(bytes, StandardCharsets.UTF_8));
+            Mono<String> asyncString = request.body().toStringAsync();
             body = asyncString.block();
         }
         return body;

@@ -3,7 +3,7 @@
 
 package com.azure.common.exception;
 
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 
 /**
  * An exception thrown for an invalid response with custom error information.
@@ -12,7 +12,7 @@ public class ServiceRequestException extends AzureException {
     /**
      * Information about the associated HTTP response.
      */
-    private AsyncHttpResponse response;
+    private HttpResponse response;
 
     /**
      * The HTTP response value.
@@ -25,7 +25,7 @@ public class ServiceRequestException extends AzureException {
      * @param message the exception message or the response content if a message is not available
      * @param response the HTTP response
      */
-    public ServiceRequestException(String message, AsyncHttpResponse response) {
+    public ServiceRequestException(String message, HttpResponse response) {
         super(message);
         this.response = response;
     }
@@ -37,7 +37,7 @@ public class ServiceRequestException extends AzureException {
      * @param response the HTTP response
      * @param value the deserialized response value
      */
-    public ServiceRequestException(String message, AsyncHttpResponse response, Object value) {
+    public ServiceRequestException(String message, HttpResponse response, Object value) {
         super(message);
         this.response = response;
         this.value = value;
@@ -50,7 +50,7 @@ public class ServiceRequestException extends AzureException {
      * @param response the HTTP response
      * @param cause the Throwable which caused the creation of this ServiceRequestException
      */
-    public ServiceRequestException(String message, AsyncHttpResponse response, Throwable cause) {
+    public ServiceRequestException(String message, HttpResponse response, Throwable cause) {
         super(message, cause);
         this.response = response;
     }
@@ -58,7 +58,7 @@ public class ServiceRequestException extends AzureException {
     /**
      * @return information about the associated HTTP response
      */
-    public AsyncHttpResponse response() {
+    public HttpResponse response() {
         return response;
     }
 

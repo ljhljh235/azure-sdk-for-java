@@ -5,7 +5,7 @@ package com.azure.common.http.policy;
 
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -18,7 +18,7 @@ public class RequestIdPolicy implements HttpPipelinePolicy {
     private static final String REQUEST_ID_HEADER = "x-ms-client-request-id";
 
     @Override
-    public Mono<AsyncHttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         String requestId = context.httpRequest().headers().value(REQUEST_ID_HEADER);
         if (requestId == null) {
             context.httpRequest().headers().set(REQUEST_ID_HEADER, UUID.randomUUID().toString());

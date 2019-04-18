@@ -3,12 +3,7 @@
 
 package com.azure.common.http;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import reactor.core.publisher.Flux;
-
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 /**
  * The outgoing Http request.
@@ -17,7 +12,7 @@ public class HttpRequest {
     private HttpMethod httpMethod;
     private URL url;
     private HttpHeaders headers;
-    private Flux<ByteBuf> body;
+    private HttpBody body;
 
     /**
      * Create a new HttpRequest instance.
@@ -39,7 +34,7 @@ public class HttpRequest {
      * @param headers the HTTP headers to use with this request
      * @param body the request content
      */
-    public HttpRequest(HttpMethod httpMethod, URL url, HttpHeaders headers, Flux<ByteBuf> body) {
+    public HttpRequest(HttpMethod httpMethod, URL url, HttpHeaders headers, HttpBody body) {
         this.httpMethod = httpMethod;
         this.url = url;
         this.headers = headers;
@@ -124,7 +119,7 @@ public class HttpRequest {
      *
      * @return the content to be send
      */
-    public Flux<ByteBuf> body() {
+    public HttpBody body() {
         return body;
     }
 
@@ -134,35 +129,8 @@ public class HttpRequest {
      * @param content the request content
      * @return this HttpRequest
      */
-    public HttpRequest withBody(String content) {
-        final byte[] bodyBytes = content.getBytes(StandardCharsets.UTF_8);
-        return withBody(bodyBytes);
-    }
-
-    /**
-     * Set the request content.
-     * The Content-Length header will be set based on the given content's length
-     *
-     * @param content the request content
-     * @return this HttpRequest
-     */
-    public HttpRequest withBody(byte[] content) {
-        headers.set("Content-Length", String.valueOf(content.length));
-        // Unpooled.wrappedBuffer(body) allocates ByteBuf from unpooled heap
-        return withBody(Flux.defer(() -> Flux.just(Unpooled.wrappedBuffer(content))));
-    }
-
-    /**
-     * Set request content.
-     *
-     * Caller must set the Content-Length header to indicate the length of the content,
-     * or use Transfer-Encoding: chunked.
-     *
-     * @param content the request content
-     * @return this HttpRequest
-     */
-    public HttpRequest withBody(Flux<ByteBuf> content) {
-        this.body = content;
+    public HttpRequest withBody(HttpBody content) {
+        body = content;
         return this;
     }
 

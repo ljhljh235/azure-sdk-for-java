@@ -124,7 +124,7 @@ public final class HttpPipeline {
      * @param request the request
      * @return a publisher upon subscription flows the context through policies, sends the request and emits response upon completion
      */
-    public Mono<AsyncHttpResponse> send(HttpRequest request) {
+    public Mono<HttpResponse> send(HttpRequest request) {
         return this.send(this.newContext(request));
     }
 
@@ -134,7 +134,7 @@ public final class HttpPipeline {
      * @param context the request context
      * @return a publisher upon subscription flows the context through policies, sends the request and emits response upon completion
      */
-    public Mono<AsyncHttpResponse> send(HttpPipelineCallContext context) {
+    public Mono<HttpResponse> send(HttpPipelineCallContext context) {
         // Return deferred to mono for complete lazy behaviour.
         //
         return Mono.defer(() -> {

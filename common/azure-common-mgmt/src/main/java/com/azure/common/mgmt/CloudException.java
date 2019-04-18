@@ -4,7 +4,7 @@
 package com.azure.common.mgmt;
 
 import com.azure.common.exception.ServiceRequestException;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 
 /**
  * Exception thrown for an invalid response with custom error information.
@@ -16,7 +16,7 @@ public final class CloudException extends ServiceRequestException {
      * @param message the exception message or the response content if a message is not available
      * @param response the HTTP response
      */
-    public CloudException(String message, AsyncHttpResponse response) {
+    public CloudException(String message, HttpResponse response) {
         super(message, response);
     }
 
@@ -27,7 +27,7 @@ public final class CloudException extends ServiceRequestException {
      * @param response the HTTP response
      * @param body the deserialized response body
      */
-    public CloudException(String message, AsyncHttpResponse response, CloudError body) {
+    public CloudException(String message, HttpResponse response, CloudError body) {
         super(message, response, body);
     }
 

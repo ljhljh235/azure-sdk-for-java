@@ -1,8 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-package com.azure.common.http;
+package com.azure.common.netty;
 
+import com.azure.common.http.HttpBody;
+import com.azure.common.http.HttpClient;
+import com.azure.common.http.HttpHeader;
+import com.azure.common.http.HttpHeaders;
+import com.azure.common.http.HttpRequest;
+import com.azure.common.http.HttpResponse;
+import com.azure.common.http.ProxyOptions;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.HttpMethod;
@@ -15,7 +22,6 @@ import reactor.netty.NettyOutbound;
 import reactor.netty.http.client.HttpClientRequest;
 import reactor.netty.http.client.HttpClientResponse;
 
-import java.nio.charset.Charset;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -24,13 +30,13 @@ import java.util.function.Supplier;
 /**
  * HttpClient that is implemented using reactor-netty.
  */
-class ReactorNettyClient implements HttpClient {
+public class ReactorNettyClient implements HttpClient {
     private reactor.netty.http.client.HttpClient httpClient;
 
     /**
      * Creates default ReactorNettyClient.
      */
-    ReactorNettyClient() {
+    public ReactorNettyClient() {
         this(reactor.netty.http.client.HttpClient.create());
     }
 
@@ -54,12 +60,12 @@ class ReactorNettyClient implements HttpClient {
     }
 
     @Override
-    public Mono<AsyncHttpResponse> sendAsync(final HttpRequest request) {
+    public Mono<HttpResponse> sendAsync(final HttpRequest request) {
         Objects.requireNonNull(request.httpMethod());
         Objects.requireNonNull(request.url());
         Objects.requireNonNull(request.url().getProtocol());
         //
-        Mono<AsyncHttpResponse> response = httpClient
+        Mono<HttpResponse> response = httpClient
             .request(HttpMethod.valueOf(request.httpMethod().toString()))
             .uri(request.url().toString())
             .send(bodySendDelegate(request))
@@ -80,7 +86,7 @@ class ReactorNettyClient implements HttpClient {
                 reactorNettyRequest.header(header.name(), header.value());
             }
             if (restRequest.body() != null) {
-                Flux<ByteBuf> nettyByteBufFlux = restRequest.body().map(Unpooled::wrappedBuffer);
+                Flux<ByteBuf> nettyByteBufFlux = restRequest.body().toByteBufAsync().map(Unpooled::wrappedBuffer);
                 return reactorNettyOutbound.send(nettyByteBufFlux);
             } else {
                 return reactorNettyOutbound;
@@ -95,7 +101,7 @@ class ReactorNettyClient implements HttpClient {
      * @param restRequest the Rest request whose response this delegate handles
      * @return a delegate upon invocation setup Rest response object
      */
-    private static BiFunction<HttpClientResponse, Connection, Publisher<AsyncHttpResponse>> responseDelegate(final HttpRequest restRequest) {
+    private static BiFunction<HttpClientResponse, Connection, Publisher<HttpResponse>> responseDelegate(final HttpRequest restRequest) {
         return (reactorNettyResponse, reactorNettyConnection) ->
             Mono.just(new ReactorNettyHttpResponse(reactorNettyResponse, reactorNettyConnection).withRequest(restRequest));
     }
@@ -118,7 +124,7 @@ class ReactorNettyClient implements HttpClient {
         return new ReactorNettyClient(this.httpClient, client -> client.port(port));
     }
 
-    private static class ReactorNettyHttpResponse extends AsyncHttpResponse {
+    static class ReactorNettyHttpResponse extends HttpResponse {
         private final HttpClientResponse reactorNettyResponse;
         private final Connection reactorNettyConnection;
 
@@ -145,39 +151,12 @@ class ReactorNettyClient implements HttpClient {
         }
 
         @Override
-        public Flux<ByteBuf> bodyAsByteBufAsync() {
-            return bodyIntern().doFinally(s -> {
+        public HttpBody body() {
+            return HttpBody.fromByteBuf(bodyIntern().doFinally(s -> {
                 if (!reactorNettyConnection.isDisposed()) {
                     reactorNettyConnection.channel().eventLoop().execute(reactorNettyConnection::dispose);
                 }
-            });
-        }
-
-        @Override
-        public Mono<byte[]> bodyAsByteArrayAsync() {
-            return bodyIntern().aggregate().asByteArray().doFinally(s -> {
-                if (!reactorNettyConnection.isDisposed()) {
-                    reactorNettyConnection.channel().eventLoop().execute(reactorNettyConnection::dispose);
-                }
-            });
-        }
-
-        @Override
-        public Mono<String> bodyAsStringAsync() {
-            return bodyIntern().aggregate().asString().doFinally(s -> {
-                if (!reactorNettyConnection.isDisposed()) {
-                    reactorNettyConnection.channel().eventLoop().execute(reactorNettyConnection::dispose);
-                }
-            });
-        }
-
-        @Override
-        public Mono<String> bodyAsStringAsync(Charset charset) {
-            return bodyIntern().aggregate().asString(charset).doFinally(s -> {
-                if (!reactorNettyConnection.isDisposed()) {
-                    reactorNettyConnection.channel().eventLoop().execute(reactorNettyConnection::dispose);
-                }
-            });
+            }));
         }
 
         @Override
@@ -191,8 +170,7 @@ class ReactorNettyClient implements HttpClient {
             return reactorNettyConnection.inbound().receive();
         }
 
-        @Override
-        Connection internConnection() {
+        public Connection internConnection() {
             return reactorNettyConnection;
         }
     }

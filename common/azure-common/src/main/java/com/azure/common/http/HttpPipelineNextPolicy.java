@@ -33,7 +33,7 @@ public class HttpPipelineNextPolicy {
      *
      * @return a publisher upon subscription invokes next policy and emits response from the policy.
      */
-    public Mono<AsyncHttpResponse> process() {
+    public Mono<HttpResponse> process() {
         final int size = this.pipeline.pipelinePolicies().length;
         if (this.currentPolicyIndex > size) {
             return Mono.error(new IllegalStateException("There is no more policies to execute."));

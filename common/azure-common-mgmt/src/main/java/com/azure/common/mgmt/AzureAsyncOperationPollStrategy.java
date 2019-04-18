@@ -5,7 +5,7 @@ package com.azure.common.mgmt;
 
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpRequest;
-import com.azure.common.http.AsyncHttpResponse;
+import com.azure.common.http.HttpResponse;
 import com.azure.common.implementation.RestProxy;
 import com.azure.common.implementation.SwaggerMethodParser;
 import reactor.core.publisher.Mono;
@@ -104,14 +104,14 @@ public final class AzureAsyncOperationPollStrategy extends PollStrategy {
     }
 
     @Override
-    public Mono<AsyncHttpResponse> updateFromAsync(AsyncHttpResponse httpPollResponse) {
+    public Mono<HttpResponse> updateFromAsync(HttpResponse httpPollResponse) {
         return ensureExpectedStatus(httpPollResponse)
                 .flatMap(response -> {
                     updateDelayInMillisecondsFrom(response);
-                    Mono<AsyncHttpResponse> result;
+                    Mono<HttpResponse> result;
                     if (!data.pollingCompleted) {
-                        final AsyncHttpResponse bufferedHttpPollResponse = response.buffer();
-                        result = bufferedHttpPollResponse.bodyAsStringAsync()
+                        final HttpResponse bufferedHttpPollResponse = response.buffer();
+                        result = bufferedHttpPollResponse.body().toStringAsync()
                                 .map(bodyString -> {
                                     AsyncOperationResource operationResource = null;
                                     try {
@@ -169,7 +169,7 @@ public final class AzureAsyncOperationPollStrategy extends PollStrategy {
      * @param delayInMilliseconds The delay (in milliseconds) that the resulting pollStrategy will
      *                            use when polling.
      */
-    static PollStrategy tryToCreate(RestProxy restProxy, SwaggerMethodParser methodParser, HttpRequest originalHttpRequest, AsyncHttpResponse httpResponse, long delayInMilliseconds) {
+    static PollStrategy tryToCreate(RestProxy restProxy, SwaggerMethodParser methodParser, HttpRequest originalHttpRequest, HttpResponse httpResponse, long delayInMilliseconds) {
         String urlHeader = getHeader(httpResponse);
         URL azureAsyncOperationUrl = null;
         if (urlHeader != null) {
@@ -194,7 +194,7 @@ public final class AzureAsyncOperationPollStrategy extends PollStrategy {
                 : null;
     }
 
-    static String getHeader(AsyncHttpResponse httpResponse) {
+    static String getHeader(HttpResponse httpResponse) {
         return httpResponse.headerValue(HEADER_NAME);
     }
 

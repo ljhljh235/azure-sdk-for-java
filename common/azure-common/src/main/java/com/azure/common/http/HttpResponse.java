@@ -4,13 +4,8 @@
 package com.azure.common.http;
 
 import com.azure.common.implementation.http.BufferedHttpResponse;
-import io.netty.buffer.ByteBuf;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.netty.Connection;
 
 import java.io.Closeable;
-import java.nio.charset.Charset;
 
 /**
  * The type representing response of {@link HttpRequest}.
@@ -45,22 +40,7 @@ public abstract class HttpResponse implements Closeable {
      *
      * @return this response content as a byte[]
      */
-    public abstract byte[] bodyAsByteArray();
-
-    /**
-     * Get the response content as a string.
-     *
-     * @return This response content as a string
-     */
-    public abstract String bodyAsString();
-
-    /**
-     * Get the response content as a string.
-     *
-     * @param charset the charset to use as encoding
-     * @return This response content as a string
-     */
-    public abstract String bodyAsString(Charset charset);
+    public abstract HttpBody body();
 
     /**
      * Get the request which resulted in this response.
@@ -81,26 +61,21 @@ public abstract class HttpResponse implements Closeable {
         this.request = request;
         return this;
     }
-//
-//    /**
-//     * Get a new Response object wrapping this response with it's content
-//     * buffered into memory.
-//     *
-//     * @return the new Response object
-//     */
-//    public HttpResponse buffer() {
-//        return new BufferedHttpResponse(this);
-//    }
+
+    /**
+     * Get a new Response object wrapping this response with it's content
+     * buffered into memory.
+     *
+     * @return the new Response object
+     */
+    public HttpResponse buffer() {
+        return new BufferedHttpResponse(this);
+    }
 
     /**
      * Closes the response content stream, if any.
      */
     @Override
     public void close() {
-    }
-
-    // package private for test purpose
-    Connection internConnection() {
-        return null;
     }
 }
