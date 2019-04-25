@@ -3,6 +3,7 @@
 
 package com.azure.common.http;
 
+import com.azure.common.http.ProxyOptions.Type;
 import io.netty.buffer.ByteBuf;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -32,7 +34,15 @@ public class HttpUrlConnectionClient implements HttpClient {
     public HttpResponse send(final HttpRequest request) {
         HttpURLConnection connection = null;
         try {
-            connection = (HttpURLConnection) request.url().openConnection();
+            if (proxyOptions == null) {
+                connection = (HttpURLConnection) request.url().openConnection();
+            } else {
+                Proxy proxy = new Proxy(proxyOptions.type() == Type.HTTP? Proxy.Type.HTTP: Proxy.Type.SOCKS, proxyOptions.address());
+                connection = (HttpURLConnection) request.url().openConnection(proxy);
+            }
+            if (request.httpMethod() == HttpMethod.PATCH) {
+                throw new UnsupportedOperationException("HttpUrlConnection cannot handle PATCH requests");
+            }
             connection.setRequestMethod(request.httpMethod().name());
             for (Map.Entry<String, String> header : request.headers().toMap().entrySet()) {
                 connection.setRequestProperty(header.getKey(), header.getValue());
@@ -61,12 +71,16 @@ public class HttpUrlConnectionClient implements HttpClient {
             } else {
                 in = connection.getErrorStream();
             }
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            while ((bytesRead = in.read(buffer)) != -1)
-            {
-                output.write(buffer, 0, bytesRead);
+            HttpBody body;
+            if (in == null) {
+                body = HttpBody.empty();
+            } else {
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                while ((bytesRead = in.read(buffer)) != -1) {
+                    output.write(buffer, 0, bytesRead);
+                }
+                body = HttpBody.fromByteArray(output.toByteArray());
             }
-            HttpBody body = HttpBody.fromByteArray(output.toByteArray());
             return new HttpResponse() {
                 @Override
                 public int statusCode() {

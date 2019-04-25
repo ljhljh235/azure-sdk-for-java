@@ -113,7 +113,7 @@ public class HttpBody {
 
     public HttpBody buffer() {
         if (asyncBody != null) {
-            return HttpBody.fromByteArray(toByteArrayAsync().cache().block());
+            return HttpBody.fromByteBuf(asyncBody.cache());
         } else if (syncBody != null) {
             return HttpBody.fromByteArray(syncBody);
         }
