@@ -1,9 +1,8 @@
 package com.azure.identity.provider;
 
+import com.azure.common.credentials.TokenCredential;
 import com.azure.identity.credential.ClientSecretCredential;
-import com.azure.identity.credential.TokenCredential;
 import com.azure.identity.exception.CredentialNotFoundException;
-import com.sun.org.apache.xpath.internal.operations.Variable;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;

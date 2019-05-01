@@ -1,6 +1,6 @@
 package com.azure.identity.provider;
 
-import com.azure.identity.credential.TokenCredential;
+import com.azure.common.credentials.TokenCredential;
 import com.azure.identity.exception.CredentialNotFoundException;
 import reactor.core.publisher.Mono;
 

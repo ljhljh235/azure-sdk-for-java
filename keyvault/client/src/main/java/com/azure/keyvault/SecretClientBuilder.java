@@ -3,20 +3,16 @@
 
 package com.azure.keyvault;
 
-import com.azure.common.credentials.ServiceClientCredentials;
-import com.azure.common.credentials.TokenCredentials;
+import com.azure.common.credentials.TokenCredential;
 import com.azure.common.http.HttpClient;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.policy.HttpLogDetailLevel;
+import com.azure.common.http.policy.HttpLoggingPolicy;
 import com.azure.common.http.policy.HttpPipelinePolicy;
 import com.azure.common.http.policy.RetryPolicy;
 import com.azure.common.http.policy.UserAgentPolicy;
-import com.azure.common.http.policy.CredentialsPolicy;
-import com.azure.common.http.policy.HttpLoggingPolicy;
-import com.azure.identity.credential.TokenCredential;
 import com.azure.keyvault.authentication.KeyVaultCredentialPolicy;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +24,7 @@ import java.util.Objects;
  * calling {@link SecretClientBuilder#build() build} constructs an instance of the client.
  *
  * <p> The minimal configuration options required by {@link SecretClientBuilder secretClientBuilder} to build {@link SecretClient}
- * are {@link String vaultEndpoint} and {@link ServiceClientCredentials credentials}. </p>
+ * are {@link String vaultEndpoint} and {@link TokenCredential credential}. </p>
  * <pre>
  * SecretClient.builder()
  *   .vaultEndpoint("https://myvault.vault.azure.net/")

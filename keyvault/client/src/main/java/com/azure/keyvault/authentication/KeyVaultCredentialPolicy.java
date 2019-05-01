@@ -1,10 +1,10 @@
 package com.azure.keyvault.authentication;
 
+import com.azure.common.credentials.TokenCredential;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
 import com.azure.common.http.HttpResponse;
 import com.azure.common.http.policy.HttpPipelinePolicy;
-import com.azure.identity.credential.TokenCredential;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;

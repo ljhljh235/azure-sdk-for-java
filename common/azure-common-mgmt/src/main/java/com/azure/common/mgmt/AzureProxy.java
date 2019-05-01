@@ -5,7 +5,7 @@ package com.azure.common.mgmt;
 
 import com.azure.common.AzureEnvironment;
 import com.azure.common.credentials.AsyncServiceClientCredentials;
-import com.azure.common.credentials.ServiceClientCredentials;
+import com.azure.common.credentials.Credential;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
@@ -163,11 +163,11 @@ public final class AzureProxy extends RestProxy {
      * Create the default HttpPipeline.
      * @param swaggerInterface The interface that the pipeline will use to generate a user-agent
      *                         string.
-     * @param credentials The credentials to use to apply authentication to the pipeline.
+     * @param credential The credential to use to apply authentication to the pipeline.
      * @return the default HttpPipeline.
      */
-    public static HttpPipeline createDefaultPipeline(Class<?> swaggerInterface, ServiceClientCredentials credentials) {
-        return createDefaultPipeline(swaggerInterface, new CredentialsPolicy(credentials));
+    public static HttpPipeline createDefaultPipeline(Class<?> swaggerInterface, Credential credential) {
+        return createDefaultPipeline(swaggerInterface, new CredentialsPolicy(credential));
     }
 
     /**

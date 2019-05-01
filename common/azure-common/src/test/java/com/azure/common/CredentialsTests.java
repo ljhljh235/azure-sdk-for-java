@@ -4,7 +4,7 @@
 package com.azure.common;
 
 import com.azure.common.credentials.BasicAuthenticationCredentials;
-import com.azure.common.credentials.TokenCredentials;
+import com.azure.common.credentials.TokenCredential;
 import com.azure.common.http.HttpMethod;
 import com.azure.common.http.HttpPipeline;
 import com.azure.common.http.HttpRequest;
@@ -13,6 +13,7 @@ import com.azure.common.http.policy.CredentialsPolicy;
 import com.azure.common.http.policy.HttpPipelinePolicy;
 import org.junit.Assert;
 import org.junit.Test;
+import reactor.core.publisher.Mono;
 
 import java.net.URL;
 
@@ -39,7 +40,12 @@ public class CredentialsTests {
 
     @Test
     public void tokenCredentialsTest() throws Exception {
-        TokenCredentials credentials = new TokenCredentials(null, "this_is_a_token");
+        TokenCredential credentials = new TokenCredential() {
+            @Override
+            public Mono<String> getTokenAsync(String resource) {
+                return Mono.just("this_is_a_token");
+            }
+        };
 
         HttpPipelinePolicy auditorPolicy =  (context, next) -> {
             String headerValue = context.httpRequest().headers().value("Authorization");

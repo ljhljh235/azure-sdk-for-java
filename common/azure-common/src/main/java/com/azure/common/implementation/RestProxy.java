@@ -5,7 +5,7 @@ package com.azure.common.implementation;
 
 import com.azure.common.ServiceClient;
 import com.azure.common.annotations.ResumeOperation;
-import com.azure.common.credentials.ServiceClientCredentials;
+import com.azure.common.credentials.Credential;
 import com.azure.common.exception.ServiceRequestException;
 import com.azure.common.http.ContextData;
 import com.azure.common.http.HttpHeader;
@@ -536,11 +536,11 @@ public class RestProxy implements InvocationHandler {
     /**
      * Create the default HttpPipeline.
      *
-     * @param credentials the credentials to use to apply authentication to the pipeline
+     * @param credential the credential to use to apply authentication to the pipeline
      * @return the default HttpPipeline
      */
-    public static HttpPipeline createDefaultPipeline(ServiceClientCredentials credentials) {
-        return createDefaultPipeline(new CredentialsPolicy(credentials));
+    public static HttpPipeline createDefaultPipeline(Credential credential) {
+        return createDefaultPipeline(new CredentialsPolicy(credential));
     }
 
     /**

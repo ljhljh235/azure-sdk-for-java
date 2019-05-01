@@ -4,13 +4,14 @@
 package com.azure.common.credentials;
 
 import com.azure.common.implementation.util.Base64Util;
+import reactor.core.publisher.Mono;
 
 import java.io.UnsupportedEncodingException;
 
 /**
  * Basic Auth credentials for use with a REST Service Client.
  */
-public class BasicAuthenticationCredentials implements ServiceClientCredentials {
+public class BasicAuthenticationCredentials extends TokenCredential {
     /**
      * Basic auth user name.
      */
@@ -28,12 +29,13 @@ public class BasicAuthenticationCredentials implements ServiceClientCredentials 
      * @param password basic auth password
      */
     public BasicAuthenticationCredentials(String userName, String password) {
+        super("Basic");
         this.userName = userName;
         this.password = password;
     }
 
     @Override
-    public String authorizationHeaderValue(String uri) {
+    public Mono<String> getTokenAsync(String resource) {
         String credential = userName + ":" + password;
         String encodedCredential;
         try {
@@ -43,6 +45,6 @@ public class BasicAuthenticationCredentials implements ServiceClientCredentials 
             throw new RuntimeException(e);
         }
 
-        return "Basic " + encodedCredential;
+        return Mono.just(encodedCredential);
     }
 }

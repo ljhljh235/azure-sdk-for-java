@@ -1,5 +1,6 @@
 package com.azure.identity.credential;
 
+import com.azure.common.credentials.TokenCredential;
 import com.azure.common.http.policy.HttpPipelinePolicy;
 import com.azure.identity.policy.AzureCredentialPipelinePolicy;
 import com.azure.identity.provider.EnvironmentCredentialProvider;

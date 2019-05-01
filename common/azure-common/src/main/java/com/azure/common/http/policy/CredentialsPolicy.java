@@ -3,37 +3,31 @@
 
 package com.azure.common.http.policy;
 
-import com.azure.common.credentials.ServiceClientCredentials;
+import com.azure.common.credentials.Credential;
 import com.azure.common.http.HttpPipelineCallContext;
 import com.azure.common.http.HttpPipelineNextPolicy;
 import com.azure.common.http.HttpResponse;
 import reactor.core.publisher.Mono;
 
-import java.io.IOException;
-
 /**
  * The Pipeline policy that adds credentials from ServiceClientCredentials to a request.
  */
 public class CredentialsPolicy implements HttpPipelinePolicy {
-    private final ServiceClientCredentials credentials;
+    private final Credential credential;
 
     /**
      * Creates CredentialsPolicy.
      *
-     * @param credentials the credentials
+     * @param credential the credential
      */
-    public CredentialsPolicy(ServiceClientCredentials credentials) {
-        this.credentials = credentials;
+    public CredentialsPolicy(Credential credential) {
+        this.credential = credential;
     }
 
     @Override
     public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
-        try {
-            String token = credentials.authorizationHeaderValue(context.httpRequest().url().toString());
-            context.httpRequest().headers().set("Authorization", token);
-            return next.process();
-        } catch (IOException e) {
-            return Mono.error(e);
-        }
+        return credential.getAuthenticationHeaderAsync(context.httpRequest().url().getHost(), context.httpRequest())
+            .doOnNext(h -> context.httpRequest().withHeader(h.name(), h.value()))
+            .flatMap(h -> next.process());
     }
 }
