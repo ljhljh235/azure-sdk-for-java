@@ -16,6 +16,13 @@
     <url>http://microsoft.com</url>
   </organization>
 
+  <parent>
+    <groupId>com.azure</groupId>
+    <artifactId>azure-sdk-parent</artifactId>
+    <version>1.0.0</version>
+    <relativePath>./parent/pom.xml</relativePath>
+  </parent>
+
   <licenses>
     <license>
       <name>The MIT License (MIT)</name>
