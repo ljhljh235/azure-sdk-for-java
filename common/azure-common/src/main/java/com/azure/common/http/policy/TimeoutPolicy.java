@@ -28,7 +28,7 @@ public class TimeoutPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
-        return next.process().timeout(this.timoutDuration);
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+        return next.processAsync().timeout(this.timoutDuration);
     }
 }

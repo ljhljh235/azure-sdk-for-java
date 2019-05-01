@@ -20,5 +20,9 @@ public interface HttpPipelinePolicy {
      * @param next the next policy to invoke
      * @return publisher that initiate the request upon subscription and emits response on completion.
      */
-    Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next);
+    Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next);
+
+    default HttpResponse process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+        return processAsync(context, next).block();
+    }
 }

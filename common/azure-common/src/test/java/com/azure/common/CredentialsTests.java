@@ -25,7 +25,7 @@ public class CredentialsTests {
         HttpPipelinePolicy auditorPolicy =  (context, next) -> {
             String headerValue = context.httpRequest().headers().value("Authorization");
             Assert.assertEquals("Basic dXNlcjpwYXNz", headerValue);
-            return next.process();
+            return next.processAsync();
         };
         //
         final HttpPipeline pipeline = new HttpPipeline(new MockHttpClient(),
@@ -34,7 +34,7 @@ public class CredentialsTests {
 
 
         HttpRequest request = new HttpRequest(HttpMethod.GET, new URL("http://localhost"));
-        pipeline.send(request).block();
+        pipeline.sendAsync(request).block();
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CredentialsTests {
         HttpPipelinePolicy auditorPolicy =  (context, next) -> {
             String headerValue = context.httpRequest().headers().value("Authorization");
             Assert.assertEquals("Bearer this_is_a_token", headerValue);
-            return next.process();
+            return next.processAsync();
         };
 
         final HttpPipeline pipeline = new HttpPipeline(new MockHttpClient(),
@@ -52,6 +52,6 @@ public class CredentialsTests {
                 auditorPolicy);
 
         HttpRequest request = new HttpRequest(HttpMethod.GET, new URL("http://localhost"));
-        pipeline.send(request).block();
+        pipeline.sendAsync(request).block();
     }
 }

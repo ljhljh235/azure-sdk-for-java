@@ -23,13 +23,13 @@ public class ProtocolPolicyTests {
     @Test
     public void withOverwrite() throws MalformedURLException {
         final HttpPipeline pipeline = createPipeline("ftp", "ftp://www.bing.com");
-        pipeline.send(createHttpRequest("http://www.bing.com"));
+        pipeline.sendAsync(createHttpRequest("http://www.bing.com"));
     }
 
     @Test
     public void withNoOverwrite() throws MalformedURLException {
         final HttpPipeline pipeline = createPipeline("ftp", false, "https://www.bing.com");
-        pipeline.send(createHttpRequest("https://www.bing.com"));
+        pipeline.sendAsync(createHttpRequest("https://www.bing.com"));
     }
     private static HttpPipeline createPipeline(String protocol, String expectedUrl) {
         return new HttpPipeline(new MockHttpClient() {
@@ -41,7 +41,7 @@ public class ProtocolPolicyTests {
         new ProtocolPolicy(protocol, true),
         (context, next) -> {
             assertEquals(expectedUrl, context.httpRequest().url().toString());
-            return next.process();
+            return next.processAsync();
         });
     }
 
@@ -55,7 +55,7 @@ public class ProtocolPolicyTests {
         new ProtocolPolicy(protocol, overwrite),
         (context, next) -> {
             assertEquals(expectedUrl, context.httpRequest().url().toString());
-            return next.process();
+            return next.processAsync();
         });
     }
 

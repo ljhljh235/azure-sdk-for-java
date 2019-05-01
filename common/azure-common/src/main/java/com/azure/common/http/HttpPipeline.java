@@ -19,7 +19,7 @@ public final class HttpPipeline {
 
     /**
      * Creates a HttpPipeline holding array of policies that gets applied to all request initiated through
-     * {@link HttpPipeline#send(HttpPipelineCallContext)} and it's response.
+     * {@link HttpPipeline#sendAsync(HttpPipelineCallContext)} and it's response.
      *
      * @param httpClient the http client to write request to wire and receive response from wire.
      * @param pipelinePolicies pipeline policies in the order they need to applied, a copy of this array will
@@ -35,7 +35,7 @@ public final class HttpPipeline {
 
     /**
      * Creates a HttpPipeline holding array of policies that gets applied all request initiated through
-     * {@link HttpPipeline#send(HttpPipelineCallContext)} and it's response.
+     * {@link HttpPipeline#sendAsync(HttpPipelineCallContext)} and it's response.
      *
      * The default HttpClient {@link HttpClient#createDefault()} will be used to write request to wire and
      * receive response from wire.
@@ -50,7 +50,7 @@ public final class HttpPipeline {
 
     /**
      * Creates a HttpPipeline holding array of policies that gets applied to all request initiated through
-     * {@link HttpPipeline#send(HttpPipelineCallContext)} and it's response.
+     * {@link HttpPipeline#sendAsync(HttpPipelineCallContext)} and it's response.
      *
      * @param httpClient the http client to write request to wire and receive response from wire.
      * @param pipelinePolicies pipeline policies in the order they need to applied, a copy of this list
@@ -66,7 +66,7 @@ public final class HttpPipeline {
 
     /**
      * Creates a HttpPipeline holding array of policies that gets applied all request initiated through
-     * {@link HttpPipeline#send(HttpPipelineCallContext)} and it's response.
+     * {@link HttpPipeline#sendAsync(HttpPipelineCallContext)} and it's response.
      *
      * The default HttpClient {@link HttpClient#createDefault()} will be used to write request to wire and
      * receive response from wire.
@@ -124,8 +124,8 @@ public final class HttpPipeline {
      * @param request the request
      * @return a publisher upon subscription flows the context through policies, sends the request and emits response upon completion
      */
-    public Mono<HttpResponse> send(HttpRequest request) {
-        return this.send(this.newContext(request));
+    public Mono<HttpResponse> sendAsync(HttpRequest request) {
+        return this.sendAsync(this.newContext(request));
     }
 
     /**
@@ -134,12 +134,33 @@ public final class HttpPipeline {
      * @param context the request context
      * @return a publisher upon subscription flows the context through policies, sends the request and emits response upon completion
      */
-    public Mono<HttpResponse> send(HttpPipelineCallContext context) {
+    public Mono<HttpResponse> sendAsync(HttpPipelineCallContext context) {
         // Return deferred to mono for complete lazy behaviour.
         //
         return Mono.defer(() -> {
             HttpPipelineNextPolicy next = new HttpPipelineNextPolicy(this, context);
-            return next.process();
+            return next.processAsync();
         });
+    }
+
+    /**
+     * Wraps the request in a context and send it through pipeline.
+     *
+     * @param request the request
+     * @return upon the request flows the context through policies, sends the request and emits response upon completion
+     */
+    public HttpResponse send(HttpRequest request) {
+        return this.send(this.newContext(request));
+    }
+
+    /**
+     * Sends the context (containing request) through pipeline.
+     *
+     * @param context the request context
+     * @return upon the request flows the context through policies, sends the request and emits response upon completion
+     */
+    public HttpResponse send(HttpPipelineCallContext context) {
+        HttpPipelineNextPolicy next = new HttpPipelineNextPolicy(this, context);
+        return next.process();
     }
 }

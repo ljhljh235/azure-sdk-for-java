@@ -28,10 +28,10 @@ public class ProxyAuthenticationPolicyTests {
                 (context, next) -> {
                     assertEquals("Basic dGVzdHVzZXI6dGVzdHBhc3M=", context.httpRequest().headers().value("Proxy-Authentication"));
                     auditorVisited.set(true);
-                    return next.process();
+                    return next.processAsync();
                 });
 
-        pipeline.send(new HttpRequest(HttpMethod.GET, new URL("http://localhost")))
+        pipeline.sendAsync(new HttpRequest(HttpMethod.GET, new URL("http://localhost")))
                 .block();
 
         if (!auditorVisited.get()) {

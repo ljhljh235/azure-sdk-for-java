@@ -69,7 +69,7 @@ public class HttpPipelineTests {
             }
         });
 
-        final HttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
+        final HttpResponse response = httpPipeline.sendAsync(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
         assertNotNull(response);
         assertEquals(200, response.statusCode());
     }
@@ -93,7 +93,7 @@ public class HttpPipelineTests {
         final HttpPipeline httpPipeline = new HttpPipeline(httpClient,
                 new UserAgentPolicy(expectedUserAgent));
 
-        final HttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
+        final HttpResponse response = httpPipeline.sendAsync(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
         assertNotNull(response);
         assertEquals(200, response.statusCode());
     }
@@ -117,7 +117,7 @@ public class HttpPipelineTests {
             },
             new RequestIdPolicy());
 
-        final HttpResponse response = httpPipeline.send(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
+        final HttpResponse response = httpPipeline.sendAsync(new HttpRequest(expectedHttpMethod, expectedUrl)).block();
         assertNotNull(response);
         assertEquals(200, response.statusCode());
     }

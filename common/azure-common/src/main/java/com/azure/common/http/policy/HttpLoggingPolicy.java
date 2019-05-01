@@ -54,7 +54,7 @@ public class HttpLoggingPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         //
         Optional<Object> data = context.getData("caller-method");
         String callerMethod;
@@ -70,7 +70,7 @@ public class HttpLoggingPolicy implements HttpPipelinePolicy {
         Mono<Void> logRequest = logRequest(logger, context.httpRequest());
         Function<HttpResponse, Mono<HttpResponse>> logResponseDelegate = logResponseDelegate(logger, context.httpRequest().url(), startNs);
         //
-        return logRequest.then(next.process()).flatMap(logResponseDelegate)
+        return logRequest.then(next.processAsync()).flatMap(logResponseDelegate)
                 .doOnError(throwable -> log(logger, "<-- HTTP FAILED: " + throwable));
     }
 

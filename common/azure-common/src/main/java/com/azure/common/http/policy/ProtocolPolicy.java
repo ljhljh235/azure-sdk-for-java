@@ -33,7 +33,7 @@ public class ProtocolPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         final UrlBuilder urlBuilder = UrlBuilder.parse(context.httpRequest().url());
         if (overwrite || urlBuilder.scheme() == null) {
             LOGGER.info("Setting protocol to {0}", protocol);
@@ -44,6 +44,6 @@ public class ProtocolPolicy implements HttpPipelinePolicy {
                 return Mono.error(e);
             }
         }
-        return next.process();
+        return next.processAsync();
     }
 }

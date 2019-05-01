@@ -23,10 +23,10 @@ public class AddDatePolicy implements HttpPipelinePolicy {
             .withLocale(Locale.US);
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         return Mono.defer(() -> {
             context.httpRequest().headers().set("Date", format.format(OffsetDateTime.now()));
-            return next.process();
+            return next.processAsync();
         });
     }
 }

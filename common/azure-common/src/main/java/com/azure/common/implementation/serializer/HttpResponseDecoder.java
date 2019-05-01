@@ -37,6 +37,17 @@ public final class HttpResponseDecoder {
     }
 
     /**
+     * Synchronously decodes a {@link HttpResponse}.
+     *
+     * @param response the response to be decoded
+     * @param decodeData the necessary data required to decode the response emitted by {@code response}
+     * @return the decoded HttpResponse
+     */
+    public HttpDecodedResponse decode(HttpResponse response, HttpResponseDecodeData decodeData) {
+        return new HttpDecodedResponse(response, this.serializer, decodeData);
+    }
+
+    /**
      * A decorated HTTP response which has subscribable body and headers that supports lazy decoding.
      *
      * Subscribing to body kickoff http content reading, it's decoding then emission of decoded object.
@@ -47,7 +58,8 @@ public final class HttpResponseDecoder {
         private final SerializerAdapter serializer;
         private final HttpResponseDecodeData decodeData;
         private Mono<Object> bodyCached;
-        private Mono<Object> headersCached;
+        private Object bodyDecoded;
+        private Object headersDecoded;
 
         /**
          * Creates HttpDecodedResponse.
@@ -81,13 +93,41 @@ public final class HttpResponseDecoder {
          *
          * @return publisher that emits decoded http content
          */
-        public Mono<Object> decodedBody() {
-            if (this.bodyCached == null) {
-                this.bodyCached = HttpResponseBodyDecoder.decode(this.response,
+        public Mono<Object> decodedBodyAsync() {
+            if (this.bodyCached == null && this.bodyDecoded == null) {
+                this.bodyCached = HttpResponseBodyDecoder.decodeAsync(this.response,
                         this.serializer,
                         this.decodeData).cache();
             }
+            if (this.bodyCached != null) {
+                return this.bodyCached;
+            }
+            else if (this.bodyDecoded != null) {
+                this.bodyCached = Mono.just(bodyDecoded);
+            }
             return this.bodyCached;
+        }
+
+        /**
+         * Gets the publisher when subscribed the http content gets read, decoded
+         * and emitted. {@code Mono.empty()} gets emitted if the content is not
+         * decodable.
+         *
+         * @return the decoded http content
+         */
+        public Object decodedBody() {
+            if (this.bodyCached == null && this.bodyDecoded == null) {
+                this.bodyDecoded = HttpResponseBodyDecoder.decode(this.response,
+                        this.serializer,
+                        this.decodeData);
+            }
+            if (this.bodyDecoded != null) {
+                return this.bodyDecoded;
+            }
+            else if (this.bodyCached != null) {
+                this.bodyDecoded = this.bodyCached.block();
+            }
+            return bodyDecoded;
         }
 
         /**
@@ -96,13 +136,13 @@ public final class HttpResponseDecoder {
          *
          * @return publisher that emits entity instance representing decoded http headers
          */
-        public Mono<Object> decodedHeaders() {
-            if (this.headersCached == null) {
-                this.headersCached = HttpResponseHeaderDecoder.decode(this.response,
+        public Object decodedHeaders() {
+            if (this.headersDecoded == null) {
+                this.headersDecoded = HttpResponseHeaderDecoder.decode(this.response,
                         this.serializer,
-                        this.decodeData).cache();
+                        this.decodeData);
             }
-            return this.headersCached;
+            return this.headersDecoded;
         }
 
         /**

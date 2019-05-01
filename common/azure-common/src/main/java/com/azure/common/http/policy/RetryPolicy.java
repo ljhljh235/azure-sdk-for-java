@@ -43,13 +43,13 @@ public class RetryPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         return attemptAsync(context, next, context.httpRequest(), 0);
     }
 
     private Mono<HttpResponse> attemptAsync(final HttpPipelineCallContext context, final HttpPipelineNextPolicy next, final HttpRequest originalHttpRequest, final int tryCount) {
         context.withHttpRequest(originalHttpRequest.buffer());
-        return next.clone().process()
+        return next.clone().processAsync()
                 .flatMap(httpResponse -> {
                     if (shouldRetry(httpResponse, tryCount)) {
                         return attemptAsync(context, next, originalHttpRequest, tryCount + 1).delaySubscription(this.delayDuration);

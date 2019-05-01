@@ -45,7 +45,7 @@ final class HttpResponseBodyDecoder {
      * @return publisher that emits decoded response body upon subscription if body is decodable,
      * no emission if the body is not-decodable
      */
-    static Mono<Object> decode(HttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
+    static Mono<Object> decodeAsync(HttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
         ensureRequestSet(httpResponse);
         //
         return Mono.defer(() -> {
@@ -88,6 +88,45 @@ final class HttpResponseBodyDecoder {
                         });
             }
         });
+    }
+
+    static Object decode(HttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
+        ensureRequestSet(httpResponse);
+
+        if (isErrorStatus(httpResponse, decodeData)) {
+            String bodyString = httpResponse.body().toString();
+            try {
+                final Object decodedErrorEntity = deserializeBody(bodyString,
+                        decodeData.getUnexpectedException(httpResponse.statusCode()).exceptionBodyType(),
+                        null,
+                        serializer,
+                        SerializerEncoding.fromHeaders(httpResponse.headers()));
+                return decodedErrorEntity == null ? Mono.empty() : Mono.just(decodedErrorEntity);
+            } catch (IOException | MalformedValueException ignored) {
+                // This translates in RestProxy as a RestException with no deserialized body.
+                // The response content will still be accessible via the .response() member.
+            }
+            return null;
+        } else if (httpResponse.request().httpMethod() == HttpMethod.HEAD) {
+            // RFC: A response to a HEAD method should not have a body. If so, it must be ignored
+            return null;
+        } else if (!isReturnTypeDecodable(decodeData)) {
+            return null;
+        } else {
+            String bodyString = httpResponse.body().toString();
+            try {
+                final Object decodedSuccessEntity = deserializeBody(bodyString,
+                        extractEntityTypeFromReturnType(decodeData),
+                        decodeData.returnValueWireType(),
+                        serializer,
+                        SerializerEncoding.fromHeaders(httpResponse.headers()));
+                return decodedSuccessEntity == null ? Mono.empty() : Mono.just(decodedSuccessEntity);
+            } catch (MalformedValueException e) {
+                return Mono.error(new ServiceRequestException("HTTP response has a malformed body.", httpResponse, e));
+            } catch (IOException e) {
+                return Mono.error(new ServiceRequestException("Deserialization Failed.", httpResponse, e));
+            }
+        }
     }
 
     /**

@@ -66,7 +66,7 @@ abstract class PollStrategy {
     protected Mono<HttpResponse> ensureExpectedStatus(HttpResponse httpResponse, int[] additionalAllowedStatusCodes) {
         Mono<HttpResponseDecoder.HttpDecodedResponse> asyncDecodedResponse = new HttpResponseDecoder(restProxy.serializer()).decode(Mono.just(httpResponse), this.methodParser);
         return asyncDecodedResponse.flatMap(decodedResponse -> {
-            return restProxy.ensureExpectedStatus(decodedResponse, methodParser, additionalAllowedStatusCodes);
+            return restProxy.ensureExpectedStatusAsync(decodedResponse, methodParser, additionalAllowedStatusCodes);
         }).map(decodedResponse -> httpResponse);
     }
 
@@ -158,7 +158,7 @@ abstract class PollStrategy {
     Mono<HttpResponse> sendPollRequestWithDelay() {
         return Mono.defer(() -> delayAsync().then(Mono.defer(() -> {
             final HttpRequest pollRequest = createPollRequest();
-            return restProxy.send(pollRequest, new ContextData("caller-method", fullyQualifiedMethodName()));
+            return restProxy.sendAsync(pollRequest, new ContextData("caller-method", fullyQualifiedMethodName()));
         })).flatMap(response -> updateFromAsync(response)));
     }
 

@@ -33,7 +33,7 @@ public class HttpPipelineNextPolicy {
      *
      * @return a publisher upon subscription invokes next policy and emits response from the policy.
      */
-    public Mono<HttpResponse> process() {
+    public Mono<HttpResponse> processAsync() {
         final int size = this.pipeline.pipelinePolicies().length;
         if (this.currentPolicyIndex > size) {
             return Mono.error(new IllegalStateException("There is no more policies to execute."));
@@ -41,6 +41,25 @@ public class HttpPipelineNextPolicy {
             this.currentPolicyIndex++;
             if (this.currentPolicyIndex == size) {
                 return this.pipeline.httpClient().sendAsync(this.context.httpRequest());
+            } else {
+                return this.pipeline.pipelinePolicies()[this.currentPolicyIndex].processAsync(this.context, this);
+            }
+        }
+    }
+
+    /**
+     * Invokes the next {@link HttpPipelinePolicy}.
+     *
+     * @return a publisher upon subscription invokes next policy and emits response from the policy.
+     */
+    public HttpResponse process() {
+        final int size = this.pipeline.pipelinePolicies().length;
+        if (this.currentPolicyIndex > size) {
+            throw new IllegalStateException("There is no more policies to execute.");
+        } else {
+            this.currentPolicyIndex++;
+            if (this.currentPolicyIndex == size) {
+                return this.pipeline.httpClient().send(this.context.httpRequest());
             } else {
                 return this.pipeline.pipelinePolicies()[this.currentPolicyIndex].process(this.context, this);
             }

@@ -18,11 +18,11 @@ public class RequestIdPolicy implements HttpPipelinePolicy {
     private static final String REQUEST_ID_HEADER = "x-ms-client-request-id";
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         String requestId = context.httpRequest().headers().value(REQUEST_ID_HEADER);
         if (requestId == null) {
             context.httpRequest().headers().set(REQUEST_ID_HEADER, UUID.randomUUID().toString());
         }
-        return next.process();
+        return next.processAsync();
     }
 }

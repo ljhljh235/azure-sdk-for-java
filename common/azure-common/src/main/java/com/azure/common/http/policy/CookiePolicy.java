@@ -28,7 +28,7 @@ public class CookiePolicy implements HttpPipelinePolicy {
     private final CookieHandler cookies = new CookieManager();
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         try {
             final URI uri = context.httpRequest().url().toURI();
 
@@ -42,7 +42,7 @@ public class CookiePolicy implements HttpPipelinePolicy {
                 context.httpRequest().headers().set(entry.getKey(), String.join(",", entry.getValue()));
             }
 
-            return next.process().map(httpResponse -> {
+            return next.processAsync().map(httpResponse -> {
                 Map<String, List<String>> responseHeaders = new HashMap<>();
                 for (HttpHeader header : httpResponse.headers()) {
                     responseHeaders.put(header.name(), Collections.singletonList(header.value()));

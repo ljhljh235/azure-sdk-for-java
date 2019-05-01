@@ -5,7 +5,6 @@ package com.azure.common.http;
 
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
 import java.util.function.Supplier;
 
 /**

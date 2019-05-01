@@ -32,7 +32,7 @@ public class RetryPolicyTests {
        },
        new RetryPolicy(3, Duration.of(0, ChronoUnit.MILLIS)));
 
-        HttpResponse response = pipeline.send(new HttpRequest(HttpMethod.GET,
+        HttpResponse response = pipeline.sendAsync(new HttpRequest(HttpMethod.GET,
                         new URL("http://localhost/"))).block();
 
         Assert.assertEquals(501, response.statusCode());
@@ -53,7 +53,7 @@ public class RetryPolicyTests {
         new RetryPolicy(maxRetries, Duration.of(0, ChronoUnit.MILLIS)));
 
 
-        HttpResponse response = pipeline.send(new HttpRequest(HttpMethod.GET,
+        HttpResponse response = pipeline.sendAsync(new HttpRequest(HttpMethod.GET,
                         new URL("http://localhost/"))).block();
 
         Assert.assertEquals(500, response.statusCode());

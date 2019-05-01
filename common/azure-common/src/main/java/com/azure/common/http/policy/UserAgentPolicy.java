@@ -56,7 +56,7 @@ public class UserAgentPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         String header = context.httpRequest().headers().value("User-Agent");
         if (header == null || DEFAULT_USER_AGENT_HEADER.equals(header)) {
             header = userAgent;
@@ -64,7 +64,7 @@ public class UserAgentPolicy implements HttpPipelinePolicy {
             header = userAgent + " " + header;
         }
         context.httpRequest().headers().set("User-Agent", header);
-        return next.process();
+        return next.processAsync();
     }
 
     private static String getOSInformation() {

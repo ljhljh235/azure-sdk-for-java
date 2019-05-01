@@ -33,7 +33,7 @@ public class PortPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         final UrlBuilder urlBuilder = UrlBuilder.parse(context.httpRequest().url());
         if (overwrite || urlBuilder.port() == null) {
             LOGGER.info("Changing port to {0}", port);
@@ -44,6 +44,6 @@ public class PortPolicy implements HttpPipelinePolicy {
                 return Mono.error(e);
             }
         }
-        return next.process();
+        return next.processAsync();
     }
 }

@@ -149,12 +149,12 @@ public class RestProxyStressTests {
 
     private static final class ThrottlingRetryPolicy implements HttpPipelinePolicy {
         @Override
-        public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+        public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
             return process(1 + ThreadLocalRandom.current().nextInt(5), context, next);
         }
 
         Mono<HttpResponse> process(final int waitTimeSeconds, final HttpPipelineCallContext context, final HttpPipelineNextPolicy nextPolicy) {
-            return nextPolicy.clone().process().flatMap(httpResponse -> {
+            return nextPolicy.clone().processAsync().flatMap(httpResponse -> {
                 if (httpResponse.statusCode() != 503 && httpResponse.statusCode() != 500) {
                     return Mono.just(httpResponse);
                 } else {
@@ -167,7 +167,7 @@ public class RestProxyStressTests {
             }).onErrorResume(throwable -> {
                 if (throwable instanceof IOException) {
                     LoggerFactory.getLogger(getClass()).warn("I/O exception occurred: " + throwable.getMessage());
-                    return process(context, nextPolicy).delaySubscription(Duration.of(waitTimeSeconds, ChronoUnit.SECONDS));
+                    return processAsync(context, nextPolicy).delaySubscription(Duration.of(waitTimeSeconds, ChronoUnit.SECONDS));
                 }
                 LoggerFactory.getLogger(getClass()).warn("Unrecoverable exception occurred: " + throwable.getMessage());
                 return Mono.error(throwable);

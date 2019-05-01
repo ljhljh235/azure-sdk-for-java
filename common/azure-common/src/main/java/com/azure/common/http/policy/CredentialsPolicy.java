@@ -27,11 +27,11 @@ public class CredentialsPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         try {
             String token = credentials.authorizationHeaderValue(context.httpRequest().url().toString());
             context.httpRequest().headers().set("Authorization", token);
-            return next.process();
+            return next.processAsync();
         } catch (IOException e) {
             return Mono.error(e);
         }

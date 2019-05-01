@@ -305,7 +305,7 @@ public final class AzureProxy extends RestProxy {
                     final int httpStatusCode = originalHttpDecodedResponse.sourceResponse().statusCode();
                     final HttpResponse originalHttpResponse = originalHttpDecodedResponse.sourceResponse();
                     final int[] longRunningOperationStatusCodes = new int[] {200, 201, 202};
-                    return ensureExpectedStatus(originalHttpDecodedResponse, methodParser, longRunningOperationStatusCodes)
+                    return ensureExpectedStatusAsync(originalHttpDecodedResponse, methodParser, longRunningOperationStatusCodes)
                             .flatMap(response -> {
                                 Mono<PollStrategy> result = null;
 

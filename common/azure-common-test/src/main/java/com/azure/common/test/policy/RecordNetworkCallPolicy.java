@@ -46,7 +46,7 @@ public class RecordNetworkCallPolicy implements HttpPipelinePolicy {
     }
 
     @Override
-    public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+    public Mono<HttpResponse> processAsync(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         final NetworkCallRecord networkCallRecord = new NetworkCallRecord();
         Map<String, String> headers = new HashMap<>();
 
@@ -64,7 +64,7 @@ public class RecordNetworkCallPolicy implements HttpPipelinePolicy {
         networkCallRecord.method(context.httpRequest().httpMethod().toString());
         networkCallRecord.uri(context.httpRequest().url().toString().replaceAll("\\?$", ""));
 
-        return next.process().flatMap(httpResponse -> {
+        return next.processAsync().flatMap(httpResponse -> {
             final HttpResponse bufferedResponse = httpResponse.buffer();
 
             return extractResponseData(bufferedResponse).map(responseData -> {

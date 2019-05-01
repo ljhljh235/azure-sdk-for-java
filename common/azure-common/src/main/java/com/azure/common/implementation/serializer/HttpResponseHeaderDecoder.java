@@ -35,18 +35,16 @@ final class HttpResponseHeaderDecoder {
      * @return publisher that emits decoded response header upon subscription if header is decodable,
      * no emission if the header is not-decodable
      */
-    static Mono<Object> decode(HttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
+    static Object decode(HttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
         Type headerType = decodeData.headersType();
         if (headerType == null) {
-            return Mono.empty();
+            return null;
         } else {
-            return Mono.defer(() -> {
-                try {
-                    return Mono.just(deserializeHeaders(httpResponse.headers(), serializer, decodeData));
-                } catch (IOException e) {
-                    return Mono.error(new ServiceRequestException("HTTP response has malformed headers", httpResponse, e));
-                }
-            });
+            try {
+                return deserializeHeaders(httpResponse.headers(), serializer, decodeData);
+            } catch (IOException e) {
+                throw new ServiceRequestException("HTTP response has malformed headers", httpResponse, e);
+            }
         }
     }
 
