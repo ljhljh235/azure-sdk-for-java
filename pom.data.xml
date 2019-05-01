@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.azure</groupId>
-  <artifactId>azure-all-sdk-parent</artifactId>
+  <artifactId>azure-data-sdk-parent</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0</version>
 
@@ -15,6 +15,13 @@
     <name>Microsoft Corporation</name>
     <url>http://microsoft.com</url>
   </organization>
+
+  <parent>
+    <groupId>com.azure</groupId>
+    <artifactId>azure-sdk-parent</artifactId>
+    <version>1.0.0</version>
+    <relativePath>./parent/pom.xml</relativePath>
+  </parent>
 
   <licenses>
     <license>
@@ -48,7 +55,9 @@
   </distributionManagement>
 
   <modules>
-    <module>./pom.client.xml</module>
-    <module>./pom.data.xml</module>
+    <module>./batch/data-plane</module>
+    <module>./eventhubs/data-plane</module>
+    <module>./keyvault/data-plane</module>
+    <module>./storage/data-plane</module>
   </modules>
 </project>

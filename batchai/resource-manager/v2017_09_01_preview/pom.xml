@@ -10,9 +10,9 @@
     <groupId>com.microsoft.azure.azure-mgmt-batchai-2017-09-01-preview</groupId>
     <parent>
         <groupId>com.microsoft.azure</groupId>
-        <artifactId>azure-arm-parent</artifactId>
+        <artifactId>azure-sdk-parent</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../../pom.xml</relativePath>
+        <relativePath>../../../parent/pom.xml</relativePath>
     </parent>
     <artifactId>azure-mgmt-batchai</artifactId>
     <version>1.0.0-beta-SNAPSHOT</version>

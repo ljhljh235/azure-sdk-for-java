@@ -10,9 +10,9 @@
     <groupId>com.microsoft.azure.eventgrid.v2019_01_01</groupId>
     <parent>
         <groupId>com.microsoft.azure</groupId>
-        <artifactId>azure-arm-parent</artifactId>
+        <artifactId>azure-sdk-parent</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../../pom.xml</relativePath>
+        <relativePath>../../../parent/pom.xml</relativePath>
     </parent>
     <artifactId>azure-mgmt-eventgrid</artifactId>
     <version>1.0.0</version>
