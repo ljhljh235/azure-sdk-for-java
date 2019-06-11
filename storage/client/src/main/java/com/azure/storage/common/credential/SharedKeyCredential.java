@@ -86,36 +86,36 @@ public final class SharedKeyCredential {
     private String buildStringToSign(URL requestURL, String httpMethod, Map<String, String> headers) {
         String contentLength = headers.get("Content-Length");
         contentLength = contentLength.equals("0") ? "" : contentLength;
-
         return String.join("\n",
             httpMethod,
-            headers.getOrDefault("Content-Encoding", ""),
-            headers.getOrDefault("Content-Language", ""),
+            getStandardHeaderValue(headers, "Content-Encoding"),
+            getStandardHeaderValue(headers, "Content-Language"),
             contentLength,
-            headers.getOrDefault("Content-MD5", ""),
-            headers.getOrDefault("Content-Type", ""),
-            headers.getOrDefault("Date", ""),
-            headers.getOrDefault("If-Modified-Since", ""),
-            headers.getOrDefault("If-Match", ""),
-            headers.getOrDefault("If-None-Match", ""),
-            headers.getOrDefault("If-Unmodified-Since", ""),
-            headers.getOrDefault("Range", ""),
+            getStandardHeaderValue(headers, "Content-MD5"),
+            getStandardHeaderValue(headers, "Content-Type"),
+            //"",
+            getStandardHeaderValue(headers, "Date"),
+            getStandardHeaderValue(headers, "If-Modified-Since"),
+            getStandardHeaderValue(headers, "If-Match"),
+            getStandardHeaderValue(headers, "If-None-Match"),
+            getStandardHeaderValue(headers, "If-Unmodified-Since"),
+            getStandardHeaderValue(headers, "Range"),
             getAdditionalXmsHeaders(headers),
             getCanonicalizedResource(requestURL));
+
     }
 
     private String getAdditionalXmsHeaders(Map<String, String> headers) {
         // Add only headers that begin with 'x-ms-'
         final List<String> xmsHeaderNameArray = headers.entrySet().stream()
-            .filter(entry -> entry.getKey().toLowerCase(Locale.ROOT).startsWith("x-ms-"))
-            .filter(entry -> entry.getValue() != null)
-            .map(Map.Entry::getKey)
-            .collect(Collectors.toList());
+                                                    .filter(entry -> entry.getKey().toLowerCase(Locale.ROOT).startsWith("x-ms-"))
+                                                    .filter(entry -> entry.getValue() != null)
+                                                    .map(Map.Entry::getKey)
+                                                    .collect(Collectors.toList());
 
         if (xmsHeaderNameArray.isEmpty()) {
             return "";
         }
-
         Collections.sort(xmsHeaderNameArray);
 
         final StringBuilder canonicalizedHeaders = new StringBuilder();
@@ -182,4 +182,11 @@ public final class SharedKeyCredential {
             throw new Error(ex);
         }
     }
+
+    private String getStandardHeaderValue(final Map<String, String> httpHeaders, final String headerName) {
+        final String headerValue = httpHeaders.get(headerName);
+
+        return headerValue == null ? "" : headerValue;
+    }
+
 }
