@@ -124,7 +124,17 @@ public final class StorageClientBuilder {
     }
 
     /**
-     * Sets the blob service endpoint, additionally parses it for information (SAS token, queue name)
+     * Sets the blob service endpoint, additionally parses it for information (SAS token).
+     * <p>
+     * The endpoint can be found on Azure Portal under the storage account's properties. The protocol must be provided
+     * in the beginning ({@code http://} or {@code https://}). Examples of valid endpoints are
+     * <p><ul>
+     *     <li>http://myaccount.blob.core.windows.net
+     *     <li>https://myaccount.blob.core.windows.net?{sasToken}
+     * </ul>
+     * <p>
+     * Calling one of the overloads of {@code .credential()} is required if a SAS token is not provided on the URL.
+     *
      * @param endpoint URL of the service
      * @return the updated StorageClientBuilder object
      */
