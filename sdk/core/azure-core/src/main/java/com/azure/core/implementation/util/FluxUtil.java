@@ -3,6 +3,7 @@
 
 package com.azure.core.implementation.util;
 
+import com.azure.core.http.rest.Response;
 import com.azure.core.util.Context;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -187,16 +188,26 @@ public final class FluxUtil {
      * </p>
      *
      * <p><strong>Code samples</strong></p>
-     * {@codesnippet com.azure.core.implementation.util.fluxutil.monocontext}
+     * {@codesnippet com.azure.core.implementation.util.fluxutil.withcontext}
      *
      * @param serviceCall The lambda function that makes the service call into which azure context will be passed
      * @param <T> The type of response returned from the service call
      * @return The response from service call
      */
-    public static <T> Mono<T> monoContext(Function<Context, Mono<T>> serviceCall) {
+    public static <T> Mono<T> withContext(Function<Context, Mono<T>> serviceCall) {
         return Mono.subscriberContext()
             .map(FluxUtil::toAzureContext)
             .flatMap(serviceCall);
+    }
+
+    /**
+     * Converts the incoming content to Mono.
+     *
+     * @param response whose {@link Response#value() value} is to be converted
+     * @return The converted {@link Mono}
+     */
+    public static <T> Mono<T> toMono(Response<T> response) {
+        return Mono.justOrEmpty(response.value());
     }
 
     /**

@@ -23,7 +23,7 @@ import reactor.core.Disposables;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +31,7 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.azure.messaging.eventhubs.EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME;
 import static com.azure.messaging.eventhubs.TestUtils.isMatchingEvent;
@@ -50,6 +51,7 @@ public class EventHubClientIntegrationTest extends ApiTestBase {
 
     private static final String PARTITION_ID = "1";
     private static final AtomicBoolean HAS_PUSHED_EVENTS = new AtomicBoolean();
+    private static final AtomicReference<Instant> MESSAGES_PUSHED_INSTANT = new AtomicReference<>();
     private static final String MESSAGE_TRACKING_VALUE = UUID.randomUUID().toString();
 
     private EventHubAsyncClient client;
@@ -70,6 +72,8 @@ public class EventHubClientIntegrationTest extends ApiTestBase {
 
     @Override
     protected void beforeTest() {
+        skipIfNotRecordMode();
+
         final ReactorHandlerProvider handlerProvider = new ReactorHandlerProvider(getReactorProvider());
         final ConnectionOptions connectionOptions = getConnectionOptions();
 
@@ -89,60 +93,16 @@ public class EventHubClientIntegrationTest extends ApiTestBase {
     }
 
     /**
-     * Verifies that we can create and send a message to an Event Hub partition.
-     */
-    @Test
-    public void sendMessageToPartition() throws IOException {
-        skipIfNotRecordMode();
-
-        // Arrange
-        final EventHubProducerOptions producerOptions = new EventHubProducerOptions().partitionId(PARTITION_ID);
-        final List<EventData> events = Arrays.asList(
-            new EventData("Event 1".getBytes(UTF_8)),
-            new EventData("Event 2".getBytes(UTF_8)),
-            new EventData("Event 3".getBytes(UTF_8)));
-
-        // Act & Assert
-        try (EventHubProducer producer = client.createProducer(producerOptions)) {
-            StepVerifier.create(producer.send(events))
-                .verifyComplete();
-        }
-    }
-
-    /**
-     * Verifies that we can create an {@link EventHubProducer} that does not care about partitions and lets the service
-     * distribute the events.
-     */
-    @Test
-    public void sendMessage() throws IOException {
-        skipIfNotRecordMode();
-
-        // Arrange
-        final List<EventData> events = Arrays.asList(
-            new EventData("Event 1".getBytes(UTF_8)),
-            new EventData("Event 2".getBytes(UTF_8)),
-            new EventData("Event 3".getBytes(UTF_8)));
-
-        // Act & Assert
-        try (EventHubProducer producer = client.createProducer()) {
-            StepVerifier.create(producer.send(events))
-                .verifyComplete();
-        }
-    }
-
-    /**
      * Verifies that we can receive messages, and that the receiver continues to fetch messages when the prefetch queue
      * is exhausted.
      */
     @Test
     public void receiveMessage() {
-        skipIfNotRecordMode();
-
         // Arrange
         final EventHubConsumerOptions options = new EventHubConsumerOptions()
             .prefetchCount(2);
         final EventHubConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
-            EventPosition.earliest(), options);
+            EventPosition.fromEnqueuedTime(MESSAGES_PUSHED_INSTANT.get()), options);
 
         // Act & Assert
         StepVerifier.create(consumer.receive().filter(x -> isMatchingEvent(x, MESSAGE_TRACKING_VALUE)).take(NUMBER_OF_EVENTS))
@@ -235,6 +195,7 @@ public class EventHubClientIntegrationTest extends ApiTestBase {
         final Flux<EventData> events = TestUtils.getEvents(NUMBER_OF_EVENTS, MESSAGE_TRACKING_VALUE);
 
         try {
+            MESSAGES_PUSHED_INSTANT.set(Instant.now());
             producer.send(events).block(TIMEOUT);
         } finally {
             dispose(producer);

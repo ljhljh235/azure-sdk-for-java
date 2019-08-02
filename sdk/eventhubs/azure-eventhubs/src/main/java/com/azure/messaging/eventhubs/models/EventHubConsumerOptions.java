@@ -3,18 +3,15 @@
 
 package com.azure.messaging.eventhubs.models;
 
-import com.azure.core.amqp.Retry;
+import com.azure.core.amqp.RetryOptions;
+import com.azure.core.implementation.annotation.Fluent;
 import com.azure.core.implementation.util.ImplUtils;
-import com.azure.core.util.logging.ClientLogger;
 import com.azure.messaging.eventhubs.EventHubAsyncClient;
 import com.azure.messaging.eventhubs.EventHubConsumer;
 import reactor.core.scheduler.Scheduler;
 
-import java.time.Duration;
 import java.util.Locale;
 import java.util.Optional;
-
-import com.azure.core.implementation.annotation.Fluent;
 
 /**
  * The baseline set of options that can be specified when creating a {@link EventHubConsumer} to configure its
@@ -25,8 +22,6 @@ import com.azure.core.implementation.annotation.Fluent;
  */
 @Fluent
 public class EventHubConsumerOptions implements Cloneable {
-    private final ClientLogger logger = new ClientLogger(EventHubConsumerOptions.class);
-
     /**
      * The maximum length, in characters, for the identifier assigned to an {@link EventHubConsumer}.
      */
@@ -45,7 +40,7 @@ public class EventHubConsumerOptions implements Cloneable {
 
     private String identifier;
     private Long ownerLevel;
-    private Retry retry;
+    private RetryOptions retry;
     private Scheduler scheduler;
     private int prefetchCount;
 
@@ -73,7 +68,6 @@ public class EventHubConsumerOptions implements Cloneable {
         this.identifier = identifier;
         return this;
     }
-
 
     /**
      * Sets the {@code ownerLevel} value on this consumer. When populated, the level indicates that a consumer is
@@ -109,7 +103,7 @@ public class EventHubConsumerOptions implements Cloneable {
      * @param retry The retry policy to use when receiving events.
      * @return The updated {@link EventHubConsumerOptions} object.
      */
-    public EventHubConsumerOptions retry(Retry retry) {
+    public EventHubConsumerOptions retry(RetryOptions retry) {
         this.retry = retry;
         return this;
     }
@@ -161,12 +155,12 @@ public class EventHubConsumerOptions implements Cloneable {
     }
 
     /**
-     * Gets the retry policy when receiving events. If not specified, the retry policy configured on the associated
+     * Gets the retry options when receiving events. If not specified, the retry options configured on the associated
      * {@link EventHubAsyncClient} is used.
      *
-     * @return The retry policy when receiving events.
+     * @return The retry options when receiving events.
      */
-    public Retry retry() {
+    public RetryOptions retry() {
         return retry;
     }
 
@@ -205,12 +199,9 @@ public class EventHubConsumerOptions implements Cloneable {
     /**
      * Creates a shallow clone of this instance.
      *
-     * The object is cloned, but this instance's fields are not cloned. {@link Duration} and {@link String} are
-     * immutable objects and are not an issue. The implementation of {@link Retry} could be mutable. In addition, the
-     * {@link #scheduler()} set is not cloned.
-     *
      * @return A shallow clone of this object.
      */
+    @Override
     public EventHubConsumerOptions clone() {
         EventHubConsumerOptions clone;
         try {
@@ -219,19 +210,14 @@ public class EventHubConsumerOptions implements Cloneable {
             clone = new EventHubConsumerOptions();
         }
 
-        if (retry != null) {
-            try {
-                clone.retry((Retry) retry.clone());
-            } catch (CloneNotSupportedException e) {
-                logger.error("Unable to create clone of retry.", e);
-                clone.retry(retry);
-            }
-        }
+        clone.scheduler(this.scheduler())
+            .identifier(this.identifier())
+            .prefetchCount(this.prefetchCount())
+            .ownerLevel(this.ownerLevel());
 
-        clone.scheduler(this.scheduler());
-        clone.identifier(this.identifier());
-        clone.prefetchCount(this.prefetchCount());
-        clone.ownerLevel(this.ownerLevel());
+        if (retry != null) {
+            clone.retry(retry.clone());
+        }
 
         return clone;
     }

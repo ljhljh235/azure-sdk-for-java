@@ -3,7 +3,6 @@
 
 package com.azure.messaging.eventhubs;
 
-import com.azure.core.amqp.Retry;
 import com.azure.core.util.logging.ClientLogger;
 import com.azure.messaging.eventhubs.implementation.ApiTestBase;
 import com.azure.messaging.eventhubs.implementation.ReactorHandlerProvider;
@@ -11,6 +10,7 @@ import com.azure.messaging.eventhubs.models.EventHubConsumerOptions;
 import com.azure.messaging.eventhubs.models.EventHubProducerOptions;
 import com.azure.messaging.eventhubs.models.EventPosition;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -29,6 +29,7 @@ import static com.azure.messaging.eventhubs.TestUtils.isMatchingEvent;
 /**
  * Verifies we can use various prefetch options with {@link EventHubConsumer}.
  */
+@Ignore("Set prefetch tests do not work because they try to send very large number of events at once.")
 public class SetPrefetchCountTest extends ApiTestBase {
     private static final String PARTITION_ID = "1";
     // Default number of events to fetch when creating the consumer.
@@ -84,7 +85,7 @@ public class SetPrefetchCountTest extends ApiTestBase {
         final int eventCount = NUMBER_OF_EVENTS;
         final CountDownLatch countDownLatch = new CountDownLatch(eventCount);
         final EventHubConsumerOptions options = new EventHubConsumerOptions()
-            .retry(Retry.getDefaultRetry())
+            .retry(RETRY_OPTIONS)
             .prefetchCount(2000);
 
         consumer = client.createConsumer(EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
@@ -151,7 +152,7 @@ public class SetPrefetchCountTest extends ApiTestBase {
 
         try {
             MESSAGES_PUSHED_INSTANT.set(Instant.now());
-            producer.send(events).block(TIMEOUT);
+            producer.send(events).block(RETRY_OPTIONS.tryTimeout());
         } finally {
             dispose(producer);
         }

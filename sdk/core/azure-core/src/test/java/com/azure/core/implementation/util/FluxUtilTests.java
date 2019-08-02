@@ -12,6 +12,7 @@ import com.azure.core.http.HttpMethod;
 import com.azure.core.http.HttpRequest;
 import com.azure.core.http.rest.PagedFlux;
 import com.azure.core.http.rest.PagedResponse;
+import com.azure.core.http.rest.Response;
 import com.azure.core.implementation.http.PagedResponseBase;
 import com.azure.core.util.Context;
 import io.netty.buffer.ByteBuf;
@@ -279,6 +280,13 @@ public class FluxUtilTests {
     }
 
     @Test
+    public void testToMono() {
+        String value = "test";
+        Assert.assertEquals(getMonoRestResponse(value).flatMap(FluxUtil::toMono).block(), value);
+        Assert.assertEquals(getMonoRestResponse("").flatMap(FluxUtil::toMono).block(), "");
+    }
+
+    @Test
     public void testCallWithContextGetSingle() {
         String response = getSingle("Hello, ")
             .subscriberContext(reactor.util.context.Context.of("FirstName", "Foo", "LastName", "Bar"))
@@ -312,9 +320,9 @@ public class FluxUtilTests {
         // Simulates the client library API
         List<PagedResponse<Integer>> pagedResponses = getPagedResponses(4);
         return new PagedFlux<>(
-            () -> FluxUtil.monoContext(context -> getFirstPage(pagedResponses, context)),
+            () -> FluxUtil.withContext(context -> getFirstPage(pagedResponses, context)),
             continuationToken -> FluxUtil
-                .monoContext(context -> getNextPage(continuationToken, pagedResponses, context)));
+                .withContext(context -> getNextPage(continuationToken, pagedResponses, context)));
     }
 
     private List<PagedResponse<Integer>> getPagedResponses(int noOfPages)
@@ -361,7 +369,7 @@ public class FluxUtilTests {
 
 
     private Mono<String> getSingle(String prefix) {
-        return FluxUtil.monoContext(context -> serviceCallSingle(prefix, context));
+        return FluxUtil.withContext(context -> serviceCallSingle(prefix, context));
     }
 
     private Flux<String> getCollection(String prefix) {
@@ -399,6 +407,31 @@ public class FluxUtilTests {
         }
         file.createNewFile();
         return file;
+    }
+
+    private <T> Mono<Response<T>> getMonoRestResponse(T value) {
+        Response<T> response = new Response<T>() {
+            @Override
+            public int statusCode() {
+                return 200;
+            }
+
+            @Override
+            public HttpHeaders headers() {
+                return null;
+            }
+
+            @Override
+            public HttpRequest request() {
+                return null;
+            }
+
+            @Override
+            public T value() {
+                return value;
+            }
+        };
+        return Mono.just(response);
     }
 
 }
