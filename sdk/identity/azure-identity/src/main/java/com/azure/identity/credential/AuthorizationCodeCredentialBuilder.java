@@ -4,12 +4,12 @@
 package com.azure.identity.credential;
 
 import com.azure.core.util.logging.ClientLogger;
+import com.azure.identity.AuthorizationCodeProvider;
 import com.azure.identity.implementation.util.ValidationUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Fluent credential builder for instantiating a {@link AuthorizationCodeCredential}.
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class AuthorizationCodeCredentialBuilder extends AadCredentialBuilderBase<AuthorizationCodeCredentialBuilder> {
     private static final ClientLogger LOGGER = new ClientLogger(AuthorizationCodeCredentialBuilder.class);
 
-    private String authCode;
+    private AuthorizationCodeProvider authorizationCodeProvider;
     private String redirectUri;
 
     /**
@@ -27,11 +27,11 @@ public class AuthorizationCodeCredentialBuilder extends AadCredentialBuilderBase
      * {@link AuthorizationCodeCredential}, but is not required for constructing the
      * login URL.
      *
-     * @param authCode the authorization code acquired from user login
+     * @param authorizationCodeProvider the authorization code acquired from user login
      * @return the AuthorizationCodeCredentialBuilder itself
      */
-    public AuthorizationCodeCredentialBuilder authorizationCode(String authCode) {
-        this.authCode = authCode;
+    public AuthorizationCodeCredentialBuilder authorizationCodeProvider(AuthorizationCodeProvider authorizationCodeProvider) {
+        this.authorizationCodeProvider = authorizationCodeProvider;
         return this;
     }
 
@@ -55,30 +55,13 @@ public class AuthorizationCodeCredentialBuilder extends AadCredentialBuilderBase
     public AuthorizationCodeCredential build() {
         ValidationUtil.validate(getClass().getSimpleName(), new HashMap<String, Object>() {{
                 put("clientId", clientId);
-                put("authorizationCode", authCode);
+                put("authorizationCodeProvider", authorizationCodeProvider);
                 put("redirectUri", redirectUri);
             }});
         try {
-            return new AuthorizationCodeCredential(clientId, authCode, new URI(redirectUri), identityClientOptions);
+            return new AuthorizationCodeCredential(clientId, tenantId, authorizationCodeProvider, new URI(redirectUri), identityClientOptions);
         } catch (URISyntaxException e) {
             throw LOGGER.logExceptionAsError(new RuntimeException(e));
         }
-    }
-
-    /**
-     * Builds a login URL for the user to login on the client side.
-     *
-     * @param scopes the scopes the token will be used for
-     * @return a login URL for the user to login
-     */
-    public String buildLoginUrl(String... scopes) {
-        ValidationUtil.validate(getClass().getSimpleName(), new HashMap<String, Object>() {{
-                put("clientId", clientId);
-                put("redirectUri", redirectUri);
-            }});
-        return String.format("%s/oauth2/v2.0/authorize?response_type=code&response_mode=query&prompt"
-                    + "=select_account&client_id=%s&redirect_uri=%s&state=%s&scope=%s",
-                identityClientOptions.getAuthorityHost(), clientId, redirectUri, UUID.randomUUID(),
-                String.join(" ", scopes));
     }
 }
