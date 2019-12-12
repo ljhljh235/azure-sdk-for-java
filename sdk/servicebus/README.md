@@ -28,13 +28,15 @@ This library is build using:
 
 The package can be downloaded from [Maven](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.microsoft.azure%22%20AND%20a%3A%22azure-servicebus%22)
 
+[//]: # ({x-version-update-start;com.microsoft.azure:azure-servicebus;current})
 ```
 <dependency> 
   <groupId>com.microsoft.azure</groupId> 
   <artifactId>azure-servicebus</artifactId> 
-  <version>1.2.8</version>
+  <version>3.1.1</version>
 </dependency>
 ```
+[//]: # ({x-version-update-end})
 
 ## How to provide feedback
 
@@ -91,4 +93,4 @@ To use a proxy for unit tests, set an environment variable `RUN_WITH_PROXY` to `
 9. Click "Apply" and then "Run"
 10. You should have a new view next to the package explorer called JUnit showing the running tests and see Console outputs depending on which test currently runs. If you do not see the JUnit tab go to Window > Show view > Other... > Java > JUnit
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-java/sdk/servicebus/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-java%2Fsdk%2Fservicebus%2FREADME.png)

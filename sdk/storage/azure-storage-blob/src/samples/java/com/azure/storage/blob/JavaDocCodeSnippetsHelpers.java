@@ -3,8 +3,7 @@
 
 package com.azure.storage.blob;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.azure.storage.blob.models.UserDelegationKey;
 
 final class JavaDocCodeSnippetsHelpers {
     static BlobContainerAsyncClient getContainerAsyncClient() {
@@ -31,11 +30,7 @@ final class JavaDocCodeSnippetsHelpers {
         return new BlobServiceClientBuilder().buildClient();
     }
 
-    static URL generateURL(String urlString) {
-        try {
-            return new URL(urlString);
-        } catch (MalformedURLException ex) {
-            throw new RuntimeException(ex);
-        }
+    static UserDelegationKey getUserDelegationKey() {
+        return getBlobServiceClient().getUserDelegationKey(null, null);
     }
 }

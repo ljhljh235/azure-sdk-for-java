@@ -4,14 +4,19 @@
 package com.azure.storage.blob;
 
 import com.azure.core.util.Context;
+import com.azure.storage.blob.models.BlobAnalyticsLogging;
 import com.azure.storage.blob.models.BlobContainerListDetails;
+import com.azure.storage.blob.models.BlobMetrics;
+import com.azure.storage.blob.models.BlobRetentionPolicy;
+import com.azure.storage.blob.models.BlobServiceProperties;
 import com.azure.storage.blob.models.ListBlobContainersOptions;
-import com.azure.storage.blob.models.Logging;
-import com.azure.storage.blob.models.Metrics;
 import com.azure.storage.blob.models.PublicAccessType;
-import com.azure.storage.blob.models.RetentionPolicy;
 import com.azure.storage.blob.models.StorageAccountInfo;
-import com.azure.storage.blob.models.StorageServiceProperties;
+import com.azure.storage.common.sas.AccountSasPermission;
+import com.azure.storage.common.sas.AccountSasResourceType;
+import com.azure.storage.common.sas.AccountSasService;
+import com.azure.storage.common.sas.AccountSasSignatureValues;
+
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.Collections;
@@ -107,7 +112,7 @@ public class BlobServiceClientJavaDocCodeSnippets {
      */
     public void getProperties() {
         // BEGIN: com.azure.storage.blob.BlobServiceClient.getProperties
-        StorageServiceProperties properties = client.getProperties();
+        BlobServiceProperties properties = client.getProperties();
 
         System.out.printf("Hour metrics enabled: %b, Minute metrics enabled: %b%n",
             properties.getHourMetrics().isEnabled(),
@@ -121,7 +126,7 @@ public class BlobServiceClientJavaDocCodeSnippets {
     public void getPropertiesWithResponse() {
         // BEGIN: com.azure.storage.blob.BlobServiceClient.getPropertiesWithResponse#Duration-Context
         Context context = new Context("Key", "Value");
-        StorageServiceProperties properties = client.getPropertiesWithResponse(timeout, context).getValue();
+        BlobServiceProperties properties = client.getPropertiesWithResponse(timeout, context).getValue();
 
         System.out.printf("Hour metrics enabled: %b, Minute metrics enabled: %b%n",
             properties.getHourMetrics().isEnabled(),
@@ -130,22 +135,22 @@ public class BlobServiceClientJavaDocCodeSnippets {
     }
 
     /**
-     * Code snippet for {@link BlobServiceClient#setProperties(StorageServiceProperties)}
+     * Code snippet for {@link BlobServiceClient#setProperties(BlobServiceProperties)}
      */
     public void setProperties() {
-        // BEGIN: com.azure.storage.blob.BlobServiceClient.setProperties#StorageServiceProperties
-        RetentionPolicy loggingRetentionPolicy = new RetentionPolicy().setEnabled(true).setDays(3);
-        RetentionPolicy metricsRetentionPolicy = new RetentionPolicy().setEnabled(true).setDays(1);
+        // BEGIN: com.azure.storage.blob.BlobServiceClient.setProperties#BlobServiceProperties
+        BlobRetentionPolicy loggingRetentionPolicy = new BlobRetentionPolicy().setEnabled(true).setDays(3);
+        BlobRetentionPolicy metricsRetentionPolicy = new BlobRetentionPolicy().setEnabled(true).setDays(1);
 
-        StorageServiceProperties properties = new StorageServiceProperties()
-            .setLogging(new Logging()
+        BlobServiceProperties properties = new BlobServiceProperties()
+            .setLogging(new BlobAnalyticsLogging()
                 .setWrite(true)
                 .setDelete(true)
                 .setRetentionPolicy(loggingRetentionPolicy))
-            .setHourMetrics(new Metrics()
+            .setHourMetrics(new BlobMetrics()
                 .setEnabled(true)
                 .setRetentionPolicy(metricsRetentionPolicy))
-            .setMinuteMetrics(new Metrics()
+            .setMinuteMetrics(new BlobMetrics()
                 .setEnabled(true)
                 .setRetentionPolicy(metricsRetentionPolicy));
 
@@ -155,26 +160,26 @@ public class BlobServiceClientJavaDocCodeSnippets {
         } catch (UnsupportedOperationException error) {
             System.out.printf("Setting properties failed: %s%n", error);
         }
-        // END: com.azure.storage.blob.BlobServiceClient.setProperties#StorageServiceProperties
+        // END: com.azure.storage.blob.BlobServiceClient.setProperties#BlobServiceProperties
     }
 
     /**
-     * Code snippet for {@link BlobServiceClient#setPropertiesWithResponse(StorageServiceProperties, Duration, Context)}
+     * Code snippet for {@link BlobServiceClient#setPropertiesWithResponse(BlobServiceProperties, Duration, Context)}
      */
     public void setPropertiesWithResponse() {
-        // BEGIN: com.azure.storage.blob.BlobServiceClient.setPropertiesWithResponse#StorageServiceProperties-Duration-Context
-        RetentionPolicy loggingRetentionPolicy = new RetentionPolicy().setEnabled(true).setDays(3);
-        RetentionPolicy metricsRetentionPolicy = new RetentionPolicy().setEnabled(true).setDays(1);
+        // BEGIN: com.azure.storage.blob.BlobServiceClient.setPropertiesWithResponse#BlobServiceProperties-Duration-Context
+        BlobRetentionPolicy loggingRetentionPolicy = new BlobRetentionPolicy().setEnabled(true).setDays(3);
+        BlobRetentionPolicy metricsRetentionPolicy = new BlobRetentionPolicy().setEnabled(true).setDays(1);
 
-        StorageServiceProperties properties = new StorageServiceProperties()
-            .setLogging(new Logging()
+        BlobServiceProperties properties = new BlobServiceProperties()
+            .setLogging(new BlobAnalyticsLogging()
                 .setWrite(true)
                 .setDelete(true)
                 .setRetentionPolicy(loggingRetentionPolicy))
-            .setHourMetrics(new Metrics()
+            .setHourMetrics(new BlobMetrics()
                 .setEnabled(true)
                 .setRetentionPolicy(metricsRetentionPolicy))
-            .setMinuteMetrics(new Metrics()
+            .setMinuteMetrics(new BlobMetrics()
                 .setEnabled(true)
                 .setRetentionPolicy(metricsRetentionPolicy));
 
@@ -182,7 +187,7 @@ public class BlobServiceClientJavaDocCodeSnippets {
 
         System.out.printf("Setting properties completed with status %d%n",
             client.setPropertiesWithResponse(properties, timeout, context).getStatusCode());
-        // END: com.azure.storage.blob.BlobServiceClient.setPropertiesWithResponse#StorageServiceProperties-Duration-Context
+        // END: com.azure.storage.blob.BlobServiceClient.setPropertiesWithResponse#BlobServiceProperties-Duration-Context
     }
 
     /**
@@ -239,5 +244,25 @@ public class BlobServiceClientJavaDocCodeSnippets {
         // BEGIN: com.azure.storage.blob.BlobServiceClient.getAccountInfoWithResponse#Duration-Context
         StorageAccountInfo accountInfo = client.getAccountInfoWithResponse(timeout, context).getValue();
         // END: com.azure.storage.blob.BlobServiceClient.getAccountInfoWithResponse#Duration-Context
+    }
+
+    /**
+     * Code snippet for {@link BlobServiceClient#generateAccountSas(AccountSasSignatureValues)}
+     */
+    public void generateAccountSas() {
+        // BEGIN: com.azure.storage.blob.BlobServiceClient.generateAccountSas#AccountSasSignatureValues
+        AccountSasPermission permissions = new AccountSasPermission()
+            .setListPermission(true)
+            .setReadPermission(true);
+        AccountSasResourceType resourceTypes = new AccountSasResourceType().setContainer(true);
+        AccountSasService services = new AccountSasService().setBlobAccess(true).setFileAccess(true);
+        OffsetDateTime expiryTime = OffsetDateTime.now().plus(Duration.ofDays(2));
+
+        AccountSasSignatureValues sasValues =
+            new AccountSasSignatureValues(expiryTime, permissions, services, resourceTypes);
+
+        // Client must be authenticated via StorageSharedKeyCredential
+        String sas = client.generateAccountSas(sasValues);
+        // END: com.azure.storage.blob.BlobServiceClient.generateAccountSas#AccountSasSignatureValues
     }
 }

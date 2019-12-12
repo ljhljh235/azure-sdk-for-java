@@ -3,7 +3,12 @@
 
 package com.azure.core.http.policy;
 
+import com.azure.core.util.CoreUtils;
+import com.azure.core.util.logging.ClientLogger;
+
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,14 +16,46 @@ import java.util.Set;
  * The log configurations for HTTP messages.
  */
 public class HttpLogOptions {
+    private String applicationId;
     private HttpLogDetailLevel logLevel;
     private Set<String> allowedHeaderNames;
     private Set<String> allowedQueryParamNames;
+    private final ClientLogger logger = new ClientLogger(HttpLogOptions.class);
 
+    private static final int MAX_APPLICATION_ID_LENGTH = 24;
+    private static final List<String> DEFAULT_HEADERS_WHITELIST = Arrays.asList(
+        "x-ms-client-request-id",
+        "x-ms-return-client-request-id",
+        "traceparent",
+        "Accept",
+        "Cache-Control",
+        "Connection",
+        "Content-Length",
+        "Content-Type",
+        "Date",
+        "ETag",
+        "Expires",
+        "If-Match",
+        "If-Modified-Since",
+        "If-None-Match",
+        "If-Unmodified-Since",
+        "Last-Modified",
+        "Pragma",
+        "Request-Id",
+        "Retry-After",
+        "Server",
+        "Transfer-Encoding",
+        "User-Agent"
+    );
+
+    /**
+     * Creates a new instance that does not log any information about HTTP requests or responses.
+     */
     public HttpLogOptions() {
         logLevel = HttpLogDetailLevel.NONE;
-        allowedHeaderNames = new HashSet<>();
+        allowedHeaderNames = new HashSet<>(DEFAULT_HEADERS_WHITELIST);
         allowedQueryParamNames = new HashSet<>();
+        applicationId = null;
     }
 
     /**
@@ -33,7 +70,7 @@ public class HttpLogOptions {
     /**
      * Sets the level of detail to log on Http messages.
      *
-     * <p> If logLevel is not provided, default value of {@link HttpLogDetailLevel#NONE} is set.</p>
+     * <p>If logLevel is not provided, default value of {@link HttpLogDetailLevel#NONE} is set.</p>
      *
      * @param logLevel The {@link HttpLogDetailLevel}.
      * @return The updated HttpLogOptions object.
@@ -55,17 +92,24 @@ public class HttpLogOptions {
     /**
      * Sets the given whitelisted headers that should be logged.
      *
+     * <p>
+     * This method sets the provided header names to be the whitelisted header names which will be logged for all HTTP
+     * requests and responses, overwriting any previously configured headers, including the default set. Additionally,
+     * users can use {@link HttpLogOptions#addAllowedHeaderName(String)} or
+     * {@link HttpLogOptions#getAllowedHeaderNames()} to add or remove more headers names to the existing set of
+     * allowed header names.
+     * </p>
+     *
      * @param allowedHeaderNames The list of whitelisted header names from the user.
      * @return The updated HttpLogOptions object.
-     * @throws NullPointerException If {@code allowedHeaderNames} is {@code null}.
      */
     public HttpLogOptions setAllowedHeaderNames(final Set<String> allowedHeaderNames) {
-        this.allowedHeaderNames = allowedHeaderNames;
+        this.allowedHeaderNames = allowedHeaderNames == null ? new HashSet<>() : allowedHeaderNames;
         return this;
     }
 
     /**
-     * Sets the given whitelisted header that should be logged.
+     * Sets the given whitelisted header to the default header set that should be logged.
      *
      * @param allowedHeaderName The whitelisted header name from the user.
      * @return The updated HttpLogOptions object.
@@ -93,7 +137,7 @@ public class HttpLogOptions {
      * @return The updated HttpLogOptions object.
      */
     public HttpLogOptions setAllowedQueryParamNames(final Set<String> allowedQueryParamNames) {
-        this.allowedQueryParamNames = allowedQueryParamNames;
+        this.allowedQueryParamNames = allowedQueryParamNames == null ? new HashSet<>() : allowedQueryParamNames;
         return this;
     }
 
@@ -106,6 +150,37 @@ public class HttpLogOptions {
      */
     public HttpLogOptions addAllowedQueryParamName(final String allowedQueryParamName) {
         this.allowedQueryParamNames.add(allowedQueryParamName);
+        return this;
+    }
+
+    /**
+     * Gets the application specific id.
+     *
+     * @return The application specific id.
+     */
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    /**
+     * Sets the custom application specific id supplied by the user of the client library.
+     *
+     * @param applicationId The user specified application id.
+     * @return The updated HttpLogOptions object.
+     */
+    public HttpLogOptions setApplicationId(final String applicationId) {
+        if (!CoreUtils.isNullOrEmpty(applicationId)) {
+            if (applicationId.length() > MAX_APPLICATION_ID_LENGTH) {
+                throw logger
+                    .logExceptionAsError(new IllegalArgumentException("'applicationId' length cannot be greater than "
+                        + MAX_APPLICATION_ID_LENGTH));
+            } else if (applicationId.contains(" ")) {
+                throw logger
+                    .logExceptionAsError(new IllegalArgumentException("'applicationId' must not contain a space."));
+            } else {
+                this.applicationId = applicationId;
+            }
+        }
         return this;
     }
 }

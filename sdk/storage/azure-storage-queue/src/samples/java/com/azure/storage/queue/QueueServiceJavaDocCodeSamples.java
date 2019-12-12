@@ -4,11 +4,17 @@ package com.azure.storage.queue;
 
 import com.azure.core.http.rest.Response;
 import com.azure.core.util.Context;
-import com.azure.storage.common.credentials.SharedKeyCredential;
+import com.azure.storage.common.StorageSharedKeyCredential;
+import com.azure.storage.common.sas.AccountSasPermission;
+import com.azure.storage.common.sas.AccountSasResourceType;
+import com.azure.storage.common.sas.AccountSasService;
+import com.azure.storage.common.sas.AccountSasSignatureValues;
+import com.azure.storage.queue.models.QueueServiceProperties;
+import com.azure.storage.queue.models.QueueServiceStatistics;
 import com.azure.storage.queue.models.QueuesSegmentOptions;
-import com.azure.storage.queue.models.StorageServiceProperties;
-import com.azure.storage.queue.models.StorageServiceStats;
+
 import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.Map;
 
@@ -65,7 +71,7 @@ public class QueueServiceJavaDocCodeSamples {
 
     /**
      * Generates code sample for creating a {@link QueueServiceClient} with {@code connectionString} which turns into
-     * {@link SharedKeyCredential}
+     * {@link StorageSharedKeyCredential}
      *
      * @return An instance of {@link QueueServiceClient}
      */
@@ -153,7 +159,7 @@ public class QueueServiceJavaDocCodeSamples {
      */
     public void getProperties() {
         // BEGIN: com.azure.storage.queue.queueServiceClient.getProperties
-        StorageServiceProperties properties = client.getProperties();
+        QueueServiceProperties properties = client.getProperties();
         System.out.printf("Hour metrics enabled: %b, Minute metrics enabled: %b",
             properties.getHourMetrics().isEnabled(), properties.getMinuteMetrics().isEnabled());
         // END: com.azure.storage.queue.queueServiceClient.getProperties
@@ -164,7 +170,7 @@ public class QueueServiceJavaDocCodeSamples {
      */
     public void getPropertiesWithResponse() {
         // BEGIN: com.azure.storage.queue.queueServiceClient.getPropertiesWithResponse#duration-context
-        StorageServiceProperties properties = client.getPropertiesWithResponse(Duration.ofSeconds(1),
+        QueueServiceProperties properties = client.getPropertiesWithResponse(Duration.ofSeconds(1),
             new Context(key1, value1)).getValue();
         System.out.printf("Hour metrics enabled: %b, Minute metrics enabled: %b",
             properties.getHourMetrics().isEnabled(), properties.getMinuteMetrics().isEnabled());
@@ -172,59 +178,59 @@ public class QueueServiceJavaDocCodeSamples {
     }
 
     /**
-     * Generates a code sample for using {@link QueueServiceClient#setProperties(StorageServiceProperties)}
+     * Generates a code sample for using {@link QueueServiceClient#setProperties(QueueServiceProperties)}
      */
     public void setProperties() {
-        // BEGIN: com.azure.storage.queue.queueServiceClient.setProperties#storageServiceProperties
-        StorageServiceProperties properties = client.getProperties();
+        // BEGIN: com.azure.storage.queue.queueServiceClient.setProperties#QueueServiceProperties
+        QueueServiceProperties properties = client.getProperties();
         properties.setCors(Collections.emptyList());
 
         client.setProperties(properties);
-        System.out.printf("Setting Queue service properties completed.");
-        // END: com.azure.storage.queue.queueServiceClient.setProperties#storageServiceProperties
+        System.out.println("Setting Queue service properties completed.");
+        // END: com.azure.storage.queue.queueServiceClient.setProperties#QueueServiceProperties
     }
 
     /**
-     * Generates a code sample for using {@link QueueServiceClient#setPropertiesWithResponse(StorageServiceProperties,
+     * Generates a code sample for using {@link QueueServiceClient#setPropertiesWithResponse(QueueServiceProperties,
      * Duration, Context)}
      */
     public void setPropertiesWithResponse() {
-        // BEGIN: com.azure.storage.queue.queueServiceClient.setPropertiesWithResponse#storageServiceProperties-duration-context
-        StorageServiceProperties properties = client.getProperties();
+        // BEGIN: com.azure.storage.queue.queueServiceClient.setPropertiesWithResponse#QueueServiceProperties-duration-context
+        QueueServiceProperties properties = client.getProperties();
         properties.setCors(Collections.emptyList());
         Response<Void> response = client.setPropertiesWithResponse(properties, Duration.ofSeconds(1),
             new Context(key1, value1));
         System.out.printf("Setting Queue service properties completed with status code %d", response.getStatusCode());
-        // END: com.azure.storage.queue.queueServiceClient.setPropertiesWithResponse#storageServiceProperties-duration-context
+        // END: com.azure.storage.queue.queueServiceClient.setPropertiesWithResponse#QueueServiceProperties-duration-context
     }
 
     /**
-     * Generates a code sample for using {@link QueueServiceClient#setPropertiesWithResponse(StorageServiceProperties,
+     * Generates a code sample for using {@link QueueServiceClient#setPropertiesWithResponse(QueueServiceProperties,
      * Duration, Context)} with metrics enabled.
      */
     public void setPropertiesWithResponseEnableMetrics() {
-        // BEGIN: com.azure.storage.queue.queueServiceClient.setPropertiesWithResponseEnableMetrics#storageServiceProperties-duration-context
-        StorageServiceProperties properties = client.getProperties();
+        // BEGIN: com.azure.storage.queue.queueServiceClient.setPropertiesWithResponseEnableMetrics#QueueServiceProperties-duration-context
+        QueueServiceProperties properties = client.getProperties();
         properties.getMinuteMetrics().setEnabled(true);
         properties.getHourMetrics().setEnabled(true);
         Response<Void> response = client.setPropertiesWithResponse(properties, Duration.ofSeconds(1),
             new Context(key1, value1));
         System.out.printf("Setting Queue service properties completed with status code %d", response.getStatusCode());
-        // END: com.azure.storage.queue.queueServiceClient.setPropertiesWithResponseEnableMetrics#storageServiceProperties-duration-context
+        // END: com.azure.storage.queue.queueServiceClient.setPropertiesWithResponseEnableMetrics#QueueServiceProperties-duration-context
     }
 
     /**
-     * Generates a code sample for using {@link QueueServiceClient#setProperties(StorageServiceProperties)} with metrics
+     * Generates a code sample for using {@link QueueServiceClient#setProperties(QueueServiceProperties)} with metrics
      * enabled.
      */
     public void setPropertiesEnableMetrics() {
-        // BEGIN: com.azure.storage.queue.queueServiceClient.setPropertiesEnableMetrics#storageServiceProperties
-        StorageServiceProperties properties = client.getProperties();
+        // BEGIN: com.azure.storage.queue.queueServiceClient.setPropertiesEnableMetrics#QueueServiceProperties
+        QueueServiceProperties properties = client.getProperties();
         properties.getMinuteMetrics().setEnabled(true);
         properties.getHourMetrics().setEnabled(true);
         client.setProperties(properties);
-        System.out.printf("Setting Queue service properties completed.");
-        // END: com.azure.storage.queue.queueServiceClient.setPropertiesEnableMetrics#storageServiceProperties
+        System.out.println("Setting Queue service properties completed.");
+        // END: com.azure.storage.queue.queueServiceClient.setPropertiesEnableMetrics#QueueServiceProperties
     }
 
     /**
@@ -232,7 +238,7 @@ public class QueueServiceJavaDocCodeSamples {
      */
     public void getStatistics() {
         // BEGIN: com.azure.storage.queue.queueServiceClient.getStatistics
-        StorageServiceStats stats = client.getStatistics();
+        QueueServiceStatistics stats = client.getStatistics();
         System.out.printf("Geo replication status: %s, Last synced: %s",
             stats.getGeoReplication().getStatus(), stats.getGeoReplication().getLastSyncTime());
         // END: com.azure.storage.queue.queueServiceClient.getStatistics
@@ -243,10 +249,31 @@ public class QueueServiceJavaDocCodeSamples {
      */
     public void getStatisticsWithResponse() {
         // BEGIN: com.azure.storage.queue.queueServiceClient.getStatisticsWithResponse#duration-context
-        StorageServiceStats stats = client.getStatisticsWithResponse(Duration.ofSeconds(1),
+        QueueServiceStatistics stats = client.getStatisticsWithResponse(Duration.ofSeconds(1),
             new Context(key1, value1)).getValue();
         System.out.printf("Geo replication status: %s, Last synced: %s",
             stats.getGeoReplication().getStatus(), stats.getGeoReplication().getLastSyncTime());
         // END: com.azure.storage.queue.queueServiceClient.getStatisticsWithResponse#duration-context
+    }
+
+    /**
+     * Code snippet for {@link QueueServiceClient#generateAccountSas(AccountSasSignatureValues)}
+     */
+    public void generateAccountSas() {
+        QueueServiceClient queueServiceClient = createClientWithCredential();
+        // BEGIN: com.azure.storage.queue.QueueServiceClient.generateAccountSas#AccountSasSignatureValues
+        AccountSasPermission permissions = new AccountSasPermission()
+            .setListPermission(true)
+            .setReadPermission(true);
+        AccountSasResourceType resourceTypes = new AccountSasResourceType().setContainer(true).setObject(true);
+        AccountSasService services = new AccountSasService().setQueueAccess(true).setFileAccess(true);
+        OffsetDateTime expiryTime = OffsetDateTime.now().plus(Duration.ofDays(2));
+
+        AccountSasSignatureValues sasValues =
+            new AccountSasSignatureValues(expiryTime, permissions, services, resourceTypes);
+
+        // Client must be authenticated via StorageSharedKeyCredential
+        String sas = queueServiceClient.generateAccountSas(sasValues);
+        // END: com.azure.storage.queue.QueueServiceClient.generateAccountSas#AccountSasSignatureValues
     }
 }

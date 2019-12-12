@@ -3,9 +3,9 @@
 
 package com.azure.core.http.policy;
 
-import com.azure.core.credentials.SimpleTokenCache;
-import com.azure.core.credentials.TokenCredential;
-import com.azure.core.credentials.TokenRequest;
+import com.azure.core.credential.SimpleTokenCache;
+import com.azure.core.credential.TokenCredential;
+import com.azure.core.credential.TokenRequestContext;
 import com.azure.core.http.HttpPipelineCallContext;
 import com.azure.core.http.HttpPipelineNextPolicy;
 import com.azure.core.http.HttpResponse;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 import java.util.Objects;
 
 /**
- * The Pipeline policy that applies a token credential to an HTTP request
+ * The pipeline policy that applies a token credential to an HTTP request
  * with "Bearer" scheme.
  */
 public class BearerTokenAuthenticationPolicy implements HttpPipelinePolicy {
@@ -37,11 +37,14 @@ public class BearerTokenAuthenticationPolicy implements HttpPipelinePolicy {
         assert scopes.length > 0;
         this.credential = credential;
         this.scopes = scopes;
-        this.cache = new SimpleTokenCache(() -> credential.getToken(new TokenRequest().addScopes(scopes)));
+        this.cache = new SimpleTokenCache(() -> credential.getToken(new TokenRequestContext().addScopes(scopes)));
     }
 
     @Override
     public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
+        if ("http".equals(context.getHttpRequest().getUrl().getProtocol())) {
+            return Mono.error(new RuntimeException("token credentials require a URL using the HTTPS protocol scheme"));
+        }
         return cache.getToken()
             .flatMap(token -> {
                 context.getHttpRequest().getHeaders().put(AUTHORIZATION_HEADER, BEARER + " " + token.getToken());

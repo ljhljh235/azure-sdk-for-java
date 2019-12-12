@@ -14,11 +14,12 @@ import reactor.core.publisher.Mono;
 
 import java.net.URL;
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * While this class is public, but it is not part of our published public APIs.
  * This is meant to be internally used only by our sdk.
- * 
+ *
  *  Client policy is combination of endpoint change retry + throttling retry.
  */
 public class ClientRetryPolicy implements IDocumentClientRetryPolicy {
@@ -39,6 +40,7 @@ public class ClientRetryPolicy implements IDocumentClientRetryPolicy {
     private URL locationEndpoint;
     private RetryContext retryContext;
     private CosmosResponseDiagnostics cosmosResponseDiagnostics;
+    private AtomicInteger cnt = new AtomicInteger(0);
 
     public ClientRetryPolicy(GlobalEndpointManager globalEndpointManager,
                              boolean enableEndpointDiscovery,
@@ -57,6 +59,11 @@ public class ClientRetryPolicy implements IDocumentClientRetryPolicy {
 
     @Override
     public Mono<ShouldRetryResult> shouldRetry(Exception e) {
+        logger.debug("retry count {}, isReadRequest {}, canUseMultipleWriteLocations {}, due to failure:",
+            cnt.incrementAndGet(),
+            isReadRequest,
+            canUseMultipleWriteLocations,
+            e);
         if (this.locationEndpoint == null) {
             // on before request is not invoked because Document Service Request creation failed.
             logger.error("locationEndpoint is null because ClientRetryPolicy::onBeforeRequest(.) is not invoked, " +
@@ -70,12 +77,12 @@ public class ClientRetryPolicy implements IDocumentClientRetryPolicy {
         if (clientException != null && clientException.cosmosResponseDiagnostics() != null) {
             this.cosmosResponseDiagnostics = clientException.cosmosResponseDiagnostics();
         }
-        if (clientException != null && 
+        if (clientException != null &&
                 Exceptions.isStatusCode(clientException, HttpConstants.StatusCodes.FORBIDDEN) &&
                 Exceptions.isSubStatusCode(clientException, HttpConstants.SubStatusCodes.FORBIDDEN_WRITEFORBIDDEN))
         {
             logger.warn("Endpoint not writable. Will refresh cache and retry. {}", e.toString());
-            return this.shouldRetryOnEndpointFailureAsync(false);
+            return this.shouldRetryOnEndpointFailureAsync(false, true);
         }
 
         // Regional endpoint is not available yet for reads (e.g. add/ online of region is in progress)
@@ -85,16 +92,16 @@ public class ClientRetryPolicy implements IDocumentClientRetryPolicy {
                 this.isReadRequest)
         {
             logger.warn("Endpoint not available for reads. Will refresh cache and retry. {}", e.toString());
-            return this.shouldRetryOnEndpointFailureAsync(true);
+            return this.shouldRetryOnEndpointFailureAsync(true, false);
         }
 
         // Received Connection error (HttpRequestException), initiate the endpoint rediscovery
         if (WebExceptionUtility.isNetworkFailure(e)) {
             logger.warn("Endpoint not reachable. Will refresh cache and retry. {}" , e.toString());
-            return this.shouldRetryOnEndpointFailureAsync(this.isReadRequest);
+            return this.shouldRetryOnEndpointFailureAsync(this.isReadRequest, false);
         }
 
-        if (clientException != null && 
+        if (clientException != null &&
                 Exceptions.isStatusCode(clientException, HttpConstants.StatusCodes.NOTFOUND) &&
                 Exceptions.isSubStatusCode(clientException, HttpConstants.SubStatusCodes.READ_SESSION_NOT_AVAILABLE)) {
             return Mono.just(this.shouldRetryOnSessionNotAvailable());
@@ -134,7 +141,7 @@ public class ClientRetryPolicy implements IDocumentClientRetryPolicy {
         }
     }
 
-    private Mono<ShouldRetryResult> shouldRetryOnEndpointFailureAsync(boolean isReadRequest) {
+    private Mono<ShouldRetryResult> shouldRetryOnEndpointFailureAsync(boolean isReadRequest , boolean forceRefresh) {
         if (!this.enableEndpointDiscovery || this.failoverRetryCount > MaxRetryCount) {
             logger.warn("ShouldRetryOnEndpointFailureAsync() Not retrying. Retry count = {}", this.failoverRetryCount);
             return Mono.just(ShouldRetryResult.noRetry());
@@ -166,7 +173,7 @@ public class ClientRetryPolicy implements IDocumentClientRetryPolicy {
             retryDelay = Duration.ofMillis(ClientRetryPolicy.RetryIntervalInMS);
         }
         this.retryContext = new RetryContext(this.failoverRetryCount, false);
-        return this.globalEndpointManager.refreshLocationAsync(null)
+        return this.globalEndpointManager.refreshLocationAsync(null, forceRefresh)
                 .then(Mono.just(ShouldRetryResult.retryAfter(retryDelay)));
     }
 

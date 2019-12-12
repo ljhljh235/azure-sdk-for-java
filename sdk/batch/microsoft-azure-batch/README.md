@@ -62,6 +62,7 @@ You can find sample code that illustrates Batch usage scenarios in https://githu
 
 If you are using released builds from 7.0.0, add the following to your POM file:
 
+[//]: # ({x-version-update-start;com.microsoft.azure:com.microsoft.azure;current})
 ```xml
 <dependency>
     <groupId>com.microsoft.azure</groupId>
@@ -74,6 +75,7 @@ If you are using released builds from 7.0.0, add the following to your POM file:
     <version>1.6.4</version>
 </dependency>
 ```
+[//]: # ({x-version-update-end})
 
 # Pre-requisites
 
@@ -122,4 +124,4 @@ Then run any test in src/test/java directory.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-java%2Fbatch%2Fdata-plane%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-java%2Fsdk%2Fbatch%2Fmicrosoft-azure-batch%2FREADME.png)

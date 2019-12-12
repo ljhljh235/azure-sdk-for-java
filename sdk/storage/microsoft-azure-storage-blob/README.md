@@ -33,13 +33,15 @@ Migrating to the newest version of the SDK will require a substantial rewrite of
 
 To get the binaries of this library as distributed by Microsoft, ready for use within your project, you can use Maven.
 
+[//]: # ({x-version-update-start;com.microsoft.azure:azure-storage-blob;current})
 ```xml
 <dependency>
 	<groupId>com.microsoft.azure</groupId>
 	<artifactId>azure-storage-blob</artifactId>
-	<version>11.0.1</version>
+	<version>11.0.2</version>
 </dependency>
 ```
+[//]: # ({x-version-update-end})
 
 ### Option 2: Source Via Git
 
@@ -157,6 +159,7 @@ public class Sample {
     }
 }
 ```
+
 ## Building
 
 If building from sources, run mvn compile to build. No build steps are necessary if including the package as a maven dependency.
@@ -164,8 +167,6 @@ If building from sources, run mvn compile to build. No build steps are necessary
 ## Running tests
 
 Please refer to CONTRIBUTING.md for information on how to run the tests.
-
-
 
 # Need Help?
 
@@ -187,4 +188,4 @@ When sending pull requests, please send non-breaking PRs to the dev branch and b
 * [Azure Storage Team Blog](http://blogs.msdn.com/b/windowsazurestorage/)
 * [Javadoc](http://azure.github.io/azure-storage-java/)
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-java/sdk/storage/microsoft-azure-storage-blob/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-java%2Fsdk%2Fstorage%2Fmicrosoft-azure-storage-blob%2FREADME.png)
