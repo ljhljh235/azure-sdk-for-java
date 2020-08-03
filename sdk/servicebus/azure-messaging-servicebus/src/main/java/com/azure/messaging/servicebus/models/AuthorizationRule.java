@@ -8,7 +8,6 @@ import com.azure.core.annotation.Fluent;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +19,13 @@ import java.util.List;
 @Fluent
 public final class AuthorizationRule {
     /*
-     * The type property.
+     * The authorization type.
      */
     @JacksonXmlProperty(localName = "type", isAttribute = true)
     private String type;
 
     /*
-     * The ClaimType property.
+     * The claim type.
      */
     @JacksonXmlProperty(
             localName = "ClaimType",
@@ -34,7 +33,7 @@ public final class AuthorizationRule {
     private String claimType;
 
     /*
-     * The ClaimValue property.
+     * The claim value.
      */
     @JacksonXmlProperty(
             localName = "ClaimValue",
@@ -100,7 +99,7 @@ public final class AuthorizationRule {
     private String secondaryKey;
 
     /**
-     * Get the type property: The type property.
+     * Get the type property: The authorization type.
      *
      * @return the type value.
      */
@@ -109,7 +108,7 @@ public final class AuthorizationRule {
     }
 
     /**
-     * Set the type property: The type property.
+     * Set the type property: The authorization type.
      *
      * @param type the type value to set.
      * @return the AuthorizationRule object itself.
@@ -120,7 +119,7 @@ public final class AuthorizationRule {
     }
 
     /**
-     * Get the claimType property: The ClaimType property.
+     * Get the claimType property: The claim type.
      *
      * @return the claimType value.
      */
@@ -129,7 +128,7 @@ public final class AuthorizationRule {
     }
 
     /**
-     * Set the claimType property: The ClaimType property.
+     * Set the claimType property: The claim type.
      *
      * @param claimType the claimType value to set.
      * @return the AuthorizationRule object itself.
@@ -140,7 +139,7 @@ public final class AuthorizationRule {
     }
 
     /**
-     * Get the claimValue property: The ClaimValue property.
+     * Get the claimValue property: The claim value.
      *
      * @return the claimValue value.
      */
@@ -149,7 +148,7 @@ public final class AuthorizationRule {
     }
 
     /**
-     * Set the claimValue property: The ClaimValue property.
+     * Set the claimValue property: The claim value.
      *
      * @param claimValue the claimValue value to set.
      * @return the AuthorizationRule object itself.

@@ -68,8 +68,14 @@ public final class ServiceBusManagementClientImpl {
         return this.httpPipeline;
     }
 
+    /** The serializer to serialize an object into a string. */
     private final SerializerAdapter serializerAdapter;
 
+    /**
+     * Gets The serializer to serialize an object into a string.
+     *
+     * @return the serializerAdapter value.
+     */
     public SerializerAdapter getSerializerAdapter() {
         return serializerAdapter;
     }
@@ -123,12 +129,13 @@ public final class ServiceBusManagementClientImpl {
     }
 
     /** Initializes an instance of ServiceBusManagementClient client. */
-    ServiceBusManagementClientImpl(String endpoint, String apiVersion) {
+    ServiceBusManagementClientImpl(String endpoint) {
         this(
                 new HttpPipelineBuilder()
                         .policies(new UserAgentPolicy(), new RetryPolicy(), new CookiePolicy())
                         .build(),
-                endpoint, apiVersion, JacksonAdapter.createDefaultSerializerAdapter());
+                JacksonAdapter.createDefaultSerializerAdapter(),
+                endpoint);
     }
 
     /**
@@ -136,17 +143,28 @@ public final class ServiceBusManagementClientImpl {
      *
      * @param httpPipeline The HTTP pipeline to send requests through.
      */
-    ServiceBusManagementClientImpl(HttpPipeline httpPipeline, String endpoint, String apiVersion,
-        SerializerAdapter serializerAdapter) {
+    ServiceBusManagementClientImpl(HttpPipeline httpPipeline, String endpoint) {
+        this(httpPipeline, JacksonAdapter.createDefaultSerializerAdapter(), endpoint);
+    }
+
+    /**
+     * Initializes an instance of ServiceBusManagementClient client.
+     *
+     * @param httpPipeline The HTTP pipeline to send requests through.
+     * @param serializerAdapter The serializer to serialize an object into a string.
+     */
+    ServiceBusManagementClientImpl(HttpPipeline httpPipeline, SerializerAdapter serializerAdapter, String endpoint) {
         this.httpPipeline = httpPipeline;
-        this.endpoint = endpoint;
-        this.apiVersion = apiVersion;
         this.serializerAdapter = serializerAdapter;
+        this.endpoint = endpoint;
+        this.apiVersion = "2017_04";
         this.entitys = new EntitysImpl(this);
         this.subscriptions = new SubscriptionsImpl(this);
         this.rules = new RulesImpl(this);
         this.namespaces = new NamespacesImpl(this);
-        this.service = RestProxy.create(ServiceBusManagementClientService.class, this.httpPipeline, serializerAdapter);
+        this.service =
+                RestProxy.create(
+                        ServiceBusManagementClientService.class, this.httpPipeline, this.getSerializerAdapter());
     }
 
     /**

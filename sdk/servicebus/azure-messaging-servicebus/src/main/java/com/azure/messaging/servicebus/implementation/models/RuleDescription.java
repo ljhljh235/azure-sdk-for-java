@@ -7,17 +7,16 @@ package com.azure.messaging.servicebus.implementation.models;
 import com.azure.core.annotation.Fluent;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-
 import java.time.OffsetDateTime;
 
 /** The RuleDescription model. */
 @JacksonXmlRootElement(
-        localName = "null",
+        localName = "RuleDescription",
         namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")
 @Fluent
 public final class RuleDescription {
     /*
-     * The Filter property.
+     * The filter property.
      */
     @JacksonXmlProperty(
             localName = "Filter",
@@ -25,7 +24,7 @@ public final class RuleDescription {
     private RuleFilter filter;
 
     /*
-     * The Action property.
+     * The action property.
      */
     @JacksonXmlProperty(
             localName = "Action",
@@ -41,7 +40,7 @@ public final class RuleDescription {
     private OffsetDateTime createdAt;
 
     /*
-     * The Name property.
+     * The name property.
      */
     @JacksonXmlProperty(
             localName = "Name",
@@ -49,7 +48,7 @@ public final class RuleDescription {
     private String name;
 
     /**
-     * Get the filter property: The Filter property.
+     * Get the filter property: The filter property.
      *
      * @return the filter value.
      */
@@ -58,7 +57,7 @@ public final class RuleDescription {
     }
 
     /**
-     * Set the filter property: The Filter property.
+     * Set the filter property: The filter property.
      *
      * @param filter the filter value to set.
      * @return the RuleDescription object itself.
@@ -69,7 +68,7 @@ public final class RuleDescription {
     }
 
     /**
-     * Get the action property: The Action property.
+     * Get the action property: The action property.
      *
      * @return the action value.
      */
@@ -78,7 +77,7 @@ public final class RuleDescription {
     }
 
     /**
-     * Set the action property: The Action property.
+     * Set the action property: The action property.
      *
      * @param action the action value to set.
      * @return the RuleDescription object itself.
@@ -109,7 +108,7 @@ public final class RuleDescription {
     }
 
     /**
-     * Get the name property: The Name property.
+     * Get the name property: The name property.
      *
      * @return the name value.
      */
@@ -118,7 +117,7 @@ public final class RuleDescription {
     }
 
     /**
-     * Set the name property: The Name property.
+     * Set the name property: The name property.
      *
      * @param name the name value to set.
      * @return the RuleDescription object itself.

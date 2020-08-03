@@ -8,7 +8,6 @@ import com.azure.core.annotation.Immutable;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /** The RuleAction model. */
 @JsonTypeInfo(
@@ -25,5 +24,4 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
         localName = "Action",
         namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")
 @Immutable
-public class RuleAction {
-}
+public class RuleAction {}

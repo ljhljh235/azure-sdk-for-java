@@ -8,7 +8,6 @@ import com.azure.core.annotation.Immutable;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /** The RuleFilter model. */
 @JsonTypeInfo(
@@ -19,13 +18,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JsonTypeName("RuleFilter")
 @JsonSubTypes({
     @JsonSubTypes.Type(name = "CorrelationFilter", value = CorrelationFilter.class),
-    @JsonSubTypes.Type(name = "SqlFilter", value = SqlFilter.class),
-    @JsonSubTypes.Type(name = "TrueFilter", value = TrueFilter.class),
-    @JsonSubTypes.Type(name = "FalseFilter", value = FalseFilter.class)
+    @JsonSubTypes.Type(name = "SqlFilter", value = SqlFilter.class)
 })
 @JacksonXmlRootElement(
         localName = "Filter",
         namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")
 @Immutable
-public class RuleFilter {
-}
+public class RuleFilter {}
