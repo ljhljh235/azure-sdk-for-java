@@ -202,6 +202,10 @@ class APISpec extends Specification {
         return setupTestMode() == TestMode.LIVE
     }
 
+    static boolean playbackMode() {
+        return setupTestMode() == TestMode.PLAYBACK
+    }
+
     private StorageSharedKeyCredential getCredential(String accountType) {
         String accountName
         String accountKey
@@ -293,10 +297,10 @@ class APISpec extends Specification {
      * https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-blob-service-operations
      *
      * @param perRequestDataSize The amount of data expected to go out in each request. Will be used to calculate a
-     * timeout value--about 10s/MB. Won't be less than 1 minute.
+     * timeout value--about 20s/MB. Won't be less than 1 minute.
      */
     DataLakeServiceAsyncClient getPrimaryServiceClientForWrites(long perRequestDataSize) {
-        int retryTimeout = Math.toIntExact((long) (perRequestDataSize / Constants.MB) * 10)
+        int retryTimeout = Math.toIntExact((long) (perRequestDataSize / Constants.MB) * 20)
         retryTimeout = Math.max(60, retryTimeout)
         return getServiceClientBuilder(primaryCredential,
             String.format(defaultEndpointTemplate, primaryCredential.getAccountName()))
@@ -794,7 +798,7 @@ class APISpec extends Specification {
                 // Use Arrays.equals as it is more optimized than Groovy/Spock's '==' for arrays.
                 assert readCount1 == readCount2 && Arrays.equals(buffer1, buffer2)
 
-                pos += bufferSize
+                pos += expectedReadCount
             }
 
             def verificationRead = stream2.read()

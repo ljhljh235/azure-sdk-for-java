@@ -17,6 +17,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import reactor.core.publisher.Mono;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -40,10 +41,10 @@ public class NewEncryptionProcessorTests {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                byte[] plainText = invocationOnMock.getArgumentAt(0, byte[].class);
+                byte[] plainText = invocationOnMock.getArgument(0, byte[].class);
 
                 if (dekId == NewEncryptionProcessorTests.dekId) {
-                    return TestCommon.EncryptData(plainText);
+                    return Mono.just(TestCommon.EncryptData(plainText));
                 } else {
                     throw new IllegalArgumentException("DEK not found.");
                 }
@@ -54,10 +55,10 @@ public class NewEncryptionProcessorTests {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                byte[] plainText = invocationOnMock.getArgumentAt(0, byte[].class);
+                byte[] plainText = invocationOnMock.getArgument(0, byte[].class);
 
                 if (dekId == NewEncryptionProcessorTests.dekId) {
-                    return TestCommon.DecryptData(plainText);
+                    return Mono.just(TestCommon.DecryptData(plainText));
                 } else {
                     throw new IllegalArgumentException("Null DEK was returned.");
                 }
@@ -113,7 +114,7 @@ public class NewEncryptionProcessorTests {
         ObjectNode encryptedDoc = NewEncryptionProcessorTests.VerifyEncryptionSucceeded(testDoc);
         ObjectNode decryptedDoc = EncryptionProcessor.decryptAsync(
             encryptedDoc,
-            NewEncryptionProcessorTests.mockEncryptor);
+            NewEncryptionProcessorTests.mockEncryptor).block();
 
         NewEncryptionProcessorTests.VerifyDecryptionSucceeded(
             decryptedDoc,
@@ -166,7 +167,7 @@ public class NewEncryptionProcessorTests {
         byte[] encryptedStream = EncryptionProcessor.encryptAsync(
             testDoc.ToStream(),
             NewEncryptionProcessorTests.mockEncryptor,
-            NewEncryptionProcessorTests.encryptionOptions);
+            NewEncryptionProcessorTests.encryptionOptions).block();
 
 //    ObjectNode encryptedDoc = NewEncryptionProcessor.BaseSerializer.FromStream<JObject>(encryptedStream);
         ObjectNode encryptedDoc = Utils.parse(encryptedStream, ObjectNode.class);

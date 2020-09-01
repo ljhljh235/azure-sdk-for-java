@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 
 
 /**
+ * TODO: change the interface to package private? moderakh
  * TODO: moderakh add read-feed/query apis for data encryption key
  * Container for data encryption keys. Provides methods to create, re-wrap, read and enumerate data encryption keys.
  * See https://aka.ms/CosmosClientEncryption for more information on client-side encryption support in Azure Cosmos DB.
