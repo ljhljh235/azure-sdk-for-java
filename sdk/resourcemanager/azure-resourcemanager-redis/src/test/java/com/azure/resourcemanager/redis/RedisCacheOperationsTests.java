@@ -123,7 +123,7 @@ public class RedisCacheOperationsTests extends RedisManagementTest {
         Assertions.assertNotNull(oldKeys);
         Assertions.assertNotNull(updatedPrimaryKey);
         Assertions.assertNotNull(updatedSecondaryKey);
-        if (isRecordMode()) {
+        if (!isPlaybackMode()) {
             Assertions.assertNotEquals(oldKeys.primaryKey(), updatedPrimaryKey.primaryKey());
             Assertions.assertEquals(oldKeys.secondaryKey(), updatedPrimaryKey.secondaryKey());
             Assertions.assertNotEquals(oldKeys.secondaryKey(), updatedSecondaryKey.secondaryKey());
@@ -205,9 +205,6 @@ public class RedisCacheOperationsTests extends RedisManagementTest {
 
     @Test
     public void canCRUDLinkedServers() throws Exception {
-        if (isPlaybackMode()) {
-            return; // TODO: fix playback random fail
-        }
 
         RedisCache rgg =
             redisManager
