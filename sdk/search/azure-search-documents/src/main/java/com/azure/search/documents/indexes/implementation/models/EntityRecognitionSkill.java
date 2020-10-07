@@ -7,22 +7,22 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
 import com.azure.search.documents.indexes.models.EntityCategory;
 import com.azure.search.documents.indexes.models.EntityRecognitionSkillLanguage;
+import com.azure.search.documents.indexes.models.InputFieldMappingEntry;
 import com.azure.search.documents.indexes.models.OutputFieldMappingEntry;
+import com.azure.search.documents.indexes.models.SearchIndexerSkill;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
-/** The EntityRecognitionSkill model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/** Text analytics entity recognition. */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Skills.Text.EntityRecognitionSkill")
-@JsonFlatten
 @Fluent
-public class EntityRecognitionSkill extends SearchIndexerSkill {
+public final class EntityRecognitionSkill extends SearchIndexerSkill {
     /*
      * A list of entity categories that should be extracted.
      */

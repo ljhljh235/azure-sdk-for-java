@@ -7,19 +7,21 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
+import com.azure.search.documents.indexes.models.LexicalAnalyzer;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
-/** The StopAnalyzer model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/**
+ * Divides text at non-letters; Applies the lowercase and stopword token filters. This analyzer is implemented using
+ * Apache Lucene.
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Azure.Search.StopAnalyzer")
-@JsonFlatten
 @Fluent
-public class StopAnalyzer extends LexicalAnalyzer {
+public final class StopAnalyzer extends LexicalAnalyzer {
     /*
      * A list of stopwords.
      */

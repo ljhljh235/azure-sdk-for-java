@@ -25,14 +25,10 @@ public final class SearchIndexerSkillsetConverter {
             return null;
         }
 
-        List<SearchIndexerSkill> skills = obj.getSkills() == null ? null
-            : obj.getSkills().stream().map(SearchIndexerSkillConverter::map).collect(Collectors.toList());
-        SearchIndexerSkillset searchIndexerSkillset = new SearchIndexerSkillset(obj.getName(), skills);
+        SearchIndexerSkillset searchIndexerSkillset = new SearchIndexerSkillset(obj.getName(), obj.getSkills());
 
         if (obj.getCognitiveServicesAccount() != null) {
-            CognitiveServicesAccount cognitiveServicesAccount =
-                CognitiveServicesAccountConverter.map(obj.getCognitiveServicesAccount());
-            searchIndexerSkillset.setCognitiveServicesAccount(cognitiveServicesAccount);
+            searchIndexerSkillset.setCognitiveServicesAccount(obj.getCognitiveServicesAccount());
         }
 
         String description = obj.getDescription();
@@ -52,18 +48,13 @@ public final class SearchIndexerSkillsetConverter {
             return null;
         }
         Objects.requireNonNull(obj.getName(), "The SearchIndexerSkillset name cannot be null");
-        List<com.azure.search.documents.indexes.implementation.models.SearchIndexerSkill> skills =
-            obj.getSkills() == null ? null
-                : obj.getSkills().stream().map(SearchIndexerSkillConverter::map).collect(Collectors.toList());
         com.azure.search.documents.indexes.implementation.models.SearchIndexerSkillset searchIndexerSkillset =
             new com.azure.search.documents.indexes.implementation.models.SearchIndexerSkillset()
                 .setName(obj.getName())
-                .setSkills(skills);
+                .setSkills(obj.getSkills());
 
         if (obj.getCognitiveServicesAccount() != null) {
-            com.azure.search.documents.indexes.implementation.models.CognitiveServicesAccount cognitiveServicesAccount =
-                CognitiveServicesAccountConverter.map(obj.getCognitiveServicesAccount());
-            searchIndexerSkillset.setCognitiveServicesAccount(cognitiveServicesAccount);
+            searchIndexerSkillset.setCognitiveServicesAccount(obj.getCognitiveServicesAccount());
         }
 
         String description = obj.getDescription();

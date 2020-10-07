@@ -7,19 +7,18 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
+import com.azure.search.documents.indexes.models.LexicalAnalyzer;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
-/** The LuceneStandardAnalyzer model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/** Standard Apache Lucene analyzer; Composed of the standard tokenizer, lowercase filter and stop filter. */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Azure.Search.StandardAnalyzer")
-@JsonFlatten
 @Fluent
-public class LuceneStandardAnalyzer extends LexicalAnalyzer {
+public final class LuceneStandardAnalyzer extends LexicalAnalyzer {
     /*
      * The maximum token length. Default is 255. Tokens longer than the maximum
      * length are split. The maximum token length that can be used is 300

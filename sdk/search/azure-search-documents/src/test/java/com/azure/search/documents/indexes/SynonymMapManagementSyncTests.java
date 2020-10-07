@@ -75,8 +75,8 @@ public class SynonymMapManagementSyncTests extends SearchTestBase {
     @Test
     public void createSynonymMapFailsWithUsefulMessageOnUserError() {
         // Create SynonymMap with invalid synonym
-        SynonymMap expectedSynonymMap = createTestSynonymMap()
-            .setSynonyms("a => b => c");
+        SynonymMap expectedSynonymMap = createTestSynonymMap();
+        expectedSynonymMap.setSynonyms("a => b => c");
 
         assertHttpResponseException(
             () -> client.createSynonymMap(expectedSynonymMap),
@@ -199,7 +199,8 @@ public class SynonymMapManagementSyncTests extends SearchTestBase {
         String originalETag = original.getETag();
         synonymMapsToDelete.add(original.getName());
 
-        SynonymMap updated = client.createOrUpdateSynonymMapWithResponse(original.setSynonyms("mutated1, mutated2"),
+        original.setSynonyms("mutated1, mutated2");
+        SynonymMap updated = client.createOrUpdateSynonymMapWithResponse(original,
             false, Context.NONE)
             .getValue();
         String updatedETag = updated.getETag();
@@ -217,7 +218,8 @@ public class SynonymMapManagementSyncTests extends SearchTestBase {
         String originalETag = original.getETag();
         synonymMapsToDelete.add(original.getName());
 
-        SynonymMap updated = client.createOrUpdateSynonymMapWithResponse(original.setSynonyms("mutated1, mutated2"),
+        original.setSynonyms("mutated1, mutated2");
+        SynonymMap updated = client.createOrUpdateSynonymMapWithResponse(original,
             true, Context.NONE)
             .getValue();
         String updatedETag = updated.getETag();
@@ -236,7 +238,8 @@ public class SynonymMapManagementSyncTests extends SearchTestBase {
         String originalETag = original.getETag();
         synonymMapsToDelete.add(original.getName());
 
-        SynonymMap updated = client.createOrUpdateSynonymMapWithResponse(original.setSynonyms("mutated1, mutated2"),
+        original.setSynonyms("mutated1, mutated2");
+        SynonymMap updated = client.createOrUpdateSynonymMapWithResponse(original,
             true, Context.NONE)
             .getValue();
         String updatedETag = updated.getETag();

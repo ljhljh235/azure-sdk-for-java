@@ -7,18 +7,17 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-/** The TokenFilter model. */
+/** Base type for token filters. */
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
-        property = "@odata\\.type",
+        property = "@odata.type",
         defaultImpl = TokenFilter.class)
 @JsonTypeName("TokenFilter")
 @JsonSubTypes({
@@ -60,7 +59,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
             name = "#Microsoft.Azure.Search.WordDelimiterTokenFilter",
             value = WordDelimiterTokenFilter.class)
 })
-@JsonFlatten
 @Fluent
 public class TokenFilter {
     /*

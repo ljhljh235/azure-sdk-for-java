@@ -7,10 +7,11 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
 import com.azure.search.documents.indexes.models.ImageAnalysisSkillLanguage;
 import com.azure.search.documents.indexes.models.ImageDetail;
+import com.azure.search.documents.indexes.models.InputFieldMappingEntry;
 import com.azure.search.documents.indexes.models.OutputFieldMappingEntry;
+import com.azure.search.documents.indexes.models.SearchIndexerSkill;
 import com.azure.search.documents.indexes.models.VisualFeature;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,12 +19,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
-/** The ImageAnalysisSkill model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/** A skill that analyzes image files. It extracts a rich set of visual features based on the image content. */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Skills.Vision.ImageAnalysisSkill")
-@JsonFlatten
 @Fluent
-public class ImageAnalysisSkill extends SearchIndexerSkill {
+public final class ImageAnalysisSkill extends SearchIndexerSkill {
     /*
      * A value indicating which language code to use. Default is en.
      */

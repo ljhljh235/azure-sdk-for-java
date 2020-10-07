@@ -7,13 +7,15 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Immutable;
-import com.azure.core.annotation.JsonFlatten;
+import com.azure.search.documents.indexes.models.DataDeletionDetectionPolicy;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-/** The NativeBlobSoftDeleteDeletionDetectionPolicy model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/**
+ * Defines a data deletion detection policy that captures deletions using the soft-deletion capability of Azure Blob
+ * Storage.
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy")
-@JsonFlatten
 @Immutable
-public class NativeBlobSoftDeleteDeletionDetectionPolicy extends DataDeletionDetectionPolicy {}
+public final class NativeBlobSoftDeleteDeletionDetectionPolicy extends DataDeletionDetectionPolicy {}

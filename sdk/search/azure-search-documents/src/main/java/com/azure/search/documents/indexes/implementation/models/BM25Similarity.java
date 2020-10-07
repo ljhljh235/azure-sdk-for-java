@@ -7,17 +7,19 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-/** The BM25Similarity model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/**
+ * Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length
+ * normalization (controlled by the 'b' parameter) as well as term frequency saturation (controlled by the 'k1'
+ * parameter).
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Azure.Search.BM25Similarity")
-@JsonFlatten
 @Fluent
-public class BM25Similarity extends Similarity {
+public final class BM25Similarity extends Similarity {
     /*
      * This property controls the scaling function between the term frequency
      * of each matching terms and the final relevance score of a document-query

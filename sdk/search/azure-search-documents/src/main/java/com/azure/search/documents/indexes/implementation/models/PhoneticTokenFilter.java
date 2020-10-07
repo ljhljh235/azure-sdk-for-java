@@ -7,19 +7,17 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
 import com.azure.search.documents.indexes.models.PhoneticEncoder;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-/** The PhoneticTokenFilter model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/** Create tokens for phonetic matches. This token filter is implemented using Apache Lucene. */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Azure.Search.PhoneticTokenFilter")
-@JsonFlatten
 @Fluent
-public class PhoneticTokenFilter extends TokenFilter {
+public final class PhoneticTokenFilter extends TokenFilter {
     /*
      * The phonetic encoder to use. Default is "metaphone".
      */

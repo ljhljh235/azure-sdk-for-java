@@ -737,8 +737,7 @@ public class SearchSyncTests extends SearchTestBase {
 
         // Create a new SynonymMap
         synonymMapToDelete = searchIndexClient.createSynonymMap(new SynonymMap(
-            testResourceNamer.randomName("names", 32))
-            .setSynonyms("luxury,fancy")).getName();
+            testResourceNamer.randomName("names", 32),"luxury,fancy")).getName();
 
         // Attach index field to SynonymMap
         SearchIndex hotelsIndex = searchIndexClient.getIndex(client.getIndexName());

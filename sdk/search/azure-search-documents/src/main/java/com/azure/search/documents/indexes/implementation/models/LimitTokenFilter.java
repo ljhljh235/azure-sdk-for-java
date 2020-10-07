@@ -7,18 +7,16 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-/** The LimitTokenFilter model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/** Limits the number of tokens while indexing. This token filter is implemented using Apache Lucene. */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Azure.Search.LimitTokenFilter")
-@JsonFlatten
 @Fluent
-public class LimitTokenFilter extends TokenFilter {
+public final class LimitTokenFilter extends TokenFilter {
     /*
      * The maximum number of tokens to produce. Default is 1.
      */
@@ -30,7 +28,7 @@ public class LimitTokenFilter extends TokenFilter {
      * even if maxTokenCount is reached. Default is false.
      */
     @JsonProperty(value = "consumeAllTokens")
-    private Boolean consumeAllTokens;
+    private Boolean allTokensConsumed;
 
     /**
      * Creates an instance of LimitTokenFilter class.
@@ -68,8 +66,8 @@ public class LimitTokenFilter extends TokenFilter {
      *
      * @return the consumeAllTokens value.
      */
-    public Boolean isConsumeAllTokens() {
-        return this.consumeAllTokens;
+    public Boolean isAllTokensConsumed() {
+        return this.allTokensConsumed;
     }
 
     /**
@@ -79,8 +77,8 @@ public class LimitTokenFilter extends TokenFilter {
      * @param consumeAllTokens the consumeAllTokens value to set.
      * @return the LimitTokenFilter object itself.
      */
-    public LimitTokenFilter setConsumeAllTokens(Boolean consumeAllTokens) {
-        this.consumeAllTokens = consumeAllTokens;
+    public LimitTokenFilter setAllTokensConsumed(Boolean consumeAllTokens) {
+        this.allTokensConsumed = consumeAllTokens;
         return this;
     }
 }

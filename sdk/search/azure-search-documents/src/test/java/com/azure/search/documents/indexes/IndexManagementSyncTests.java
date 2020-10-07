@@ -270,7 +270,7 @@ public class IndexManagementSyncTests extends SearchTestBase {
     @Test
     public void canAddSynonymFieldProperty() {
         String synonymMapName = testResourceNamer.randomName("names", 32);
-        SynonymMap synonymMap = new SynonymMap(synonymMapName).setSynonyms("hotel,motel");
+        SynonymMap synonymMap = new SynonymMap(synonymMapName, "hotel,motel");
         client.createSynonymMap(synonymMap);
         synonymMapsToDelete.add(synonymMap.getName());
 
@@ -292,8 +292,7 @@ public class IndexManagementSyncTests extends SearchTestBase {
     @Test
     public void canUpdateSynonymFieldProperty() {
         String synonymMapName = testResourceNamer.randomName("names", 32);
-        SynonymMap synonymMap = new SynonymMap(synonymMapName)
-            .setSynonyms("hotel,motel");
+        SynonymMap synonymMap = new SynonymMap(synonymMapName, "hotel,motel");
 
         client.createSynonymMap(synonymMap);
         synonymMapsToDelete.add(synonymMap.getName());
@@ -343,8 +342,7 @@ public class IndexManagementSyncTests extends SearchTestBase {
         SearchIndex existingIndex = client.getIndex(fullFeaturedIndex.getName());
 
         SynonymMap synonymMap = client.createSynonymMap(new SynonymMap(
-            testResourceNamer.randomName("names", 32))
-            .setSynonyms("hotel,motel")
+            testResourceNamer.randomName("names", 32), "hotel,motel")
         );
         synonymMapsToDelete.add(synonymMap.getName());
 

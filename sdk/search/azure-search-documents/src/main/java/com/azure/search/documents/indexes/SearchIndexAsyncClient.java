@@ -18,7 +18,6 @@ import com.azure.search.documents.SearchClientBuilder;
 import com.azure.search.documents.SearchServiceVersion;
 import com.azure.search.documents.implementation.converters.AnalyzeRequestConverter;
 import com.azure.search.documents.implementation.converters.SearchIndexConverter;
-import com.azure.search.documents.implementation.converters.SynonymMapConverter;
 import com.azure.search.documents.implementation.util.FieldBuilder;
 import com.azure.search.documents.implementation.util.MappingUtils;
 import com.azure.search.documents.indexes.implementation.SearchServiceClientImpl;
@@ -522,9 +521,8 @@ public final class SearchIndexAsyncClient {
         Objects.requireNonNull(synonymMap, "'SynonymMap' cannot be null.");
         try {
             return restClient.getSynonymMaps()
-                .createWithResponseAsync(SynonymMapConverter.map(synonymMap), null, context)
-                .onErrorMap(MappingUtils::exceptionMapper)
-                .map(MappingUtils::mappingExternalSynonymMap);
+                .createWithResponseAsync(synonymMap, null, context)
+                .onErrorMap(MappingUtils::exceptionMapper);
         } catch (RuntimeException ex) {
             return monoError(logger, ex);
         }
@@ -568,8 +566,7 @@ public final class SearchIndexAsyncClient {
         try {
             return restClient.getSynonymMaps()
                 .getWithResponseAsync(synonymMapName, null, context)
-                .onErrorMap(MappingUtils::exceptionMapper)
-                .map(MappingUtils::mappingExternalSynonymMap);
+                .onErrorMap(MappingUtils::exceptionMapper);
         } catch (RuntimeException ex) {
             return monoError(logger, ex);
         }
@@ -687,10 +684,9 @@ public final class SearchIndexAsyncClient {
         String ifMatch = onlyIfUnchanged ? synonymMap.getETag() : null;
         try {
             return restClient.getSynonymMaps()
-                .createOrUpdateWithResponseAsync(synonymMap.getName(), SynonymMapConverter.map(synonymMap),
+                .createOrUpdateWithResponseAsync(synonymMap.getName(), synonymMap,
                     ifMatch, null, null, context)
-                .onErrorMap(MappingUtils::exceptionMapper)
-                .map(MappingUtils::mappingExternalSynonymMap);
+                .onErrorMap(MappingUtils::exceptionMapper);
         } catch (RuntimeException ex) {
             return monoError(logger, ex);
         }

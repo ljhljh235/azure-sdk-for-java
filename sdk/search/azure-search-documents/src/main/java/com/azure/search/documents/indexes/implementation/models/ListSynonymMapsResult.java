@@ -7,11 +7,12 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Immutable;
+import com.azure.search.documents.indexes.models.SynonymMap;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-/** The ListSynonymMapsResult model. */
+/** Response from a List SynonymMaps request. If successful, it includes the full definitions of all synonym maps. */
 @Immutable
 public final class ListSynonymMapsResult {
     /*

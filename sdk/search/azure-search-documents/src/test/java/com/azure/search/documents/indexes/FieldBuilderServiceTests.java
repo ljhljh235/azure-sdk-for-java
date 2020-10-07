@@ -45,7 +45,7 @@ public class FieldBuilderServiceTests extends SearchTestBase {
 
     @Test
     public void createIndexWithFieldBuilder() {
-        SynonymMap synonymMap = new SynonymMap(synonymMapName).setSynonyms("hotel,motel");
+        SynonymMap synonymMap = new SynonymMap(synonymMapName, "hotel,motel");
         client.createSynonymMap(synonymMap);
         index.setFields(SearchIndexClient.buildSearchFields(Hotel.class, new FieldBuilderOptions()
             .setJsonSerializer(new JacksonJsonSerializerBuilder().serializer(new ObjectMapper()

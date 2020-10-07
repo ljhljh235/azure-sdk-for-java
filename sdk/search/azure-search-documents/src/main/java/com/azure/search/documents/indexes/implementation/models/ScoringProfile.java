@@ -7,13 +7,14 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
+import com.azure.search.documents.indexes.models.ScoringFunction;
 import com.azure.search.documents.indexes.models.ScoringFunctionAggregation;
 import com.azure.search.documents.indexes.models.TextWeights;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-/** The ScoringProfile model. */
+/** Defines parameters for a search index that influence scoring in search queries. */
 @Fluent
 public final class ScoringProfile {
     /*

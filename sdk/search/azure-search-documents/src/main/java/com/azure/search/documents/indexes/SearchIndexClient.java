@@ -546,7 +546,7 @@ public final class SearchIndexClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public void deleteSynonymMap(String synonymMapName) {
-        deleteSynonymMapWithResponse(new SynonymMap(synonymMapName), false, Context.NONE);
+        deleteSynonymMapWithResponse(new SynonymMap(synonymMapName, null), false, Context.NONE);
     }
 
     /**

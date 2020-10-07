@@ -7,19 +7,20 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
 import com.azure.search.documents.indexes.models.RegexFlags;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-/** The PatternTokenizer model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/**
+ * Tokenizer that uses regex pattern matching to construct distinct tokens. This tokenizer is implemented using Apache
+ * Lucene.
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Azure.Search.PatternTokenizer")
-@JsonFlatten
 @Fluent
-public class PatternTokenizer extends LexicalTokenizer {
+public final class PatternTokenizer extends LexicalTokenizer {
     /*
      * A regular expression pattern to match token separators. Default is an
      * expression that matches one or more non-word characters.

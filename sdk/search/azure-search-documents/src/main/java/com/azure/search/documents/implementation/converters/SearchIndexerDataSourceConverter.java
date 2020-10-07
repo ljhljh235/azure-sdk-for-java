@@ -32,18 +32,14 @@ public final class SearchIndexerDataSourceConverter {
 
 
         if (obj.getDataChangeDetectionPolicy() != null) {
-            DataChangeDetectionPolicy dataChangeDetectionPolicy =
-                DataChangeDetectionPolicyConverter.map(obj.getDataChangeDetectionPolicy());
-            searchIndexerDataSourceConnection.setDataChangeDetectionPolicy(dataChangeDetectionPolicy);
+            searchIndexerDataSourceConnection.setDataChangeDetectionPolicy(obj.getDataChangeDetectionPolicy());
         }
 
         String description = obj.getDescription();
         searchIndexerDataSourceConnection.setDescription(description);
 
         if (obj.getDataDeletionDetectionPolicy() != null) {
-            DataDeletionDetectionPolicy dataDeletionDetectionPolicy =
-                DataDeletionDetectionPolicyConverter.map(obj.getDataDeletionDetectionPolicy());
-            searchIndexerDataSourceConnection.setDataDeletionDetectionPolicy(dataDeletionDetectionPolicy);
+            searchIndexerDataSourceConnection.setDataDeletionDetectionPolicy(obj.getDataDeletionDetectionPolicy());
         }
 
         String eTag = obj.getETag();
@@ -71,18 +67,14 @@ public final class SearchIndexerDataSourceConverter {
             .setContainer(obj.getContainer());
 
         if (obj.getDataChangeDetectionPolicy() != null) {
-            com.azure.search.documents.indexes.implementation.models.DataChangeDetectionPolicy
-                dataChangeDetectionPolicy = DataChangeDetectionPolicyConverter.map(obj.getDataChangeDetectionPolicy());
-            searchIndexerDataSource.setDataChangeDetectionPolicy(dataChangeDetectionPolicy);
+            searchIndexerDataSource.setDataChangeDetectionPolicy(obj.getDataChangeDetectionPolicy());
         }
 
         String description = obj.getDescription();
         searchIndexerDataSource.setDescription(description);
 
         if (obj.getDataDeletionDetectionPolicy() != null) {
-            com.azure.search.documents.indexes.implementation.models.DataDeletionDetectionPolicy dataDeletionDetectionPolicy
-                = DataDeletionDetectionPolicyConverter.map(obj.getDataDeletionDetectionPolicy());
-            searchIndexerDataSource.setDataDeletionDetectionPolicy(dataDeletionDetectionPolicy);
+            searchIndexerDataSource.setDataDeletionDetectionPolicy(obj.getDataDeletionDetectionPolicy());
         }
 
         String eTag = obj.getETag();

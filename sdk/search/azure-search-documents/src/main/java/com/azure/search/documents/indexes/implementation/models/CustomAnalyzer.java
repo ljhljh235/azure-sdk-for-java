@@ -7,8 +7,8 @@
 package com.azure.search.documents.indexes.implementation.models;
 
 import com.azure.core.annotation.Fluent;
-import com.azure.core.annotation.JsonFlatten;
 import com.azure.search.documents.indexes.models.CharFilterName;
+import com.azure.search.documents.indexes.models.LexicalAnalyzer;
 import com.azure.search.documents.indexes.models.LexicalTokenizerName;
 import com.azure.search.documents.indexes.models.TokenFilterName;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -17,12 +17,15 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
-/** The CustomAnalyzer model. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata\\.type")
+/**
+ * Allows you to take control over the process of converting text into indexable/searchable tokens. It's a user-defined
+ * configuration consisting of a single predefined tokenizer and one or more filters. The tokenizer is responsible for
+ * breaking text into tokens, and the filters for modifying tokens emitted by the tokenizer.
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@odata.type")
 @JsonTypeName("#Microsoft.Azure.Search.CustomAnalyzer")
-@JsonFlatten
 @Fluent
-public class CustomAnalyzer extends LexicalAnalyzer {
+public final class CustomAnalyzer extends LexicalAnalyzer {
     /*
      * The name of the tokenizer to use to divide continuous text into a
      * sequence of tokens, such as breaking a sentence into words.
