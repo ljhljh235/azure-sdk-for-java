@@ -21,6 +21,10 @@ import com.azure.core.annotation.ServiceInterface;
 import com.azure.core.annotation.ServiceMethod;
 import com.azure.core.annotation.UnexpectedResponseExceptionType;
 import com.azure.core.exception.HttpResponseException;
+import com.azure.core.http.rest.PagedFlux;
+import com.azure.core.http.rest.PagedIterable;
+import com.azure.core.http.rest.PagedResponse;
+import com.azure.core.http.rest.PagedResponseBase;
 import com.azure.core.http.rest.Response;
 import com.azure.core.http.rest.RestProxy;
 import com.azure.core.util.Context;
@@ -56,7 +60,7 @@ public final class SparkBatchesImpl {
         @Get("/batches")
         @ExpectedResponses({200})
         @UnexpectedResponseExceptionType(HttpResponseException.class)
-        Mono<Response<SparkBatchJobCollection>> getSparkBatchJobs(
+        Mono<Response<SparkBatchJobCollection>> listSparkBatchJobs(
                 @HostParam("endpoint") String endpoint,
                 @HostParam("livyApiVersion") String livyApiVersion,
                 @HostParam("sparkPoolName") String sparkPoolName,
@@ -110,18 +114,27 @@ public final class SparkBatchesImpl {
      * @return response for batch list operation.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<Response<SparkBatchJobCollection>> getSparkBatchJobsWithResponseAsync(
+    public Mono<PagedResponse<SparkBatchJob>> listSparkBatchJobsSinglePageAsync(
             Integer from, Integer size, Boolean detailed) {
         return FluxUtil.withContext(
-                context ->
-                        service.getSparkBatchJobs(
-                                this.client.getEndpoint(),
-                                this.client.getLivyApiVersion(),
-                                this.client.getSparkPoolName(),
-                                from,
-                                size,
-                                detailed,
-                                context));
+                        context ->
+                                service.listSparkBatchJobs(
+                                        this.client.getEndpoint(),
+                                        this.client.getLivyApiVersion(),
+                                        this.client.getSparkPoolName(),
+                                        from,
+                                        size,
+                                        detailed,
+                                        context))
+                .map(
+                        res ->
+                                new PagedResponseBase<>(
+                                        res.getRequest(),
+                                        res.getStatusCode(),
+                                        res.getHeaders(),
+                                        res.getValue().getSessions(),
+                                        null,
+                                        null));
     }
 
     /**
@@ -137,16 +150,25 @@ public final class SparkBatchesImpl {
      * @return response for batch list operation.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<Response<SparkBatchJobCollection>> getSparkBatchJobsWithResponseAsync(
+    public Mono<PagedResponse<SparkBatchJob>> listSparkBatchJobsSinglePageAsync(
             Integer from, Integer size, Boolean detailed, Context context) {
-        return service.getSparkBatchJobs(
-                this.client.getEndpoint(),
-                this.client.getLivyApiVersion(),
-                this.client.getSparkPoolName(),
-                from,
-                size,
-                detailed,
-                context);
+        return service.listSparkBatchJobs(
+                        this.client.getEndpoint(),
+                        this.client.getLivyApiVersion(),
+                        this.client.getSparkPoolName(),
+                        from,
+                        size,
+                        detailed,
+                        context)
+                .map(
+                        res ->
+                                new PagedResponseBase<>(
+                                        res.getRequest(),
+                                        res.getStatusCode(),
+                                        res.getHeaders(),
+                                        res.getValue().getSessions(),
+                                        null,
+                                        null));
     }
 
     /**
@@ -160,17 +182,9 @@ public final class SparkBatchesImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkBatchJobCollection> getSparkBatchJobsAsync(Integer from, Integer size, Boolean detailed) {
-        return getSparkBatchJobsWithResponseAsync(from, size, detailed)
-                .flatMap(
-                        (Response<SparkBatchJobCollection> res) -> {
-                            if (res.getValue() != null) {
-                                return Mono.just(res.getValue());
-                            } else {
-                                return Mono.empty();
-                            }
-                        });
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkBatchJob> listSparkBatchJobsAsync(Integer from, Integer size, Boolean detailed) {
+        return new PagedFlux<>(() -> listSparkBatchJobsSinglePageAsync(from, size, detailed));
     }
 
     /**
@@ -180,20 +194,12 @@ public final class SparkBatchesImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkBatchJobCollection> getSparkBatchJobsAsync() {
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkBatchJob> listSparkBatchJobsAsync() {
         final Integer from = null;
         final Integer size = null;
         final Boolean detailed = null;
-        return getSparkBatchJobsWithResponseAsync(from, size, detailed)
-                .flatMap(
-                        (Response<SparkBatchJobCollection> res) -> {
-                            if (res.getValue() != null) {
-                                return Mono.just(res.getValue());
-                            } else {
-                                return Mono.empty();
-                            }
-                        });
+        return new PagedFlux<>(() -> listSparkBatchJobsSinglePageAsync(from, size, detailed));
     }
 
     /**
@@ -208,18 +214,10 @@ public final class SparkBatchesImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkBatchJobCollection> getSparkBatchJobsAsync(
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkBatchJob> listSparkBatchJobsAsync(
             Integer from, Integer size, Boolean detailed, Context context) {
-        return getSparkBatchJobsWithResponseAsync(from, size, detailed, context)
-                .flatMap(
-                        (Response<SparkBatchJobCollection> res) -> {
-                            if (res.getValue() != null) {
-                                return Mono.just(res.getValue());
-                            } else {
-                                return Mono.empty();
-                            }
-                        });
+        return new PagedFlux<>(() -> listSparkBatchJobsSinglePageAsync(from, size, detailed, context));
     }
 
     /**
@@ -233,9 +231,9 @@ public final class SparkBatchesImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkBatchJobCollection getSparkBatchJobs(Integer from, Integer size, Boolean detailed) {
-        return getSparkBatchJobsAsync(from, size, detailed).block();
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkBatchJob> listSparkBatchJobs(Integer from, Integer size, Boolean detailed) {
+        return new PagedIterable<>(listSparkBatchJobsAsync(from, size, detailed));
     }
 
     /**
@@ -245,12 +243,12 @@ public final class SparkBatchesImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkBatchJobCollection getSparkBatchJobs() {
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkBatchJob> listSparkBatchJobs() {
         final Integer from = null;
         final Integer size = null;
         final Boolean detailed = null;
-        return getSparkBatchJobsAsync(from, size, detailed).block();
+        return new PagedIterable<>(listSparkBatchJobsAsync(from, size, detailed));
     }
 
     /**
@@ -265,10 +263,10 @@ public final class SparkBatchesImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Response<SparkBatchJobCollection> getSparkBatchJobsWithResponse(
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkBatchJob> listSparkBatchJobs(
             Integer from, Integer size, Boolean detailed, Context context) {
-        return getSparkBatchJobsWithResponseAsync(from, size, detailed, context).block();
+        return new PagedIterable<>(listSparkBatchJobsAsync(from, size, detailed, context));
     }
 
     /**

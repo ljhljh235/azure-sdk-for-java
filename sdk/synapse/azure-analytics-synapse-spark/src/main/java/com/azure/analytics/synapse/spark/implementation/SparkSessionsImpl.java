@@ -26,6 +26,10 @@ import com.azure.core.annotation.ServiceInterface;
 import com.azure.core.annotation.ServiceMethod;
 import com.azure.core.annotation.UnexpectedResponseExceptionType;
 import com.azure.core.exception.HttpResponseException;
+import com.azure.core.http.rest.PagedFlux;
+import com.azure.core.http.rest.PagedIterable;
+import com.azure.core.http.rest.PagedResponse;
+import com.azure.core.http.rest.PagedResponseBase;
 import com.azure.core.http.rest.Response;
 import com.azure.core.http.rest.RestProxy;
 import com.azure.core.util.Context;
@@ -61,7 +65,7 @@ public final class SparkSessionsImpl {
         @Get("/sessions")
         @ExpectedResponses({200})
         @UnexpectedResponseExceptionType(HttpResponseException.class)
-        Mono<Response<SparkSessionCollection>> getSparkSessions(
+        Mono<Response<SparkSessionCollection>> listSparkSessions(
                 @HostParam("endpoint") String endpoint,
                 @HostParam("livyApiVersion") String livyApiVersion,
                 @HostParam("sparkPoolName") String sparkPoolName,
@@ -115,7 +119,7 @@ public final class SparkSessionsImpl {
         @Get("/sessions/{sessionId}/statements")
         @ExpectedResponses({200})
         @UnexpectedResponseExceptionType(HttpResponseException.class)
-        Mono<Response<SparkStatementCollection>> getSparkStatements(
+        Mono<Response<SparkStatementCollection>> listSparkStatements(
                 @HostParam("endpoint") String endpoint,
                 @HostParam("livyApiVersion") String livyApiVersion,
                 @HostParam("sparkPoolName") String sparkPoolName,
@@ -168,18 +172,27 @@ public final class SparkSessionsImpl {
      * @return the response.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<Response<SparkSessionCollection>> getSparkSessionsWithResponseAsync(
+    public Mono<PagedResponse<SparkSession>> listSparkSessionsSinglePageAsync(
             Integer from, Integer size, Boolean detailed) {
         return FluxUtil.withContext(
-                context ->
-                        service.getSparkSessions(
-                                this.client.getEndpoint(),
-                                this.client.getLivyApiVersion(),
-                                this.client.getSparkPoolName(),
-                                from,
-                                size,
-                                detailed,
-                                context));
+                        context ->
+                                service.listSparkSessions(
+                                        this.client.getEndpoint(),
+                                        this.client.getLivyApiVersion(),
+                                        this.client.getSparkPoolName(),
+                                        from,
+                                        size,
+                                        detailed,
+                                        context))
+                .map(
+                        res ->
+                                new PagedResponseBase<>(
+                                        res.getRequest(),
+                                        res.getStatusCode(),
+                                        res.getHeaders(),
+                                        res.getValue().getSessions(),
+                                        null,
+                                        null));
     }
 
     /**
@@ -195,16 +208,25 @@ public final class SparkSessionsImpl {
      * @return the response.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<Response<SparkSessionCollection>> getSparkSessionsWithResponseAsync(
+    public Mono<PagedResponse<SparkSession>> listSparkSessionsSinglePageAsync(
             Integer from, Integer size, Boolean detailed, Context context) {
-        return service.getSparkSessions(
-                this.client.getEndpoint(),
-                this.client.getLivyApiVersion(),
-                this.client.getSparkPoolName(),
-                from,
-                size,
-                detailed,
-                context);
+        return service.listSparkSessions(
+                        this.client.getEndpoint(),
+                        this.client.getLivyApiVersion(),
+                        this.client.getSparkPoolName(),
+                        from,
+                        size,
+                        detailed,
+                        context)
+                .map(
+                        res ->
+                                new PagedResponseBase<>(
+                                        res.getRequest(),
+                                        res.getStatusCode(),
+                                        res.getHeaders(),
+                                        res.getValue().getSessions(),
+                                        null,
+                                        null));
     }
 
     /**
@@ -218,17 +240,9 @@ public final class SparkSessionsImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkSessionCollection> getSparkSessionsAsync(Integer from, Integer size, Boolean detailed) {
-        return getSparkSessionsWithResponseAsync(from, size, detailed)
-                .flatMap(
-                        (Response<SparkSessionCollection> res) -> {
-                            if (res.getValue() != null) {
-                                return Mono.just(res.getValue());
-                            } else {
-                                return Mono.empty();
-                            }
-                        });
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkSession> listSparkSessionsAsync(Integer from, Integer size, Boolean detailed) {
+        return new PagedFlux<>(() -> listSparkSessionsSinglePageAsync(from, size, detailed));
     }
 
     /**
@@ -238,20 +252,12 @@ public final class SparkSessionsImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkSessionCollection> getSparkSessionsAsync() {
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkSession> listSparkSessionsAsync() {
         final Integer from = null;
         final Integer size = null;
         final Boolean detailed = null;
-        return getSparkSessionsWithResponseAsync(from, size, detailed)
-                .flatMap(
-                        (Response<SparkSessionCollection> res) -> {
-                            if (res.getValue() != null) {
-                                return Mono.just(res.getValue());
-                            } else {
-                                return Mono.empty();
-                            }
-                        });
+        return new PagedFlux<>(() -> listSparkSessionsSinglePageAsync(from, size, detailed));
     }
 
     /**
@@ -266,18 +272,10 @@ public final class SparkSessionsImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkSessionCollection> getSparkSessionsAsync(
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkSession> listSparkSessionsAsync(
             Integer from, Integer size, Boolean detailed, Context context) {
-        return getSparkSessionsWithResponseAsync(from, size, detailed, context)
-                .flatMap(
-                        (Response<SparkSessionCollection> res) -> {
-                            if (res.getValue() != null) {
-                                return Mono.just(res.getValue());
-                            } else {
-                                return Mono.empty();
-                            }
-                        });
+        return new PagedFlux<>(() -> listSparkSessionsSinglePageAsync(from, size, detailed, context));
     }
 
     /**
@@ -291,9 +289,9 @@ public final class SparkSessionsImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkSessionCollection getSparkSessions(Integer from, Integer size, Boolean detailed) {
-        return getSparkSessionsAsync(from, size, detailed).block();
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkSession> listSparkSessions(Integer from, Integer size, Boolean detailed) {
+        return new PagedIterable<>(listSparkSessionsAsync(from, size, detailed));
     }
 
     /**
@@ -303,12 +301,12 @@ public final class SparkSessionsImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkSessionCollection getSparkSessions() {
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkSession> listSparkSessions() {
         final Integer from = null;
         final Integer size = null;
         final Boolean detailed = null;
-        return getSparkSessionsAsync(from, size, detailed).block();
+        return new PagedIterable<>(listSparkSessionsAsync(from, size, detailed));
     }
 
     /**
@@ -323,10 +321,10 @@ public final class SparkSessionsImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Response<SparkSessionCollection> getSparkSessionsWithResponse(
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkSession> listSparkSessions(
             Integer from, Integer size, Boolean detailed, Context context) {
-        return getSparkSessionsWithResponseAsync(from, size, detailed, context).block();
+        return new PagedIterable<>(listSparkSessionsAsync(from, size, detailed, context));
     }
 
     /**
@@ -863,15 +861,24 @@ public final class SparkSessionsImpl {
      * @return a list of statements within a spark session.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<Response<SparkStatementCollection>> getSparkStatementsWithResponseAsync(int sessionId) {
+    public Mono<PagedResponse<SparkStatement>> listSparkStatementsSinglePageAsync(int sessionId) {
         return FluxUtil.withContext(
-                context ->
-                        service.getSparkStatements(
-                                this.client.getEndpoint(),
-                                this.client.getLivyApiVersion(),
-                                this.client.getSparkPoolName(),
-                                sessionId,
-                                context));
+                        context ->
+                                service.listSparkStatements(
+                                        this.client.getEndpoint(),
+                                        this.client.getLivyApiVersion(),
+                                        this.client.getSparkPoolName(),
+                                        sessionId,
+                                        context))
+                .map(
+                        res ->
+                                new PagedResponseBase<>(
+                                        res.getRequest(),
+                                        res.getStatusCode(),
+                                        res.getHeaders(),
+                                        res.getValue().getStatements(),
+                                        null,
+                                        null));
     }
 
     /**
@@ -885,14 +892,22 @@ public final class SparkSessionsImpl {
      * @return a list of statements within a spark session.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<Response<SparkStatementCollection>> getSparkStatementsWithResponseAsync(
-            int sessionId, Context context) {
-        return service.getSparkStatements(
-                this.client.getEndpoint(),
-                this.client.getLivyApiVersion(),
-                this.client.getSparkPoolName(),
-                sessionId,
-                context);
+    public Mono<PagedResponse<SparkStatement>> listSparkStatementsSinglePageAsync(int sessionId, Context context) {
+        return service.listSparkStatements(
+                        this.client.getEndpoint(),
+                        this.client.getLivyApiVersion(),
+                        this.client.getSparkPoolName(),
+                        sessionId,
+                        context)
+                .map(
+                        res ->
+                                new PagedResponseBase<>(
+                                        res.getRequest(),
+                                        res.getStatusCode(),
+                                        res.getHeaders(),
+                                        res.getValue().getStatements(),
+                                        null,
+                                        null));
     }
 
     /**
@@ -904,54 +919,9 @@ public final class SparkSessionsImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a list of statements within a spark session.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkStatementCollection> getSparkStatementsAsync(int sessionId) {
-        return getSparkStatementsWithResponseAsync(sessionId)
-                .flatMap(
-                        (Response<SparkStatementCollection> res) -> {
-                            if (res.getValue() != null) {
-                                return Mono.just(res.getValue());
-                            } else {
-                                return Mono.empty();
-                            }
-                        });
-    }
-
-    /**
-     * Gets a list of statements within a spark session.
-     *
-     * @param sessionId Identifier for the session.
-     * @param context The context to associate with this operation.
-     * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws HttpResponseException thrown if the request is rejected by server.
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
-     * @return a list of statements within a spark session.
-     */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkStatementCollection> getSparkStatementsAsync(int sessionId, Context context) {
-        return getSparkStatementsWithResponseAsync(sessionId, context)
-                .flatMap(
-                        (Response<SparkStatementCollection> res) -> {
-                            if (res.getValue() != null) {
-                                return Mono.just(res.getValue());
-                            } else {
-                                return Mono.empty();
-                            }
-                        });
-    }
-
-    /**
-     * Gets a list of statements within a spark session.
-     *
-     * @param sessionId Identifier for the session.
-     * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws HttpResponseException thrown if the request is rejected by server.
-     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
-     * @return a list of statements within a spark session.
-     */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkStatementCollection getSparkStatements(int sessionId) {
-        return getSparkStatementsAsync(sessionId).block();
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkStatement> listSparkStatementsAsync(int sessionId) {
+        return new PagedFlux<>(() -> listSparkStatementsSinglePageAsync(sessionId));
     }
 
     /**
@@ -964,9 +934,38 @@ public final class SparkSessionsImpl {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a list of statements within a spark session.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Response<SparkStatementCollection> getSparkStatementsWithResponse(int sessionId, Context context) {
-        return getSparkStatementsWithResponseAsync(sessionId, context).block();
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkStatement> listSparkStatementsAsync(int sessionId, Context context) {
+        return new PagedFlux<>(() -> listSparkStatementsSinglePageAsync(sessionId, context));
+    }
+
+    /**
+     * Gets a list of statements within a spark session.
+     *
+     * @param sessionId Identifier for the session.
+     * @throws IllegalArgumentException thrown if parameters fail the validation.
+     * @throws HttpResponseException thrown if the request is rejected by server.
+     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
+     * @return a list of statements within a spark session.
+     */
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkStatement> listSparkStatements(int sessionId) {
+        return new PagedIterable<>(listSparkStatementsAsync(sessionId));
+    }
+
+    /**
+     * Gets a list of statements within a spark session.
+     *
+     * @param sessionId Identifier for the session.
+     * @param context The context to associate with this operation.
+     * @throws IllegalArgumentException thrown if parameters fail the validation.
+     * @throws HttpResponseException thrown if the request is rejected by server.
+     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
+     * @return a list of statements within a spark session.
+     */
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkStatement> listSparkStatements(int sessionId, Context context) {
+        return new PagedIterable<>(listSparkStatementsAsync(sessionId, context));
     }
 
     /**

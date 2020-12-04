@@ -6,16 +6,16 @@ package com.azure.analytics.synapse.spark;
 
 import com.azure.analytics.synapse.spark.implementation.SparkSessionsImpl;
 import com.azure.analytics.synapse.spark.models.SparkSession;
-import com.azure.analytics.synapse.spark.models.SparkSessionCollection;
 import com.azure.analytics.synapse.spark.models.SparkSessionOptions;
 import com.azure.analytics.synapse.spark.models.SparkStatement;
 import com.azure.analytics.synapse.spark.models.SparkStatementCancellationResult;
-import com.azure.analytics.synapse.spark.models.SparkStatementCollection;
 import com.azure.analytics.synapse.spark.models.SparkStatementOptions;
 import com.azure.core.annotation.ReturnType;
 import com.azure.core.annotation.ServiceClient;
 import com.azure.core.annotation.ServiceMethod;
 import com.azure.core.exception.HttpResponseException;
+import com.azure.core.http.rest.PagedFlux;
+import com.azure.core.http.rest.PagedResponse;
 import com.azure.core.http.rest.Response;
 import reactor.core.publisher.Mono;
 
@@ -44,10 +44,9 @@ public final class SparkSessionAsyncClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<Response<SparkSessionCollection>> getSparkSessionsWithResponse(
-            Integer from, Integer size, Boolean detailed) {
-        return this.serviceClient.getSparkSessionsWithResponseAsync(from, size, detailed);
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public Mono<PagedResponse<SparkSession>> listSparkSessionsSinglePage(Integer from, Integer size, Boolean detailed) {
+        return this.serviceClient.listSparkSessionsSinglePageAsync(from, size, detailed);
     }
 
     /**
@@ -61,9 +60,9 @@ public final class SparkSessionAsyncClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkSessionCollection> getSparkSessions(Integer from, Integer size, Boolean detailed) {
-        return this.serviceClient.getSparkSessionsAsync(from, size, detailed);
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkSession> listSparkSessions(Integer from, Integer size, Boolean detailed) {
+        return this.serviceClient.listSparkSessionsAsync(from, size, detailed);
     }
 
     /**
@@ -73,9 +72,9 @@ public final class SparkSessionAsyncClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkSessionCollection> getSparkSessions() {
-        return this.serviceClient.getSparkSessionsAsync();
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkSession> listSparkSessions() {
+        return this.serviceClient.listSparkSessionsAsync();
     }
 
     /**
@@ -232,9 +231,9 @@ public final class SparkSessionAsyncClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a list of statements within a spark session.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<Response<SparkStatementCollection>> getSparkStatementsWithResponse(int sessionId) {
-        return this.serviceClient.getSparkStatementsWithResponseAsync(sessionId);
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public Mono<PagedResponse<SparkStatement>> listSparkStatementsSinglePage(int sessionId) {
+        return this.serviceClient.listSparkStatementsSinglePageAsync(sessionId);
     }
 
     /**
@@ -246,9 +245,9 @@ public final class SparkSessionAsyncClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a list of statements within a spark session.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Mono<SparkStatementCollection> getSparkStatements(int sessionId) {
-        return this.serviceClient.getSparkStatementsAsync(sessionId);
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedFlux<SparkStatement> listSparkStatements(int sessionId) {
+        return this.serviceClient.listSparkStatementsAsync(sessionId);
     }
 
     /**

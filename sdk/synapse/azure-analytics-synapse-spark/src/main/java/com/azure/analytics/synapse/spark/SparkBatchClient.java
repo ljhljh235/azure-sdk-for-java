@@ -6,12 +6,12 @@ package com.azure.analytics.synapse.spark;
 
 import com.azure.analytics.synapse.spark.implementation.SparkBatchesImpl;
 import com.azure.analytics.synapse.spark.models.SparkBatchJob;
-import com.azure.analytics.synapse.spark.models.SparkBatchJobCollection;
 import com.azure.analytics.synapse.spark.models.SparkBatchJobOptions;
 import com.azure.core.annotation.ReturnType;
 import com.azure.core.annotation.ServiceClient;
 import com.azure.core.annotation.ServiceMethod;
 import com.azure.core.exception.HttpResponseException;
+import com.azure.core.http.rest.PagedIterable;
 import com.azure.core.http.rest.Response;
 import com.azure.core.util.Context;
 
@@ -40,9 +40,9 @@ public final class SparkBatchClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkBatchJobCollection getSparkBatchJobs(Integer from, Integer size, Boolean detailed) {
-        return this.serviceClient.getSparkBatchJobs(from, size, detailed);
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkBatchJob> listSparkBatchJobs(Integer from, Integer size, Boolean detailed) {
+        return this.serviceClient.listSparkBatchJobs(from, size, detailed);
     }
 
     /**
@@ -52,9 +52,9 @@ public final class SparkBatchClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkBatchJobCollection getSparkBatchJobs() {
-        return this.serviceClient.getSparkBatchJobs();
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkBatchJob> listSparkBatchJobs() {
+        return this.serviceClient.listSparkBatchJobs();
     }
 
     /**
@@ -69,10 +69,10 @@ public final class SparkBatchClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return response for batch list operation.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Response<SparkBatchJobCollection> getSparkBatchJobsWithResponse(
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkBatchJob> listSparkBatchJobs(
             Integer from, Integer size, Boolean detailed, Context context) {
-        return this.serviceClient.getSparkBatchJobsWithResponse(from, size, detailed, context);
+        return this.serviceClient.listSparkBatchJobs(from, size, detailed, context);
     }
 
     /**

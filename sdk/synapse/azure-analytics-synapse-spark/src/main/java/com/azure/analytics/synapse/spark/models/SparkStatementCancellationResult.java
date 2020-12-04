@@ -14,25 +14,25 @@ public final class SparkStatementCancellationResult {
      * The msg property.
      */
     @JsonProperty(value = "msg")
-    private String msg;
+    private String message;
 
     /**
-     * Get the msg property: The msg property.
+     * Get the message property: The msg property.
      *
-     * @return the msg value.
+     * @return the message value.
      */
-    public String getMsg() {
-        return this.msg;
+    public String getMessage() {
+        return this.message;
     }
 
     /**
-     * Set the msg property: The msg property.
+     * Set the message property: The msg property.
      *
-     * @param msg the msg value to set.
+     * @param message the message value to set.
      * @return the SparkStatementCancellationResult object itself.
      */
-    public SparkStatementCancellationResult setMsg(String msg) {
-        this.msg = msg;
+    public SparkStatementCancellationResult setMessage(String message) {
+        this.message = message;
         return this;
     }
 }

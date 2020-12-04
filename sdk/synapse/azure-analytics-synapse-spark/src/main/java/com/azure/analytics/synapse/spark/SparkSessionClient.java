@@ -6,16 +6,15 @@ package com.azure.analytics.synapse.spark;
 
 import com.azure.analytics.synapse.spark.implementation.SparkSessionsImpl;
 import com.azure.analytics.synapse.spark.models.SparkSession;
-import com.azure.analytics.synapse.spark.models.SparkSessionCollection;
 import com.azure.analytics.synapse.spark.models.SparkSessionOptions;
 import com.azure.analytics.synapse.spark.models.SparkStatement;
 import com.azure.analytics.synapse.spark.models.SparkStatementCancellationResult;
-import com.azure.analytics.synapse.spark.models.SparkStatementCollection;
 import com.azure.analytics.synapse.spark.models.SparkStatementOptions;
 import com.azure.core.annotation.ReturnType;
 import com.azure.core.annotation.ServiceClient;
 import com.azure.core.annotation.ServiceMethod;
 import com.azure.core.exception.HttpResponseException;
+import com.azure.core.http.rest.PagedIterable;
 import com.azure.core.http.rest.Response;
 import com.azure.core.util.Context;
 
@@ -44,9 +43,9 @@ public final class SparkSessionClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkSessionCollection getSparkSessions(Integer from, Integer size, Boolean detailed) {
-        return this.serviceClient.getSparkSessions(from, size, detailed);
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkSession> listSparkSessions(Integer from, Integer size, Boolean detailed) {
+        return this.serviceClient.listSparkSessions(from, size, detailed);
     }
 
     /**
@@ -56,9 +55,9 @@ public final class SparkSessionClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkSessionCollection getSparkSessions() {
-        return this.serviceClient.getSparkSessions();
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkSession> listSparkSessions() {
+        return this.serviceClient.listSparkSessions();
     }
 
     /**
@@ -73,10 +72,10 @@ public final class SparkSessionClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Response<SparkSessionCollection> getSparkSessionsWithResponse(
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkSession> listSparkSessions(
             Integer from, Integer size, Boolean detailed, Context context) {
-        return this.serviceClient.getSparkSessionsWithResponse(from, size, detailed, context);
+        return this.serviceClient.listSparkSessions(from, size, detailed, context);
     }
 
     /**
@@ -235,9 +234,9 @@ public final class SparkSessionClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a list of statements within a spark session.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public SparkStatementCollection getSparkStatements(int sessionId) {
-        return this.serviceClient.getSparkStatements(sessionId);
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkStatement> listSparkStatements(int sessionId) {
+        return this.serviceClient.listSparkStatements(sessionId);
     }
 
     /**
@@ -250,9 +249,9 @@ public final class SparkSessionClient {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a list of statements within a spark session.
      */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public Response<SparkStatementCollection> getSparkStatementsWithResponse(int sessionId, Context context) {
-        return this.serviceClient.getSparkStatementsWithResponse(sessionId, context);
+    @ServiceMethod(returns = ReturnType.COLLECTION)
+    public PagedIterable<SparkStatement> listSparkStatements(int sessionId, Context context) {
+        return this.serviceClient.listSparkStatements(sessionId, context);
     }
 
     /**
