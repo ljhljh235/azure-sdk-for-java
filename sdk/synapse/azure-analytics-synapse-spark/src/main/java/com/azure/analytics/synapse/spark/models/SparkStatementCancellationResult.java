@@ -11,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Fluent
 public final class SparkStatementCancellationResult {
     /*
-     * The msg property.
+     * The msg property from the Lizy API. The value is always "canceled".
      */
     @JsonProperty(value = "msg")
     private String message;
 
     /**
-     * Get the message property: The msg property.
+     * Get the message property: The msg property from the Lizy API. The value is always "canceled".
      *
      * @return the message value.
      */
@@ -26,7 +26,7 @@ public final class SparkStatementCancellationResult {
     }
 
     /**
-     * Set the message property: The msg property.
+     * Set the message property: The msg property from the Lizy API. The value is always "canceled".
      *
      * @param message the message value to set.
      * @return the SparkStatementCancellationResult object itself.
