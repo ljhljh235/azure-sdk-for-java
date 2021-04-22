@@ -63,11 +63,6 @@ public class TranslateDocuments {
 
         // Step 3: Poll until translation is completed
         while (response.getStatusCode() == 202) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             String operationLocation = response.getHeaders().getValue("Operation-Location");
             DynamicResponse pollResponse = client.invoke()
                 .setUrl(operationLocation)
@@ -88,6 +83,12 @@ public class TranslateDocuments {
             } else {
                 System.err.println("Unexpected status: " + status);
                 break;
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }

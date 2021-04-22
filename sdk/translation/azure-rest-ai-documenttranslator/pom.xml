@@ -30,7 +30,6 @@
   </scm>
 
   <properties>
-    <!-- Anomaly detector temporarily skipping code coverage until tests are added -->
     <jacoco.skip.coverage.check>true</jacoco.skip.coverage.check>
   </properties>
 
