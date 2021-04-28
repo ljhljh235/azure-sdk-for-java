@@ -17,7 +17,7 @@ import com.azure.core.util.serializer.ObjectSerializer;
 public final class BatchDocumentTranslationClient {
     private final String endpoint;
 
-    private final HttpPipeline pipeline;
+    private final HttpPipeline httpPipeline;
 
     private final ObjectSerializer objectSerializer;
 
@@ -26,12 +26,12 @@ public final class BatchDocumentTranslationClient {
      *
      * @param endpoint Supported Cognitive Services endpoints (protocol and hostname, for example:
      *     https://westus.api.cognitive.microsoft.com).
-     * @param pipeline The HTTP pipeline to send requests through.
+     * @param httpPipeline The HTTP pipeline to send requests through.
      * @param objectSerializer The serializer to serialize an object into a string.
      */
-    BatchDocumentTranslationClient(String endpoint, HttpPipeline pipeline, ObjectSerializer objectSerializer) {
+    BatchDocumentTranslationClient(String endpoint, HttpPipeline httpPipeline, ObjectSerializer objectSerializer) {
         this.endpoint = endpoint;
-        this.pipeline = pipeline;
+        this.httpPipeline = httpPipeline;
         this.objectSerializer = objectSerializer;
     }
 
@@ -90,7 +90,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest startTranslation() {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/batches")
                 .setPathParam("endpoint", endpoint)
                 .addHeader("Accept", "application/json")
@@ -197,7 +197,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getTranslationsStatus() {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/batches")
                 .setPathParam("endpoint", endpoint)
                 .addHeader("Accept", "application/json")
@@ -241,7 +241,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getDocumentStatus(String id, String documentId) {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/batches/{id}/documents/{documentId}")
                 .setPathParam("endpoint", endpoint)
                 .setPathParam("id", id)
@@ -291,7 +291,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getTranslationStatus(String id) {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/batches/{id}")
                 .setPathParam("endpoint", endpoint)
                 .setPathParam("id", id)
@@ -342,7 +342,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest cancelTranslation(String id) {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/batches/{id}")
                 .setPathParam("endpoint", endpoint)
                 .setPathParam("id", id)
@@ -443,7 +443,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getDocumentsStatus(String id) {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/batches/{id}/documents")
                 .setPathParam("endpoint", endpoint)
                 .setPathParam("id", id)
@@ -482,7 +482,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getSupportedDocumentFormats() {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/documents/formats")
                 .setPathParam("endpoint", endpoint)
                 .addHeader("Accept", "application/json")
@@ -520,7 +520,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getSupportedGlossaryFormats() {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/glossaries/formats")
                 .setPathParam("endpoint", endpoint)
                 .addHeader("Accept", "application/json")
@@ -545,7 +545,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getSupportedStorageSources() {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/storagesources")
                 .setPathParam("endpoint", endpoint)
                 .addHeader("Accept", "application/json")
@@ -597,7 +597,7 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getTranslationsStatusNext(String nextLink) {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/{nextLink}")
                 .setPathParam("endpoint", endpoint)
                 .setPathParam("nextLink", nextLink)
@@ -646,22 +646,12 @@ public final class BatchDocumentTranslationClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public DynamicRequest getDocumentsStatusNext(String nextLink) {
-        return new DynamicRequest(objectSerializer, pipeline)
+        return new DynamicRequest(objectSerializer, httpPipeline)
                 .setUrl("{endpoint}/translator/text/batch/v1.0-preview.1/{nextLink}")
                 .setPathParam("endpoint", endpoint)
                 .setPathParam("nextLink", nextLink)
                 .addHeader("Accept", "application/json")
                 .addHeader("Content-Type", "application/json")
                 .setHttpMethod(HttpMethod.GET);
-    }
-
-    /**
-     * Create an empty DynamicRequest with the serializer and pipeline initialized for this client.
-     *
-     * @return a DynamicRequest where customizations can be made before sent to the service.
-     */
-    @ServiceMethod(returns = ReturnType.SINGLE)
-    public DynamicRequest invoke() {
-        return new DynamicRequest(objectSerializer, pipeline);
     }
 }

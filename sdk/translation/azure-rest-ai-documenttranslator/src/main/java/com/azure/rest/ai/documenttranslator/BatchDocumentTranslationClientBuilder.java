@@ -59,22 +59,6 @@ public final class BatchDocumentTranslationClientBuilder {
     }
 
     /*
-     * The serializer to serialize an object into a string.
-     */
-    private ObjectSerializer objectSerializer;
-
-    /**
-     * Sets The serializer to serialize an object into a string.
-     *
-     * @param objectSerializer the objectSerializer value.
-     * @return the BatchDocumentTranslationClientBuilder.
-     */
-    public BatchDocumentTranslationClientBuilder objectSerializer(ObjectSerializer objectSerializer) {
-        this.objectSerializer = objectSerializer;
-        return this;
-    }
-
-    /*
      * The HTTP pipeline to send requests through
      */
     private HttpPipeline pipeline;
@@ -87,6 +71,22 @@ public final class BatchDocumentTranslationClientBuilder {
      */
     public BatchDocumentTranslationClientBuilder pipeline(HttpPipeline pipeline) {
         this.pipeline = pipeline;
+        return this;
+    }
+
+    /*
+     * The serializer to serialize an object into a string
+     */
+    private ObjectSerializer objectSerializer;
+
+    /**
+     * Sets The serializer to serialize an object into a string.
+     *
+     * @param objectSerializer the objectSerializer value.
+     * @return the BatchDocumentTranslationClientBuilder.
+     */
+    public BatchDocumentTranslationClientBuilder objectSerializer(ObjectSerializer objectSerializer) {
+        this.objectSerializer = objectSerializer;
         return this;
     }
 
@@ -196,7 +196,7 @@ public final class BatchDocumentTranslationClientBuilder {
         }
         List<HttpPipelinePolicy> policies = new ArrayList<>();
         if (azureKeyCredential != null) {
-            policies.add(new AzureKeyCredentialPolicy("Ocp-Apim-Subscription-Key", azureKeyCredential));
+            policies.add(new AzureKeyCredentialPolicy("api-key", azureKeyCredential));
         }
         String clientName = properties.getOrDefault(SDK_NAME, "UnknownName");
         String clientVersion = properties.getOrDefault(SDK_VERSION, "UnknownVersion");
@@ -222,11 +222,11 @@ public final class BatchDocumentTranslationClientBuilder {
      * @return an instance of BatchDocumentTranslationClient.
      */
     public BatchDocumentTranslationClient buildClient() {
-        if (objectSerializer == null) {
-            this.objectSerializer = JsonSerializerProviders.createInstance();
-        }
         if (pipeline == null) {
             this.pipeline = createHttpPipeline();
+        }
+        if (objectSerializer == null) {
+            this.objectSerializer = JsonSerializerProviders.createInstance();
         }
         BatchDocumentTranslationClient client =
                 new BatchDocumentTranslationClient(endpoint, pipeline, objectSerializer);
