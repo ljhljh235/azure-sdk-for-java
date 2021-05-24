@@ -6,6 +6,7 @@ package com.azure.ai.documenttranslator;
 import com.azure.core.credential.AzureKeyCredential;
 import com.azure.core.experimental.http.DynamicResponse;
 import com.azure.core.http.HttpMethod;
+import com.azure.core.http.HttpResponse;
 import com.azure.core.http.netty.NettyAsyncHttpClientBuilder;
 
 import javax.json.Json;
@@ -50,9 +51,7 @@ public class TranslateDocuments {
             .build();
 
         // Step 2: Send the request
-        DynamicResponse response = client.startTranslation()
-            .setBody(requestBody.toString())
-            .send();
+        HttpResponse response = client.startTranslation(requestBody.toString().getBytes(), null);
 
         if (response.getStatusCode() / 100 != 2) {
             System.err.println("Received error: " + response.getBody().toString());

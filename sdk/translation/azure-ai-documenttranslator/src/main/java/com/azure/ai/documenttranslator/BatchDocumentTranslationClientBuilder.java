@@ -9,7 +9,6 @@ import com.azure.core.credential.AzureKeyCredential;
 import com.azure.core.http.HttpClient;
 import com.azure.core.http.HttpPipeline;
 import com.azure.core.http.HttpPipelineBuilder;
-import com.azure.core.http.policy.AzureKeyCredentialPolicy;
 import com.azure.core.http.policy.CookiePolicy;
 import com.azure.core.http.policy.HttpLogOptions;
 import com.azure.core.http.policy.HttpLoggingPolicy;
@@ -18,16 +17,14 @@ import com.azure.core.http.policy.HttpPolicyProviders;
 import com.azure.core.http.policy.RetryPolicy;
 import com.azure.core.http.policy.UserAgentPolicy;
 import com.azure.core.util.Configuration;
-import com.azure.core.util.serializer.JsonSerializerProviders;
-import com.azure.core.util.serializer.ObjectSerializer;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /** A builder for creating a new instance of the BatchDocumentTranslationClient type. */
-@ServiceClientBuilder(serviceClients = {BatchDocumentTranslationRestClient.class})
+@ServiceClientBuilder(
+        serviceClients = {BatchDocumentTranslationClient.class, BatchDocumentTranslationAsyncClient.class})
 public final class BatchDocumentTranslationClientBuilder {
     private static final String SDK_NAME = "name";
 
@@ -55,22 +52,6 @@ public final class BatchDocumentTranslationClientBuilder {
      */
     public BatchDocumentTranslationClientBuilder endpoint(String endpoint) {
         this.endpoint = endpoint;
-        return this;
-    }
-
-    /*
-     * The serializer to serialize an object into a string.
-     */
-    private ObjectSerializer objectSerializer;
-
-    /**
-     * Sets The serializer to serialize an object into a string.
-     *
-     * @param objectSerializer the objectSerializer value.
-     * @return the BatchDocumentTranslationClientBuilder.
-     */
-    public BatchDocumentTranslationClientBuilder objectSerializer(ObjectSerializer objectSerializer) {
-        this.objectSerializer = objectSerializer;
         return this;
     }
 
@@ -196,7 +177,7 @@ public final class BatchDocumentTranslationClientBuilder {
         }
         List<HttpPipelinePolicy> policies = new ArrayList<>();
         if (azureKeyCredential != null) {
-            policies.add(new AzureKeyCredentialPolicy("Ocp-Apim-Subscription-Key", azureKeyCredential));
+            policies.add(new AzureKeyCredentialPolicy("api-key", azureKeyCredential));
         }
         String clientName = properties.getOrDefault(SDK_NAME, "UnknownName");
         String clientVersion = properties.getOrDefault(SDK_VERSION, "UnknownVersion");
@@ -217,19 +198,20 @@ public final class BatchDocumentTranslationClientBuilder {
     }
 
     /**
-     * Builds an instance of BatchDocumentTranslationRestClient low level client.
+     * Builds an instance of BatchDocumentTranslationAsyncClient async client.
      *
-     * @return an instance of BatchDocumentTranslationRestClient.
+     * @return an instance of BatchDocumentTranslationAsyncClient.
      */
-    public BatchDocumentTranslationRestClient buildRestClient() {
-        if (objectSerializer == null) {
-            this.objectSerializer = JsonSerializerProviders.createInstance();
-        }
-        if (pipeline == null) {
-            this.pipeline = createHttpPipeline();
-        }
-        BatchDocumentTranslationRestClient client =
-                new BatchDocumentTranslationRestClient(endpoint, pipeline, objectSerializer);
-        return client;
+    public BatchDocumentTranslationAsyncClient buildAsyncClient() {
+        return new BatchDocumentTranslationAsyncClient(endpoint, pipeline);
+    }
+
+    /**
+     * Builds an instance of BatchDocumentTranslationClient sync client.
+     *
+     * @return an instance of BatchDocumentTranslationClient.
+     */
+    public BatchDocumentTranslationClient buildClient() {
+        return new BatchDocumentTranslationClient(buildAsyncClient());
     }
 }
