@@ -59,8 +59,8 @@ public class PostLedgerEntries {
         System.out.println("Posting ledger entries:");
 
         BinaryData postResult = confidentialLedgerClient.beginPostLedgerEntryAndWait(new RequestOptions()
-            .addQueryParam("Name", "jianghao-entry-566")
-            .setBody(BinaryData.fromString("{\"contents\":\"The content of the ledger - 566\"}")))
+            .addQueryParam("Name", "<ledger name>")
+            .setBody(BinaryData.fromString("{\"contents\":\"The content of the ledger\"}")))
             .block();
 
         System.out.println("Created ledger: " + postResult.toString());
