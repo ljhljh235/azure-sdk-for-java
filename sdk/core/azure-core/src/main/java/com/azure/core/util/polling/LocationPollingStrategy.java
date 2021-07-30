@@ -22,7 +22,7 @@ import java.time.Duration;
 /**
  * Implements a Location polling strategy.
  */
-public class LocationPollingStrategy implements PollingStrategy {
+public class LocationPollingStrategy<U> implements PollingStrategy<U> {
     private static final String LOCATION = "Location";
     private static final String REQUEST_URL = "requestURL";
     private static final String HTTP_METHOD = "httpMethod";
@@ -109,7 +109,7 @@ public class LocationPollingStrategy implements PollingStrategy {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <U> Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType) {
+    public Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType) {
         String finalGetUrl;
         String httpMethod = pollingContext.getData(HTTP_METHOD);
         if ("PUT".equalsIgnoreCase(httpMethod) || "PATCH".equalsIgnoreCase(httpMethod)) {

@@ -23,7 +23,7 @@ import java.time.Duration;
 /**
  * Implements a operation resource polling strategy, typically from Operation-Location.
  */
-public class OperationResourcePollingStrategy implements PollingStrategy {
+public class OperationResourcePollingStrategy<U> implements PollingStrategy<U> {
     private static final String OPERATION_LOCATION = "Operation-Location";
     private static final String LOCATION = "Location";
     private static final String REQUEST_URL = "requestURL";
@@ -118,7 +118,7 @@ public class OperationResourcePollingStrategy implements PollingStrategy {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <U> Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType) {
+    public Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType) {
         String finalGetUrl = pollingContext.getData(RESOURCE_LOCATION);
         if (finalGetUrl == null) {
             String httpMethod = pollingContext.getData(HTTP_METHOD);

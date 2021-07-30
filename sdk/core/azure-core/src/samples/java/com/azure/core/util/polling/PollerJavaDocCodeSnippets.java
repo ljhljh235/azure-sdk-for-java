@@ -192,7 +192,7 @@ public final class PollerJavaDocCodeSnippets {
                 202,
                 new HttpHeaders().set("Operation-Location", "http://httpbin.org"),
                 null)),
-            new OperationResourcePollingStrategy(
+            new OperationResourcePollingStrategy<>(
                 new HttpPipelineBuilder().build(),
                 Context.NONE),
             TypeReference.createInstance(String.class));
@@ -215,7 +215,7 @@ public final class PollerJavaDocCodeSnippets {
         // BEGIN: com.azure.core.util.polling.poller.initializeAndSubscribeWithCustomPollingStrategy
 
         // Create custom polling strategy based on OperationResourcePollingStrategy
-        PollingStrategy strategy = new OperationResourcePollingStrategy(
+        PollingStrategy<String> strategy = new OperationResourcePollingStrategy<>(
                 new HttpPipelineBuilder().build(),
                 Context.NONE) {
             // override any interface method to customize the polling behavior

@@ -21,9 +21,9 @@ import java.util.Map;
  * A polling strategy that chains multiple polling strategies, finds the first strategy that can poll the current
  * long running operation, and polls with that strategy.
  */
-public class ChainedPollingStrategy implements PollingStrategy {
-    private final List<PollingStrategy> pollingStrategies;
-    private PollingStrategy pollableStrategy = null;
+public class ChainedPollingStrategy<U> implements PollingStrategy<U> {
+    private final List<PollingStrategy<U>> pollingStrategies;
+    private PollingStrategy<U> pollableStrategy = null;
 
     /**
      * Creates an empty chained polling strategy.
@@ -42,13 +42,13 @@ public class ChainedPollingStrategy implements PollingStrategy {
      * @param context additional metadata to pass along with the request
      * @return the initialized chained polling strategy with the default chain
      */
-    public static ChainedPollingStrategy createDefault(
+    public static <U> ChainedPollingStrategy<U> createDefault(
             HttpPipeline httpPipeline,
             Context context) {
-        return new ChainedPollingStrategy()
-            .addPollingStrategy(new OperationResourcePollingStrategy(httpPipeline, context))
-            .addPollingStrategy(new LocationPollingStrategy(httpPipeline, context))
-            .addPollingStrategy(new StatusCheckPollingStrategy());
+        return new ChainedPollingStrategy<U>()
+            .addPollingStrategy(new OperationResourcePollingStrategy<>(httpPipeline, context))
+            .addPollingStrategy(new LocationPollingStrategy<>(httpPipeline, context))
+            .addPollingStrategy(new StatusCheckPollingStrategy<>());
     }
 
     /**
@@ -56,7 +56,7 @@ public class ChainedPollingStrategy implements PollingStrategy {
      * @param pollingStrategy the polling strategy to add
      * @return the modified ChainedPollingStrategy instance
      */
-    public ChainedPollingStrategy addPollingStrategy(PollingStrategy pollingStrategy) {
+    public ChainedPollingStrategy<U> addPollingStrategy(PollingStrategy<U> pollingStrategy) {
         this.pollingStrategies.add(pollingStrategy);
         return this;
     }
@@ -74,7 +74,7 @@ public class ChainedPollingStrategy implements PollingStrategy {
     }
 
     @Override
-    public <U> Mono<U> getResult(PollingContext<BinaryData> context, TypeReference<U> resultType) {
+    public Mono<U> getResult(PollingContext<BinaryData> context, TypeReference<U> resultType) {
         return pollableStrategy.getResult(context, resultType);
     }
 

@@ -3,9 +3,9 @@
 
 package com.azure.security.confidentialledger;
 
-import com.azure.core.experimental.http.DynamicResponse;
 import com.azure.core.http.HttpClient;
 import com.azure.core.http.netty.NettyAsyncHttpClientBuilder;
+import com.azure.core.util.BinaryData;
 import com.azure.identity.DefaultAzureCredentialBuilder;
 import io.netty.handler.ssl.SslContextBuilder;
 
@@ -14,7 +14,6 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -29,17 +28,17 @@ public class ReadmeSamples {
      * Sample for creating low level client.
      */
     public void createClient() throws Exception {
-        ConfidentialLedgerIdentityServiceBaseClient identityServiceClient = new ConfidentialLedgerClientBuilder()
-            .ledgerUri(new URL("<confidential-ledger-url>"))
-            .identityServiceUri(new URL("<confidential-ledger-identity-service-url>"))
+        ConfidentialLedgerIdentityServiceClient identityServiceClient = new ConfidentialLedgerClientBuilder()
+            .ledgerUri("<confidential-ledger-url>")
+            .identityServiceUri("<confidential-ledger-identity-service-url>")
             .credential(new DefaultAzureCredentialBuilder().build())
-            .buildConfidentialLedgerIdentityServiceBaseClient();
+            .buildConfidentialLedgerIdentityServiceClient();
 
         String ledgerId = "<confidential-ledger-url>"
             .replaceAll("\\w+://", "")
             .replaceAll("\\..*", "");
-        DynamicResponse response = identityServiceClient.getLedgerIdentity(ledgerId).send();
-        JsonReader jsonReader = Json.createReader(new StringReader(response.getBody().toString()));
+        BinaryData response = identityServiceClient.getLedgerIdentity(ledgerId, null);
+        JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
         JsonObject result = jsonReader.readObject();
         String tlsCert = result.getString("ledgerTlsCertificate");
         reactor.netty.http.client.HttpClient reactorClient = reactor.netty.http.client.HttpClient.create()
@@ -49,10 +48,10 @@ public class ReadmeSamples {
 
         System.out.println("Creating Confidential Ledger client with the certificate...");
 
-        ConfidentialLedgerBaseClient confidentialLedgerClient = new ConfidentialLedgerClientBuilder()
-            .ledgerUri(new URL("<confidential-ledger-url"))
+        ConfidentialLedgerClient confidentialLedgerClient = new ConfidentialLedgerClientBuilder()
+            .ledgerUri("<confidential-ledger-url")
             .credential(new DefaultAzureCredentialBuilder().build())
             .httpClient(httpClient)
-            .buildConfidentialLedgerBaseClient();
+            .buildConfidentialLedgerClient();
     }
 }

@@ -8,7 +8,9 @@ java: true
 output-folder: ../
 namespace: com.azure.security.confidentialledger
 generate-client-interfaces: false
-sync-methods: none
+generate-client-as-impl: true
+generate-sync-async-clients: true
+sync-methods: all
 license-header: MICROSOFT_MIT_SMALL
 low-level-client: true
 credential-types: tokencredential

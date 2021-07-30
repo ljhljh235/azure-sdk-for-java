@@ -3,30 +3,24 @@
 
 package com.azure.security.confidentialledger;
 
-import com.azure.core.experimental.http.DynamicResponse;
 import com.azure.core.http.HttpClient;
-import com.azure.core.http.ProxyOptions;
 import com.azure.core.http.netty.NettyAsyncHttpClientBuilder;
-import com.azure.core.http.rest.PagedIterable;
+import com.azure.core.http.rest.RequestOptions;
 import com.azure.core.util.BinaryData;
 import com.azure.identity.AzureCliCredentialBuilder;
-import com.azure.identity.DefaultAzureCredentialBuilder;
 import io.netty.handler.ssl.SslContextBuilder;
 
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
-import java.net.InetSocketAddress;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 /**
  * Sample for getting ledger entries using the ConfidentialLedgerBaseClient.
  */
-public class GetLedgerEntries {
+public class PostLedgerEntries {
     /**
      * Main method to invoke this demo.
      *
@@ -45,8 +39,8 @@ public class GetLedgerEntries {
             .replaceAll("\\..*", "");
         BinaryData response = identityServiceClient.getLedgerIdentity(ledgerId, null);
         JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
-        JsonObject result = jsonReader.readObject();
-        String tlsCert = result.getString("ledgerTlsCertificate");
+        JsonObject certResult = jsonReader.readObject();
+        String tlsCert = certResult.getString("ledgerTlsCertificate");
         reactor.netty.http.client.HttpClient reactorClient = reactor.netty.http.client.HttpClient.create()
             .secure(sslContextSpec -> sslContextSpec.sslContext(SslContextBuilder.forClient()
                 .trustManager(new ByteArrayInputStream(tlsCert.getBytes(StandardCharsets.UTF_8)))));
@@ -56,20 +50,28 @@ public class GetLedgerEntries {
 
         System.out.println("Creating Confidential Ledger client with the certificate...");
 
-        ConfidentialLedgerClient confidentialLedgerClient = new ConfidentialLedgerClientBuilder()
+        ConfidentialLedgerAsyncClient confidentialLedgerClient = new ConfidentialLedgerClientBuilder()
             .ledgerUri(System.getenv("CONFIDENTIALLEDGER_URL"))
             .credential(new AzureCliCredentialBuilder().build())
             .httpClient(httpClient)
-            .buildConfidentialLedgerClient();
+            .buildConfidentialLedgerAsyncClient();
+
+        System.out.println("Posting ledger entries:");
+
+        BinaryData postResult = confidentialLedgerClient.beginPostLedgerEntryAndWait(new RequestOptions()
+            .addQueryParam("Name", "jianghao-entry-566")
+            .setBody(BinaryData.fromString("{\"contents\":\"The content of the ledger - 566\"}")))
+            .block();
+
+        System.out.println("Created ledger: " + postResult.toString());
 
         System.out.println("Getting ledger entries:");
 
-        PagedIterable<BinaryData> entries = confidentialLedgerClient.getLedgerEntries(null);
-
-        for (BinaryData entry : entries) {
-            jsonReader = Json.createReader(new StringReader(entry.toString()));
-            result = jsonReader.readObject();
-            System.out.println("Sub leger " + result.getString("subLedgerId") + ": " + result.getString("contents"));
-        }
+        confidentialLedgerClient.getLedgerEntries(null)
+            .doOnNext(entry -> {
+                JsonReader reader = Json.createReader(new StringReader(entry.toString()));
+                JsonObject entryResult = reader.readObject();
+                System.out.println("Sub leger " + entryResult.getString("subLedgerId") + ": " + entryResult.getString("contents"));
+            }).blockLast();
     }
 }

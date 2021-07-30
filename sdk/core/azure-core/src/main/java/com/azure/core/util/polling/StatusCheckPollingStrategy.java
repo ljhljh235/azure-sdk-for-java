@@ -19,7 +19,7 @@ import java.time.Duration;
  * Fallback polling strategy that doesn't poll but exits successfully if no other polling are detected
  * and status code is 2xx.
  */
-public class StatusCheckPollingStrategy implements PollingStrategy {
+public class StatusCheckPollingStrategy<U> implements PollingStrategy<U> {
 
     private final ClientLogger logger = new ClientLogger(StatusCheckPollingStrategy.class);
 
@@ -41,7 +41,7 @@ public class StatusCheckPollingStrategy implements PollingStrategy {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <U> Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType) {
+    public Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType) {
         BinaryData activationResponse = pollingContext.getActivationResponse().getValue();
         if (TypeUtil.isTypeOrSubTypeOf(BinaryData.class, resultType.getJavaType())) {
             return (Mono<U>) Mono.just(activationResponse);

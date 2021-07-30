@@ -44,7 +44,7 @@ import java.time.Duration;
  * Azure. When there are special scenarios, built-in polling strategies can be inherited and select methods can be
  * overridden to accomplish the polling requirements, without writing an entire polling strategy from scratch.
  */
-public interface PollingStrategy {
+public interface PollingStrategy<U> {
     /**
      * Checks if this strategy is able to handle polling for this long running operation based on the information in
      * the initial response.
@@ -85,7 +85,7 @@ public interface PollingStrategy {
      * @param <U> The type of the final result of long running operation
      * @return a publisher emitting the final result
      */
-    <U> Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType);
+    Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType);
 
     /**
      * Cancels the long running operation if service supports cancellation. If service does not support cancellation

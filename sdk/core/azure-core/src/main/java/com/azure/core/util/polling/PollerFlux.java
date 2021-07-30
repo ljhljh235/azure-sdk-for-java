@@ -176,7 +176,7 @@ public final class PollerFlux<T, U> extends Flux<AsyncPollResponse<T, U>> {
     public static <U> PollerFlux<BinaryData, U>
         create(Duration pollInterval,
                Supplier<Mono<? extends Response<?>>> initialOperation,
-               PollingStrategy strategy,
+               PollingStrategy<U> strategy,
                TypeReference<U> resultType) {
         return create(
             pollInterval,
