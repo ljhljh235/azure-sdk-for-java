@@ -23,13 +23,14 @@ import java.time.Duration;
 /**
  * Implements a operation resource polling strategy, typically from Operation-Location.
  */
-public class OperationResourcePollingStrategy<U> implements PollingStrategy<U> {
+public class OperationResourcePollingStrategy<T, U> implements PollingStrategy<T, U> {
     private static final String OPERATION_LOCATION = "Operation-Location";
     private static final String LOCATION = "Location";
     private static final String REQUEST_URL = "requestURL";
     private static final String HTTP_METHOD = "httpMethod";
     private static final String RESOURCE_LOCATION = "resourceLocation";
     private static final String RETRY_AFTER = "Retry-After";
+    private static final String POLL_RESPONSE_BODY = "pollResponseBody";
 
     private final SerializerAdapter serializer = new JacksonAdapter();
 
@@ -64,8 +65,10 @@ public class OperationResourcePollingStrategy<U> implements PollingStrategy<U> {
         return Mono.just(operationLocationHeader != null);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<BinaryData> pollingContext) {
+    public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<T> pollingContext,
+                                                   TypeReference<T> pollResponseType) {
         HttpHeader operationLocationHeader = response.getHeaders().get(getOperationLocationHeaderName());
         HttpHeader locationHeader = response.getHeaders().get(LOCATION);
         if (operationLocationHeader != null) {
@@ -87,8 +90,9 @@ public class OperationResourcePollingStrategy<U> implements PollingStrategy<U> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Mono<PollResponse<BinaryData>> poll(PollingContext<BinaryData> pollingContext) {
+    public Mono<PollResponse<T>> poll(PollingContext<T> pollingContext, TypeReference<T> pollResponseType) {
         HttpRequest request = new HttpRequest(HttpMethod.GET, pollingContext.getData(OPERATION_LOCATION));
         Mono<HttpResponse> responseMono;
         if (context == null) {
@@ -103,22 +107,32 @@ public class OperationResourcePollingStrategy<U> implements PollingStrategy<U> {
                     if (pollResult.getResourceLocation() != null) {
                         pollingContext.setData(RESOURCE_LOCATION, pollResult.getResourceLocation());
                     }
+                    pollingContext.setData(POLL_RESPONSE_BODY, body);
                     return pollResult.getStatus();
                 })
-                .map(status -> {
+                .flatMap(status -> {
                     String retryAfter = res.getHeaderValue(RETRY_AFTER);
-                    if (retryAfter != null) {
-                        return new PollResponse<>(status, BinaryData.fromString(body),
-                            Duration.ofSeconds(Long.parseLong(retryAfter)));
-                    } else {
-                        return new PollResponse<>(status, BinaryData.fromString(body));
-                    }
+                    return Mono.fromCallable(() -> {
+                        if (TypeUtil.isTypeOrSubTypeOf(BinaryData.class, pollResponseType.getJavaType())) {
+                            return (T) BinaryData.fromString(body);
+                        } else {
+                            return serializer.deserialize(body, pollResponseType.getJavaType(),
+                                SerializerEncoding.JSON);
+                        }
+                    }).map(pollResponse -> {
+                        if (retryAfter != null) {
+                            return new PollResponse<>(status, pollResponse,
+                                Duration.ofSeconds(Long.parseLong(retryAfter)));
+                        } else {
+                            return new PollResponse<>(status, pollResponse);
+                        }
+                    });
                 })));
     }
 
-    @Override
     @SuppressWarnings("unchecked")
-    public Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType) {
+    @Override
+    public Mono<U> getResult(PollingContext<T> pollingContext, TypeReference<U> resultType) {
         String finalGetUrl = pollingContext.getData(RESOURCE_LOCATION);
         if (finalGetUrl == null) {
             String httpMethod = pollingContext.getData(HTTP_METHOD);
@@ -132,11 +146,12 @@ public class OperationResourcePollingStrategy<U> implements PollingStrategy<U> {
         }
 
         if (finalGetUrl == null) {
-            BinaryData latestResponse = pollingContext.getLatestResponse().getValue();
+            String latestResponseBody = pollingContext.getData(POLL_RESPONSE_BODY);
             if (TypeUtil.isTypeOrSubTypeOf(BinaryData.class, resultType.getJavaType())) {
-                return (Mono<U>) Mono.just(latestResponse);
+                return (Mono<U>) Mono.just(BinaryData.fromString(latestResponseBody));
             } else {
-                return latestResponse.toObjectAsync(resultType);
+                return Mono.fromCallable(() -> serializer.deserialize(latestResponseBody, resultType.getJavaType(),
+                    SerializerEncoding.JSON));
             }
         } else {
             HttpRequest request = new HttpRequest(HttpMethod.GET, finalGetUrl);
@@ -158,7 +173,7 @@ public class OperationResourcePollingStrategy<U> implements PollingStrategy<U> {
     }
 
     @Override
-    public Mono<BinaryData> cancel(PollingContext<BinaryData> pollingContext, PollResponse<BinaryData> initialResponse) {
+    public Mono<T> cancel(PollingContext<T> pollingContext, PollResponse<T> initialResponse) {
         return Mono.error(new IllegalStateException("Cancellation is not supported."));
     }
 

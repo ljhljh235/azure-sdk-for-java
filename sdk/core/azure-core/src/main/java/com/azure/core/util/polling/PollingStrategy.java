@@ -44,7 +44,7 @@ import java.time.Duration;
  * Azure. When there are special scenarios, built-in polling strategies can be inherited and select methods can be
  * overridden to accomplish the polling requirements, without writing an entire polling strategy from scratch.
  */
-public interface PollingStrategy<U> {
+public interface PollingStrategy<T, U> {
     /**
      * Checks if this strategy is able to handle polling for this long running operation based on the information in
      * the initial response.
@@ -63,18 +63,18 @@ public interface PollingStrategy<U> {
      * @param pollingContext the {@link PollingContext} for the current polling operation
      * @return a publisher emitting the long running operation status
      */
-    Mono<LongRunningOperationStatus> onInitialResponse(
-        Response<?> response, PollingContext<BinaryData> pollingContext);
+    Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<T> pollingContext,
+                                            TypeReference<T> pollResultType);
 
     /**
-     * Parses the response from the polling URL into a {@link PollResponse<BinaryData>}, and stores information
+     * Parses the response from the polling URL into a {@link PollResponse<T>}, and stores information
      * useful for further polling and final response in the {@link PollingContext}. The result must have the
      * {@link LongRunningOperationStatus} specified, and the entire polling response content as a {@link BinaryData}.
      *
      * @param pollingContext the {@link PollingContext} for the current polling operation
      * @return a publisher emitting the a poll response containing the status and the response content
      */
-    Mono<PollResponse<BinaryData>> poll(PollingContext<BinaryData> pollingContext);
+    Mono<PollResponse<T>> poll(PollingContext<T> pollingContext, TypeReference<T> pollResultType);
 
     /**
      * Parses the response from the final GET call into the result type of the long running operation.
@@ -85,7 +85,7 @@ public interface PollingStrategy<U> {
      * @param <U> The type of the final result of long running operation
      * @return a publisher emitting the final result
      */
-    Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType);
+    Mono<U> getResult(PollingContext<T> pollingContext, TypeReference<U> resultType);
 
     /**
      * Cancels the long running operation if service supports cancellation. If service does not support cancellation
@@ -96,5 +96,5 @@ public interface PollingStrategy<U> {
      * @param initialResponse the response from the initial operation
      * @return a publisher emitting the cancellation response content
      */
-    Mono<BinaryData> cancel(PollingContext<BinaryData> pollingContext, PollResponse<BinaryData> initialResponse);
+    Mono<T> cancel(PollingContext<T> pollingContext, PollResponse<T> initialResponse);
 }

@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
 
-public class PostLedgerEntriesPollingStrategy implements PollingStrategy<BinaryData> {
+public class PostLedgerEntriesPollingStrategy implements PollingStrategy<BinaryData, BinaryData> {
     private static final String X_MS_CCF_TRANSACTION_ID = "x-ms-ccf-transaction-id";
 
     private final Function<String, Mono<BinaryData>> getTransactionStatusOperation;
@@ -27,13 +27,16 @@ public class PostLedgerEntriesPollingStrategy implements PollingStrategy<BinaryD
     }
 
     @Override
-    public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<BinaryData> pollingContext) {
+    public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response,
+                                                              PollingContext<BinaryData> pollingContext,
+                                                              TypeReference<BinaryData> pollResponseType) {
         pollingContext.setData(X_MS_CCF_TRANSACTION_ID, response.getHeaders().get(X_MS_CCF_TRANSACTION_ID).getValue());
         return Mono.just(LongRunningOperationStatus.IN_PROGRESS);
     }
 
     @Override
-    public Mono<PollResponse<BinaryData>> poll(PollingContext<BinaryData> pollingContext) {
+    public Mono<PollResponse<BinaryData>> poll(PollingContext<BinaryData> pollingContext,
+                                               TypeReference<BinaryData> pollResponseType) {
         return getTransactionStatusOperation.apply(pollingContext.getData(X_MS_CCF_TRANSACTION_ID))
             .flatMap(binaryData -> binaryData.toObjectAsync(TransactionStatusResult.class)
                 .map(result -> {

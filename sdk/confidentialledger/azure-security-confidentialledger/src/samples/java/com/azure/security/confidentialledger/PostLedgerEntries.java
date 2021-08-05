@@ -5,6 +5,8 @@ package com.azure.security.confidentialledger;
 
 import com.azure.core.http.HttpClient;
 import com.azure.core.http.netty.NettyAsyncHttpClientBuilder;
+import com.azure.core.http.policy.HttpLogDetailLevel;
+import com.azure.core.http.policy.HttpLogOptions;
 import com.azure.core.http.rest.RequestOptions;
 import com.azure.core.util.BinaryData;
 import com.azure.identity.AzureCliCredentialBuilder;
@@ -54,6 +56,7 @@ public class PostLedgerEntries {
             .ledgerUri(System.getenv("CONFIDENTIALLEDGER_URL"))
             .credential(new AzureCliCredentialBuilder().build())
             .httpClient(httpClient)
+            .httpLogOptions(new HttpLogOptions().setLogLevel(HttpLogDetailLevel.BODY_AND_HEADERS))
             .buildConfidentialLedgerAsyncClient();
 
         System.out.println("Posting ledger entries:");

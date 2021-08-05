@@ -306,7 +306,7 @@ public final class ConfidentialLedgerAsyncClient {
     public PollerFlux<BinaryData, BinaryData> beginPostLedgerEntry(RequestOptions requestOptions, Duration pollInterval) {
         return PollerFlux.create(pollInterval, () -> postLedgerEntryWithResponse(requestOptions),
             new PostLedgerEntriesPollingStrategy(transactionId -> getTransactionStatus(transactionId, requestOptions)),
-            TypeReference.createInstance(BinaryData.class));
+            TypeReference.createInstance(BinaryData.class), TypeReference.createInstance(BinaryData.class));
     }
 
     @ServiceMethod(returns = ReturnType.SINGLE)

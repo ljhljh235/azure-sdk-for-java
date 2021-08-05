@@ -5,25 +5,21 @@ package com.azure.core.util.polling;
 
 import com.azure.core.http.HttpPipeline;
 import com.azure.core.http.rest.Response;
-import com.azure.core.util.BinaryData;
 import com.azure.core.util.Context;
 import com.azure.core.util.serializer.TypeReference;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.lang.reflect.Type;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A polling strategy that chains multiple polling strategies, finds the first strategy that can poll the current
  * long running operation, and polls with that strategy.
  */
-public class ChainedPollingStrategy<U> implements PollingStrategy<U> {
-    private final List<PollingStrategy<U>> pollingStrategies;
-    private PollingStrategy<U> pollableStrategy = null;
+public class ChainedPollingStrategy<T, U> implements PollingStrategy<T, U> {
+    private final List<PollingStrategy<T, U>> pollingStrategies;
+    private PollingStrategy<T, U> pollableStrategy = null;
 
     /**
      * Creates an empty chained polling strategy.
@@ -42,10 +38,10 @@ public class ChainedPollingStrategy<U> implements PollingStrategy<U> {
      * @param context additional metadata to pass along with the request
      * @return the initialized chained polling strategy with the default chain
      */
-    public static <U> ChainedPollingStrategy<U> createDefault(
+    public static <T, U> ChainedPollingStrategy<T, U> createDefault(
             HttpPipeline httpPipeline,
             Context context) {
-        return new ChainedPollingStrategy<U>()
+        return new ChainedPollingStrategy<T, U>()
             .addPollingStrategy(new OperationResourcePollingStrategy<>(httpPipeline, context))
             .addPollingStrategy(new LocationPollingStrategy<>(httpPipeline, context))
             .addPollingStrategy(new StatusCheckPollingStrategy<>());
@@ -56,7 +52,7 @@ public class ChainedPollingStrategy<U> implements PollingStrategy<U> {
      * @param pollingStrategy the polling strategy to add
      * @return the modified ChainedPollingStrategy instance
      */
-    public ChainedPollingStrategy<U> addPollingStrategy(PollingStrategy<U> pollingStrategy) {
+    public ChainedPollingStrategy<T, U> addPollingStrategy(PollingStrategy<T, U> pollingStrategy) {
         this.pollingStrategies.add(pollingStrategy);
         return this;
     }
@@ -74,22 +70,23 @@ public class ChainedPollingStrategy<U> implements PollingStrategy<U> {
     }
 
     @Override
-    public Mono<U> getResult(PollingContext<BinaryData> context, TypeReference<U> resultType) {
+    public Mono<U> getResult(PollingContext<T> context, TypeReference<U> resultType) {
         return pollableStrategy.getResult(context, resultType);
     }
 
     @Override
-    public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<BinaryData> pollingContext) {
-        return pollableStrategy.onInitialResponse(response, pollingContext);
+    public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<T> pollingContext,
+                                                              TypeReference<T> pollResultType) {
+        return pollableStrategy.onInitialResponse(response, pollingContext, pollResultType);
     }
 
     @Override
-    public Mono<PollResponse<BinaryData>> poll(PollingContext<BinaryData> context) {
-        return pollableStrategy.poll(context);
+    public Mono<PollResponse<T>> poll(PollingContext<T> context, TypeReference<T> pollResultType) {
+        return pollableStrategy.poll(context, pollResultType);
     }
 
     @Override
-    public Mono<BinaryData> cancel(PollingContext<BinaryData> pollingContext, PollResponse<BinaryData> initialResponse) {
+    public Mono<T> cancel(PollingContext<T> pollingContext, PollResponse<T> initialResponse) {
         return pollableStrategy.cancel(pollingContext, initialResponse);
     }
 }

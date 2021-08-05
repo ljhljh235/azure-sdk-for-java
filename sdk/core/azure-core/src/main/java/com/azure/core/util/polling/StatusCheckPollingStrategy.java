@@ -3,23 +3,18 @@
 
 package com.azure.core.util.polling;
 
-import com.azure.core.http.HttpPipeline;
 import com.azure.core.http.rest.Response;
 import com.azure.core.implementation.TypeUtil;
 import com.azure.core.util.BinaryData;
-import com.azure.core.util.Context;
 import com.azure.core.util.logging.ClientLogger;
 import com.azure.core.util.serializer.TypeReference;
 import reactor.core.publisher.Mono;
-
-import java.lang.reflect.Type;
-import java.time.Duration;
 
 /**
  * Fallback polling strategy that doesn't poll but exits successfully if no other polling are detected
  * and status code is 2xx.
  */
-public class StatusCheckPollingStrategy<U> implements PollingStrategy<U> {
+public class StatusCheckPollingStrategy<T, U> implements PollingStrategy<T, U> {
 
     private final ClientLogger logger = new ClientLogger(StatusCheckPollingStrategy.class);
 
@@ -28,30 +23,42 @@ public class StatusCheckPollingStrategy<U> implements PollingStrategy<U> {
         return Mono.just(true);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<BinaryData> pollingContext) {
+    public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<T> pollingContext,
+                                                              TypeReference<T> pollResponseType) {
         return Mono.just(LongRunningOperationStatus.SUCCESSFULLY_COMPLETED);
     }
 
     @Override
-    public Mono<PollResponse<BinaryData>> poll(PollingContext<BinaryData> context) {
+    public Mono<PollResponse<T>> poll(PollingContext<T> context, TypeReference<T> pollResponseType) {
         throw logger.logExceptionAsWarning(
             new IllegalStateException("StatusCheckPollingStrategy doesn't support polling"));
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Mono<U> getResult(PollingContext<BinaryData> pollingContext, TypeReference<U> resultType) {
-        BinaryData activationResponse = pollingContext.getActivationResponse().getValue();
-        if (TypeUtil.isTypeOrSubTypeOf(BinaryData.class, resultType.getJavaType())) {
+    public Mono<U> getResult(PollingContext<T> pollingContext, TypeReference<U> resultType) {
+        T activationResponse = pollingContext.getActivationResponse().getValue();
+        if (TypeUtil.isTypeOrSubTypeOf(activationResponse.getClass(), resultType.getJavaType())) {
             return (Mono<U>) Mono.just(activationResponse);
         } else {
-            return activationResponse.toObjectAsync(resultType);
+            Mono<BinaryData> binaryDataMono;
+            if (activationResponse instanceof BinaryData) {
+                binaryDataMono = Mono.just((BinaryData) activationResponse);
+            } else {
+                binaryDataMono = BinaryData.fromObjectAsync(activationResponse);
+            }
+            if (TypeUtil.isTypeOrSubTypeOf(BinaryData.class, resultType.getJavaType())) {
+                return (Mono<U>) binaryDataMono;
+            } else {
+                return binaryDataMono.flatMap(binaryData -> binaryData.toObjectAsync(resultType));
+            }
         }
     }
 
     @Override
-    public Mono<BinaryData> cancel(PollingContext<BinaryData> pollingContext, PollResponse<BinaryData> initialResponse) {
+    public Mono<T> cancel(PollingContext<T> pollingContext, PollResponse<T> initialResponse) {
         return Mono.error(new IllegalStateException("Cancellation is not supported."));
     }
 }
