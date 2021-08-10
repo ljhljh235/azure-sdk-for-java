@@ -169,9 +169,12 @@ public final class PollerFlux<T, U> extends Flux<AsyncPollResponse<T, U>> {
      *     If there is no specific activation work to be done then invocation should return Mono.empty(),
      *     this operation will be called with a new {@link PollingContext}.
      * @param strategy a known strategy for polling a long running operation in Azure
-     * @param resultType the {@link Type} of the final result object to deserialize into, or BinaryData if raw response
-     *                   body should be kept. This should match the generic parameter {@link U}.
-     * @param <U> The type of the final result of long running operation
+     * @param pollResponseType the {@link TypeReference} of the response type from a polling call, or BinaryData if raw
+     *                         response body should be kept. This should match the generic parameter {@link U}.
+     * @param resultType the {@link TypeReference} of the final result object to deserialize into, or BinaryData if raw
+     *                   response body should be kept. This should match the generic parameter {@link U}.
+     * @param <T> The type of poll response value.
+     * @param <U> The type of the final result of long running operation.
      * @return PollerFlux
      */
     @SuppressWarnings("unchecked")

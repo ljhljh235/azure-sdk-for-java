@@ -22,6 +22,11 @@ import java.time.Duration;
 
 /**
  * Implements a operation resource polling strategy, typically from Operation-Location.
+ *
+ * @param <T> the {@link TypeReference} of the response type from a polling call, or BinaryData if raw response body
+ *            should be kept
+ * @param <U> the {@link TypeReference} of the final result object to deserialize into, or BinaryData if raw response
+ *            body should be kept
  */
 public class OperationResourcePollingStrategy<T, U> implements PollingStrategy<T, U> {
     private static final String OPERATION_LOCATION = "Operation-Location";

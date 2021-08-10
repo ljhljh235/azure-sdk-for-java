@@ -16,6 +16,11 @@ import java.util.List;
 /**
  * A polling strategy that chains multiple polling strategies, finds the first strategy that can poll the current
  * long running operation, and polls with that strategy.
+ *
+ * @param <T> the {@link TypeReference} of the response type from a polling call, or BinaryData if raw response body
+ *            should be kept
+ * @param <U> the {@link TypeReference} of the final result object to deserialize into, or BinaryData if raw response
+ *            body should be kept
  */
 public class ChainedPollingStrategy<T, U> implements PollingStrategy<T, U> {
     private final List<PollingStrategy<T, U>> pollingStrategies;
@@ -36,6 +41,10 @@ public class ChainedPollingStrategy<T, U> implements PollingStrategy<T, U> {
      *
      * @param httpPipeline an instance of {@link HttpPipeline} to send requests with
      * @param context additional metadata to pass along with the request
+     * @param <T> the {@link TypeReference} of the response type from a polling call, or BinaryData if raw response body
+     *            should be kept
+     * @param <U> the {@link TypeReference} of the final result object to deserialize into, or BinaryData if raw response
+     *            body should be kept
      * @return the initialized chained polling strategy with the default chain
      */
     public static <T, U> ChainedPollingStrategy<T, U> createDefault(
@@ -76,13 +85,13 @@ public class ChainedPollingStrategy<T, U> implements PollingStrategy<T, U> {
 
     @Override
     public Mono<LongRunningOperationStatus> onInitialResponse(Response<?> response, PollingContext<T> pollingContext,
-                                                              TypeReference<T> pollResultType) {
-        return pollableStrategy.onInitialResponse(response, pollingContext, pollResultType);
+                                                              TypeReference<T> pollResponseType) {
+        return pollableStrategy.onInitialResponse(response, pollingContext, pollResponseType);
     }
 
     @Override
-    public Mono<PollResponse<T>> poll(PollingContext<T> context, TypeReference<T> pollResultType) {
-        return pollableStrategy.poll(context, pollResultType);
+    public Mono<PollResponse<T>> poll(PollingContext<T> context, TypeReference<T> pollResponseType) {
+        return pollableStrategy.poll(context, pollResponseType);
     }
 
     @Override

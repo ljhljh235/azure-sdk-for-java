@@ -13,6 +13,11 @@ import reactor.core.publisher.Mono;
 /**
  * Fallback polling strategy that doesn't poll but exits successfully if no other polling are detected
  * and status code is 2xx.
+ *
+ * @param <T> the {@link TypeReference} of the response type from a polling call, or BinaryData if raw response body
+ *            should be kept
+ * @param <U> the {@link TypeReference} of the final result object to deserialize into, or BinaryData if raw response
+ *            body should be kept
  */
 public class StatusCheckPollingStrategy<T, U> implements PollingStrategy<T, U> {
 
